@@ -47,7 +47,3 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [GeustController::class, 'logout'])->name('logout');
 });
 
-
-Route::get('/test',function (){
-    return view('test');
-});

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRegisterRequest;
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,11 @@ class UserController extends Controller
         $user->username = $email;
         $user->password = Hash::make($password);
         $user->save();
+
+        $address = new Address;
+        $address->user_id = $user->id;
+        $address->save();
+
         return redirect()->route('login');
     }
 
