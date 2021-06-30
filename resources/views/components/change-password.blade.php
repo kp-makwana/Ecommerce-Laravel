@@ -72,7 +72,7 @@
             },
         });
     });
-    </script>
+</script>
 <script>
     $('#change_password').on('hidden.bs.modal', function () {
         $('#change_password form')[0].reset();
@@ -82,38 +82,7 @@
     });
 </script>
 <script>
-    // $('#new_password,#c_new_password').on('keyup',function () {
-    //     if ($('#new_password').val() == $('#c_new_password').val()) {
-    //         $('#message').html('Matching').css('color', 'green');
-    //     } else{
-    //         $('#message').html('Not Matching').css('color', 'red');
-    //     }
-    // });
-</script>
-<script>
-    {{--$(function(){--}}
-    {{--    $("#form").on("submit", function(){--}}
-    {{--        if ($('#new_password').val() == $('#c_new_password').val()) {--}}
-    {{--            $.ajax({--}}
-    {{--                url: '{{ route('user.profile.changePassword') }}',--}}
-    {{--                type: 'POST',--}}
-    {{--                data: $('#request').serialize(),--}}
-    {{--                success: function() {--}}
-    {{--                    alert($('#request').serialize());--}}
-    {{--                }--}}
-    {{--            });--}}
-    {{--        } else{--}}
-    {{--            $('#message').html('Not Matching').css('color', 'red');--}}
-    {{--        }--}}
-
-    {{--        // e.preventDefault();--}}
-    {{--    });--}}
-    {{--});--}}
-
-    // function formSubmit() {
-
     $("#submit").click(function () {
-        var hasError = false;
         var passwordVal = $("#pass").val();
         var checkVal = $("#c_new_password").val();
         // $("#pass_error").innerHTML("");
@@ -132,9 +101,7 @@
             $("#c_pass_error").html('');
             $("#c_pass_error").html('Passwords do not match.');
             return false;
-        }
-        else {
-
+        } else {
             alert("here");
         }
     });
