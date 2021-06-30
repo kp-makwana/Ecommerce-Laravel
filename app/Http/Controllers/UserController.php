@@ -7,10 +7,28 @@ use App\Http\Requests\UserRegisterRequest;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller
 {
+    /**
+     * Store a secret message for the user.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function storeSecret(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->fill([
+            'secret' => Crypt::encryptString($request->secret),
+        ])->save();
+    }
     public function showLogin()
     {
         return view('login');
