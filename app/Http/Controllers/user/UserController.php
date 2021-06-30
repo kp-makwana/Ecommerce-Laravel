@@ -13,7 +13,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 
@@ -103,10 +104,17 @@ class UserController extends Controller
         }
         return redirect()->route('user.profile.index');
     }
+    public function checkPassword(Request $request)
+    {
+        return Hash::check($request->password,Auth::user()->getAuthPassword());
+    }
     public function changePassword(Request $request)
     {
-
-        return false;
-    //    return "<p>password not match</p>";
+        dd($request);
+        $validated = $request->validate([
+            'c_password' => 'required',
+            'new_password' => 'required',
+            'c_new_password' => 'required',
+        ]);
     }
 }

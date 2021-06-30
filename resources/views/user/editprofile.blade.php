@@ -32,7 +32,7 @@
                                    aria-controls="profile" aria-selected="false">Address</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-target="#change_password" data-toggle="modal">Change Password</a>
+                                <a class="nav-link" data-target="#change_password" data-toggle="modal" aria-controls="password" aria-selected="false">Change Password</a>
                             </li>
                         </ul>
                     </div>
@@ -108,7 +108,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     @error('gender')
-                                    <div class="error">*</div> @enderror
+                                    <div class="text-danger">*</div> @enderror
                                     <label>Gender</label>
                                 </div>
                                 <div class="col-md-6">

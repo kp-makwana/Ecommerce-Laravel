@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/index', [UserController::class, 'index'])->name('index');
             Route::get('/edit', [UserController::class, 'edit'])->name('edit');
             Route::post('/update', [UserController::class, 'update'])->name('update');
+            Route::post('/checkPassword', [UserController::class, 'checkPassword'])->name('checkPassword');
             Route::post('/', [UserController::class, 'changePassword'])->name('changePassword');
         });
     });
@@ -47,4 +48,5 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/logout', [GeustController::class, 'logout'])->name('logout');
 });
+//Route::get('/test', [UserController::class, 'changePassword'])->name('changePassword');
 
