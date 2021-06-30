@@ -100,17 +100,11 @@ class UserController extends Controller
             $image_resize->save(public_path('/storage/UserProfile/' . $image_name));
             $profile->save();
         }
-
-
-        #user Profile update
-//        $profile = Profile_picture::where('user_id', $user->id)->first();
-//        if (!$profile) {
-//            $profile = new Profile_picture();
-//        } else {
-//            if ($fileUpload != null) {
-//            }
-//        }
-
         return redirect()->route('user.profile.index');
+    }
+    public function changePassword()
+    {
+        return false;
+    //    return "<p>password not match</p>";
     }
 }

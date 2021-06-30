@@ -32,8 +32,7 @@
                                    aria-controls="profile" aria-selected="false">Address</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab"
-                                   aria-controls="profile" aria-selected="false">Change Password</a>
+                                <a class="nav-link" data-target="#change_password" data-toggle="modal">Change Password</a>
                             </li>
                         </ul>
                     </div>
@@ -220,6 +219,7 @@
                 </div>
             </div>
         </form>
+        <x-ChangePassword/>
     </div>
     <script>
 

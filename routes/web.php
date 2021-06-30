@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/index', [UserController::class, 'index'])->name('index');
             Route::get('/edit', [UserController::class, 'edit'])->name('edit');
             Route::post('/update', [UserController::class, 'update'])->name('update');
+            Route::post('/', [UserController::class, 'changePassword'])->name('changePassword');
         });
     });
     Route::prefix('admin')->as('admin.')->group(function () {
