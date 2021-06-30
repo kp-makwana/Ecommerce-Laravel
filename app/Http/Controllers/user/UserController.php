@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Request;
 use Intervention\Image\Facades\Image;
 
 
@@ -102,8 +103,9 @@ class UserController extends Controller
         }
         return redirect()->route('user.profile.index');
     }
-    public function changePassword()
+    public function changePassword(Request $request)
     {
+
         return false;
     //    return "<p>password not match</p>";
     }
