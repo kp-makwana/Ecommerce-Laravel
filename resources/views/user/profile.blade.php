@@ -1,4 +1,4 @@
-@extends('user.layout.sidebar')
+@extends('user.layout.sidebar',['title'=>'Profile'])
 @section('content')
     <div class="container emp-profile bg-dark text-white">
         {{--        <form method="post">--}}

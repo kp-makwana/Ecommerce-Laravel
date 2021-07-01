@@ -1,4 +1,4 @@
-@extends('user.layout.sidebar')
+@extends('user.layout.sidebar',['title'=>'Edit Profile'])
 @section('content')
     <div class="container emp-profile bg-dark text-white">
         <form action="{{ route('user.profile.update') }}" method="POST" name="update" enctype="multipart/form-data">

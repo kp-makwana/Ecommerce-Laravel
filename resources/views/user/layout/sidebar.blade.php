@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>E-commerce</title>
+    <title>{{ $title }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -23,6 +23,7 @@
 <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar">
         <div class="p-4 pt-5">
+             @php $user = App\Models\User::find(Auth::user()->id) @endphp
             <img
                 src="{{ $user->ProfilePicture? asset('storage/UserProfile/'.$user->ProfilePicture->name) : asset('images/user.png') }}"
                 class="img logo rounded-circle mb-5">
@@ -34,17 +35,17 @@
                 <li class="{{ request()->is('user/profile/*') ? 'active' : '' }}">
                     <a href="{{ route('user.profile.index') }}">My Profile</a>
                 </li>
-                <li class="{{ request()->is('user/order') ? 'active' : '' }}">
-                    <a href="#">Order</a>
+                <li class="{{ request()->is('user/order/*') ? 'active' : '' }}">
+                    <a href="{{ route('user.order.index') }}">Order</a>
                 </li>
-                <li class="{{ request()->is('user/wishlist') ? 'active' : '' }}">
-                    <a href="#">My Wishlist</a>
+                <li class="{{ request()->is('user/wishlist/*') ? 'active' : '' }}">
+                    <a href="{{ route('user.wishlist.index') }}">My Wishlist</a>
                 </li>
-                <li class="{{ request()->is('user/cart') ? 'active' : '' }}">
-                    <a href="#">My Cart</a>
+                <li class="{{ request()->is('user/cart/*') ? 'active' : '' }}">
+                    <a href="{{ route('user.cart.index') }}">My Cart</a>
                 </li>
-                <li class="{{ request()->is('user/help') ? 'active' : '' }}">
-                    <a href="#">Help & Support</a>
+                <li class="{{ request()->is('user/help/*') ? 'active' : '' }}">
+                    <a href="{{ route('user.help.index') }}">Help & Support</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-danger" href="{{ route('logout') }}">Logout</a>
