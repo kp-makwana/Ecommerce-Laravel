@@ -20,16 +20,19 @@
                style="background-image: {{ asset('images/user.png') }};"></a>
             <ul class="list-unstyled components mb-5">
                 <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#productSub" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Product</a>
+                    <ul class="collapse list-unstyled" id="productSub">
                         <li>
-                            <a href="#">Home 1</a>
+                            <a href="#">Product 1</a>
                         </li>
                         <li>
-                            <a href="#">Home 2</a>
+                            <a href="#">Product 2</a>
                         </li>
                         <li>
-                            <a href="#">Home 3</a>
+                            <a href="#">Product 3</a>
                         </li>
                     </ul>
                 </li>
