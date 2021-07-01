@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="text-center col-md-10">Change Password</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+                <button id="modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">×
                 </button>
             </div>
             <div class="modal-body">
@@ -26,6 +26,7 @@
                                                    name="pass" id="pass" type="password">
                                             <span class="text-danger" id="pass_error"></span>
                                         </div>
+                                        @error('pass')<span class="text-danger">{{ $message }}</span>@enderror
                                         <div class="form-group">
                                             <input class="form-control input-lg" placeholder="Confirm New Password"
                                                    name="c_new_password" id="c_new_password" type="password">
@@ -48,8 +49,6 @@
         </div>
     </div>
 </div>
-
-
 <script>
     $("#c_password").focusout(function () {
         var password = $(this).val();
@@ -63,7 +62,7 @@
             success: function (data) {
                 // alert(data);
                 if (data == false) {
-                    $("#pass_not_match").html("Password Not Match");
+                    $("#pass_not_match").html("invalid Current Password.");
                     $("#c_password").focus();
                     // alert(data);
                 } else {
@@ -83,15 +82,20 @@
 </script>
 <script>
     $("#submit").click(function () {
+        var myLength = $("#pass").val().length;
         var passwordVal = $("#pass").val();
         var checkVal = $("#c_new_password").val();
-        // $("#pass_error").innerHTML("");
-        // $("#c_pass_error").innerHTML("");
         if (passwordVal == '') {
             $("#pass_error").html('');
             $("#pass_error").html('Please enter a password.');
             return false;
-        } else if (checkVal == '') {
+        }
+        else if(myLength<3){
+            $("#pass_error").html('');
+            $("#pass_error").html('Password minimum Length 3.');
+            return false;
+        }
+        else if (checkVal == '') {
             $("#pass_error").html('');
             $("#c_pass_error").html('');
             $("#c_pass_error").html('Please re-enter your password.');
@@ -102,7 +106,19 @@
             $("#c_pass_error").html('Passwords do not match.');
             return false;
         } else {
-            alert("here");
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('user.profile.changePassword') }}',
+                data: {
+                    password : $("#pass").val(),
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    if (data == true) {
+                        document.location = "http://127.0.0.1:8000/user/profile/index";
+                    }
+                },
+            });
         }
     });
 </script>

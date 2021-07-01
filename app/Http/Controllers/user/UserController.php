@@ -110,11 +110,9 @@ class UserController extends Controller
     }
     public function changePassword(Request $request)
     {
-        dd($request);
-        $validated = $request->validate([
-            'c_password' => 'required',
-            'new_password' => 'required',
-            'c_new_password' => 'required',
-        ]);
+         $password = $request->password;
+         $user = User::find(Auth::user()->id);
+         $user->password = Hash::make($password);
+         return $user->save();
     }
 }
