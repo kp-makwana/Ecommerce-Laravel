@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\CityType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,6 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call([BrandSeeder::class]);
         $this->call([ProductTypeSeeder::class]);
         $this->call([ProductSeeder::class]);
-
+        \App\Models\ProductRating::factory(10)->create();
     }
 }
