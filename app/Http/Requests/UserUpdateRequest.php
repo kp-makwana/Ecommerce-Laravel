@@ -28,8 +28,8 @@ class UserUpdateRequest extends FormRequest
         return [
             'f_name' => 'required|min:3|max:25',
             'l_name' => 'required|min:3|max:25',
-            'phone' => 'required',Rule::unique('users', 'contact_no')->ignore(Auth::user()->id),
-            'email' => 'required',Rule::unique('users', 'email')->ignore(Auth::user()->id),
+            'phone' => 'required', Rule::unique('users', 'contact_no')->ignore(Auth::user()->id),
+            'email' => 'required', Rule::unique('users', 'email')->ignore(Auth::user()->id),
             'zipcode' => 'min:6|max:6',
         ];
     }

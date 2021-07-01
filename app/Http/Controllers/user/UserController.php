@@ -10,11 +10,9 @@ use App\Models\Country;
 use App\Models\Profile_picture;
 use App\Models\State;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
 
@@ -78,9 +76,9 @@ class UserController extends Controller
             $profile = Profile_picture::where('user_id', $user->id)->first();
             if ($profile) {
                 //delete old file
-                    //File::delete($image_path);
-                    unlink(public_path('/storage/UserProfile/' .$profile->name));
-            }else{
+                //File::delete($image_path);
+                unlink(public_path('/storage/UserProfile/' . $profile->name));
+            } else {
                 $profile = new Profile_picture();
             }
             #params
@@ -104,15 +102,17 @@ class UserController extends Controller
         }
         return redirect()->route('user.profile.index');
     }
+
     public function checkPassword(Request $request)
     {
-        return Hash::check($request->password,Auth::user()->getAuthPassword());
+        return Hash::check($request->password, Auth::user()->getAuthPassword());
     }
+
     public function changePassword(Request $request)
     {
-         $password = $request->password;
-         $user = User::find(Auth::user()->id);
-         $user->password = Hash::make($password);
-         return $user->save();
+        $password = $request->password;
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($password);
+        return $user->save();
     }
 }

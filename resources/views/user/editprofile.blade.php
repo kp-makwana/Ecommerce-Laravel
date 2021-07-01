@@ -32,7 +32,8 @@
                                    aria-controls="profile" aria-selected="false">Address</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-target="#change_password" data-toggle="modal" aria-controls="password" aria-selected="false">Change Password</a>
+                                <a class="nav-link" data-target="#change_password" data-toggle="modal"
+                                   aria-controls="password" aria-selected="false">Change Password</a>
                             </li>
                         </ul>
                     </div>
@@ -195,7 +196,8 @@
                                     <label for="current_password">Current Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="password" id="current_password" name="current_password" class="bg-dark text-white form-control"/>
+                                    <input type="password" id="current_password" name="current_password"
+                                           class="bg-dark text-white form-control"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -203,7 +205,8 @@
                                     <label for="new_password">New password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="password" name="new_password" id="new_password" class="form-control bg-dark text-white" maxlength="6"/>
+                                    <input type="password" name="new_password" id="new_password"
+                                           class="form-control bg-dark text-white" maxlength="6"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -211,7 +214,8 @@
                                     <label for="confirm_new_pass">Current Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="password" id="confirm_new_pass" name="confirm_new_pass" class="bg-dark text-white form-control"/>
+                                    <input type="password" id="confirm_new_pass" name="confirm_new_pass"
+                                           class="bg-dark text-white form-control"/>
                                 </div>
                             </div>
                         </div>

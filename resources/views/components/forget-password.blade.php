@@ -1,4 +1,3 @@
-
 <!--modal-->
 <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -17,9 +16,11 @@
                                 <div class="panel-body">
                                     <fieldset>
                                         <div class="form-group">
-                                            <input class="form-control input-lg" placeholder="E-mail Address" name="email" type="email">
+                                            <input class="form-control input-lg" placeholder="E-mail Address"
+                                                   name="email" type="email">
                                         </div>
-                                        <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
+                                        <input class="btn btn-lg btn-primary btn-block" value="Send My Password"
+                                               type="submit">
                                     </fieldset>
                                 </div>
                             </div>

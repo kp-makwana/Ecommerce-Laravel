@@ -89,13 +89,11 @@
             $("#pass_error").html('');
             $("#pass_error").html('Please enter a password.');
             return false;
-        }
-        else if(myLength<3){
+        } else if (myLength < 3) {
             $("#pass_error").html('');
             $("#pass_error").html('Password minimum Length 3.');
             return false;
-        }
-        else if (checkVal == '') {
+        } else if (checkVal == '') {
             $("#pass_error").html('');
             $("#c_pass_error").html('');
             $("#c_pass_error").html('Please re-enter your password.');
@@ -110,7 +108,7 @@
                 type: 'POST',
                 url: '{{ route('user.profile.changePassword') }}',
                 data: {
-                    password : $("#pass").val(),
+                    password: $("#pass").val(),
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function (data) {

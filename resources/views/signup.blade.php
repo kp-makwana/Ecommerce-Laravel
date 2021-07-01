@@ -4,7 +4,7 @@
 
     <!-- Registeration Form -->
     <div class="col-md-7 col-lg-6 ml-auto mt-4">
-        <form action="{{ route('user.register') }}" method="POST" id="registration_form" name="registration_form" >
+        <form action="{{ route('user.register') }}" method="POST" id="registration_form" name="registration_form">
             @csrf
             <div class="row">
 
@@ -22,7 +22,7 @@
                 <p class="text-danger ml-3">{{ $message }}</p>
                 @enderror
 
-                <!-- Last Name -->
+            <!-- Last Name -->
                 <div class="input-group col-lg-12 mb-4">
                     <div class="input-group-prepend">
                             <span class="input-group-text bg-white px-4 border-md border-right-0">
@@ -163,43 +163,5 @@
             </div>
         </form>
     </div>
-
 @endsection
-{{--@section('script')--}}
-{{--<script>--}}
-{{--    if ($("#registration_form").length > 0){--}}
-{{--        $("#registration_form").validate({--}}
-{{--            // errorElement: 'span',--}}
-{{--            // errorLabelContainer: '.errorTxt',--}}
-{{--            // errorClass: 'validation-error error text-danger',--}}
-{{--            rules: {--}}
-{{--                first_name: {--}}
-{{--                    required: true,--}}
-{{--                    maxlength: 15,--}}
-{{--                    minlength: 2,--}}
-{{--                    not_empty: true--}}
-{{--                },--}}
-{{--                last_name: {--}}
-{{--                    required: true,--}}
-{{--                    maxlength: 15,--}}
-{{--                    minlength: 2,--}}
-{{--                    not_empty: true--}}
-{{--                },--}}
-{{--            },--}}
-{{--            messages: {--}}
-{{--                first_name: {--}}
-{{--                    required: "Please enter a first name.",--}}
-{{--                    maxlength: "Firstname should be less than or equal to 15 characters",--}}
-{{--                    minlength: "You must enter at least 2 characters"--}}
-{{--                },--}}
-{{--                last_name: {--}}
-{{--                    required: "Please enter a last name ",--}}
-{{--                    maxlength: "Lastname should be less than or equal to 15 characters",--}}
-{{--                    minlength: "You must enter at least 2 characters"--}}
-{{--                },--}}
-{{--            },--}}
-{{--        });--}}
-{{--    }--}}
-{{--</script>--}}
-{{--@endsection--}}
 

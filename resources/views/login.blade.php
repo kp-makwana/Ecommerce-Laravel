@@ -13,7 +13,8 @@
                                 <i class="fa fa-envelope text-muted"></i>
                             </span>
                     </div>
-                    <input id="email" type="email" name="username" placeholder="Enter Email or UserName Address" class="form-control bg-white border-left-0 border-md">
+                    <input id="email" type="email" name="username" placeholder="Enter Email or UserName Address"
+                           class="form-control bg-white border-left-0 border-md">
                 </div>
                 @error('username')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
 
@@ -24,7 +25,8 @@
                                 <i class="fa fa-lock text-muted"></i>
                             </span>
                     </div>
-                    <input id="password" type="password" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
+                    <input id="password" type="password" name="password" placeholder="Password"
+                           class="form-control bg-white border-left-0 border-md">
                 </div>
                 @error('password')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
                 @if(Session::has('type'))
@@ -61,7 +63,9 @@
 
                 <!-- Already Registered -->
                 <div class="text-center w-100">
-                    <p class="text-muted font-weight-bold">I don't have a account<a href="{{ route('signup') }}" class="text-primary ml-2">Sign up</a></p>
+                    <p class="text-muted font-weight-bold">I don't have a account<a href="{{ route('signup') }}"
+                                                                                    class="text-primary ml-2">Sign
+                            up</a></p>
                 </div>
             </div>
         </form>

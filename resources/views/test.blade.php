@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
     <style>
-        .error{
+        .error {
             color: #FF0000;
         }
     </style>
@@ -35,7 +35,8 @@
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Title</label>
-                    <input type="text" id="title" name="title" class="@error('title') is-invalid @enderror form-control">
+                    <input type="text" id="title" name="title"
+                           class="@error('title') is-invalid @enderror form-control">
                     @error('title')
                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                     @enderror
@@ -55,7 +56,8 @@
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
-                    <textarea name="description" class="@error('description') is-invalid @enderror form-control"></textarea>
+                    <textarea name="description"
+                              class="@error('description') is-invalid @enderror form-control"></textarea>
 
                 </div>
 

@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\user\DashboardController;
 use App\Http\Controllers\user\UserController;
 use App\Http\Controllers\UserController as GeustController;
-use App\Http\Controllers\user\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,8 +27,8 @@ Route::middleware('login')->group(function () {
 
 });
 
-Route::post('getStates',[AddressController::class, 'fetchStates'])->name('fetchStates');
-Route::post('getCities',[AddressController::class, 'fetchCities'])->name('fetchCities');
+Route::post('getStates', [AddressController::class, 'fetchStates'])->name('fetchStates');
+Route::post('getCities', [AddressController::class, 'fetchCities'])->name('fetchCities');
 Route::middleware('auth')->group(function () {
     Route::prefix('user')->as('user.')->group(function () {
         Route::prefix('dashboard')->as('dashboard.')->group(function () {
