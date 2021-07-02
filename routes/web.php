@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\user\DashboardController;
-use App\Http\Controllers\user\UserController;
+//use App\Http\Controllers\AdminController;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\UserController as GeustController;
 use Illuminate\Support\Facades\Route;
 
