@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProfilePicturesTable extends Migration
+class CreateProductImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateProfilePicturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('profile_pictures', function (Blueprint $table) {
+        Schema::create('product_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
             $table->string('name');
             $table->string('original_name');
             $table->string('mime_type');
@@ -23,7 +23,7 @@ class CreateProfilePicturesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
@@ -34,6 +34,6 @@ class CreateProfilePicturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profile_pictures');
+        Schema::dropIfExists('product_images');
     }
 }

@@ -23,18 +23,7 @@
                     <a href="#">Home</a>
                 </li>
                 <li>
-                    <a href="#productSub" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Product</a>
-                    <ul class="collapse list-unstyled" id="productSub">
-                        <li>
-                            <a href="#">Product 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Product 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Product 3</a>
-                        </li>
-                    </ul>
+                    <a href="#" >Product</a>
                 </li>
                 <li>
                     <a href="#">About</a>

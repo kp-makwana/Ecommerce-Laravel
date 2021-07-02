@@ -17,7 +17,7 @@ class CreateProductRatingsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
-            $table->enum('rating',[1,2,3,4,5]);
+            $table->enum('rating', [1, 2, 3, 4, 5]);
             $table->string('title');
             $table->string('description')->nullable();
             $table->timestamps();

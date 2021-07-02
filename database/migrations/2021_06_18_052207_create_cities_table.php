@@ -18,7 +18,7 @@ class CreateCitiesTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('state_id');
-            $table->enum('city_type',['metro','non_metro']);
+            $table->enum('city_type', ['metro', 'non_metro']);
             $table->timestamps();
             $table->softDeletes();
 

@@ -18,7 +18,7 @@ class CreateOffersTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->string('offer_price');
             $table->string('description')->nullable();
-            $table->enum('status',['active','inactive']);
+            $table->enum('status', ['active', 'inactive']);
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
