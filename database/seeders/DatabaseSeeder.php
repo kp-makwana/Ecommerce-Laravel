@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,5 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call([ProductTypeSeeder::class]);
         $this->call([ProductSeeder::class]);
         \App\Models\ProductRating::factory(10)->create();
+        $this->call([OrderStatusSeeder::class]);
+        $this->call([OrderSeeder::class]);
+        $this->call([OrderDetailsSeeder::class]);
     }
 }

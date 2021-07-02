@@ -22,13 +22,13 @@ class ProductRatingFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'user_id' => User::all()->random()->id,
             'product_id' => Product::all()->random()->id,
-            'rating' => rand(1,5),
-            'title' => $this->faker->words,
+            'rating' => $this->faker->randomElement([1, 2, 3, 4, 5]),
+            'title' => $this->faker->word(),
         ];
     }
 }
