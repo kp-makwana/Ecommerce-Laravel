@@ -63,10 +63,6 @@ Route::middleware('auth')->group(function () {
             })->name('index');
         });
     });
-    Route::prefix('admin')->as('admin.')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('index');
-        Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
-    });
     Route::get('/logout', [GeustController::class, 'logout'])->name('logout');
 });
 //Route::get('/test', [UserController::class, 'changePassword'])->name('changePassword');

@@ -9,45 +9,44 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user.style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    {{--    <script src="{{ asset('js/popper.js') }}"></script>--}}
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
 </head>
 <body>
 
-<div class="wrapper d-flex align-items-stretch">
+<div class="wrapper d-flex align-items-stretch text-white">
     <nav id="sidebar">
         <div class="p-4 pt-5">
             <a href="#" class="img logo rounded-circle mb-5"
                style="background-image: {{ asset('images/user.png') }};"></a>
             <ul class="list-unstyled components mb-5">
-                <li class="active">
-                    <a href="#">Home</a>
+                <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('admin.index') }}">Home</a>
+                </li>
+                <li class="{{ request()->is('admin/product/*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.product.index') }}">Product</a>
                 </li>
                 <li>
-                    <a href="#" >Product</a>
+                    <a href="#">Category</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="#">Brand</a>
                 </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                       class="dropdown-toggle">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
+                    <a href="#">Users</a>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
+                    <a href="#">Orders</a>
                 </li>
             </ul>
 
@@ -65,7 +64,7 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg bg-dark text-white">
             <div class="container-fluid">
 
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -97,7 +96,6 @@
             </div>
         </nav>
         @yield('content')
-        <h2 class="mb-4">Sidebar #01</h2>
     </div>
 </div>
 
