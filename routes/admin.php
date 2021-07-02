@@ -20,5 +20,4 @@ Route::middleware('auth')->group(function () {
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index',[AdminController::class,'product'])->name('index');
     });
-
 });

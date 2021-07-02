@@ -65,5 +65,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::get('/logout', [GeustController::class, 'logout'])->name('logout');
 });
-//Route::get('/test', [UserController::class, 'changePassword'])->name('changePassword');
+Route::get('/test', function (){
+    return view('test');
+});
 

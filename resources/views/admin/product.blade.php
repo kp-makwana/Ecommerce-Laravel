@@ -1,4 +1,4 @@
-@extends('admin.layout.sidebar')
+@extends('admin.layout.sidebar',['title'=>'Product'])
 @section('content')
 
 @endsection
