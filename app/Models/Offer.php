@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Offer extends Model
 {
     use HasFactory;
+
+    public const STATUS = [
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+    ];
 }

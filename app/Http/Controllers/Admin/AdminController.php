@@ -13,7 +13,7 @@ class AdminController extends Controller
         return view('admin.dashboard', ['user' => Auth::user()]);
     }
 
-    public function logout()
+    public function logout(): \Illuminate\Http\RedirectResponse
     {
         Auth::logout();
         return redirect()->route('login');
@@ -23,4 +23,5 @@ class AdminController extends Controller
     {
         return view('admin.product');
     }
+
 }
