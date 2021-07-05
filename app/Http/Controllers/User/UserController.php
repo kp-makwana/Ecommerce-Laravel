@@ -34,7 +34,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(UserUpdateRequest $request)
+    public function update(UserUpdateRequest $request): \Illuminate\Http\RedirectResponse
     {
         #params
         $f_name = $request->input('f_name');
@@ -103,7 +103,7 @@ class UserController extends Controller
         return redirect()->route('user.profile.index');
     }
 
-    public function checkPassword(Request $request)
+    public function checkPassword(Request $request): bool
     {
         return Hash::check($request->password, Auth::user()->getAuthPassword());
     }
