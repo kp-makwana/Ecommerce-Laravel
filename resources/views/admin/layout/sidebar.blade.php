@@ -19,39 +19,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-
+    @stack('style')
     <style>
-        #grid-container {
-            position: relative;
-            width: 300px;
-            height: 400px;
-            overflow: auto;
-            border: 1px red solid;
-        }
-
-        #grid {
-            border: 1px blue solid;
-        }
-
-        #grid ul {
-            height: 40px;
-            list-style-type: none;
-            white-space: nowrap;
-            padding: 0;
-            margin: 0;
-            border: 1px green solid;
-        }
-
-        #grid ul li {
-            display: inline;
-            padding: 0;
-            margin: 0;
-        }
-
-        #grid ul li img {
-            height: 50px;
-        }
-
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -64,8 +33,8 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-
-    {{--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>--}}
+{{--    form validation--}}
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
     {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
 
 </head>
@@ -111,7 +80,7 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
 
-        <nav class="navbar navbar-expand-lg bg-dark text-white">
+        <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
 
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -144,8 +113,8 @@
                                 Category
                             </a>
                             <div class="dropdown-menu" id="category_menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('admin.product.index') }}">All Category</a>
-                                <a class="dropdown-item" href="{{ route('admin.product.add') }}">Add Category</a>
+                                <a class="dropdown-item" href="{{ route('admin.category.index') }}">All Category</a>
+                                <a class="dropdown-item" href="{{ route('admin.category.add') }}">Add Category</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown-header dropdown mr-2">
@@ -154,8 +123,8 @@
                                 Brand
                             </a>
                             <div class="dropdown-menu" id="brand_menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('admin.product.index') }}">All Brand</a>
-                                <a class="dropdown-item" href="{{ route('admin.product.add') }}">Add Brand</a>
+                                <a class="dropdown-item" href="{{ route('admin.brand.index') }}">All Brand</a>
+                                <a class="dropdown-item" href="{{ route('admin.brand.add') }}">Add Brand</a>
                             </div>
                         </li>
 

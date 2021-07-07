@@ -21,15 +21,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('index');
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::prefix('product')->as('product.')->group(function () {
-        Route::get('/index', [AdminController::class, 'product'])->name('index');
+        Route::get('/index', [ProductController::class, 'index'])->name('index');
         Route::get('/add', [ProductController::class, 'add'])->name('add');
+        Route::post('/save', [ProductController::class, 'save'])->name('save');
     });
-    Route::prefix('category')->as('product.')->group(function () {
-        Route::get('/index', [AdminController::class, 'product'])->name('index');
+    Route::prefix('category')->as('category.')->group(function () {
+        Route::get('/index', [CategoryController::class, 'index'])->name('index');
         Route::get('/add', [CategoryController::class, 'add'])->name('add');
     });
-    Route::prefix('brand')->as('product.')->group(function () {
-        Route::get('/index', [AdminController::class, 'product'])->name('index');
+    Route::prefix('brand')->as('brand.')->group(function () {
+        Route::get('/index', [BrandController::class, 'index'])->name('index');
         Route::get('/add', [BrandController::class, 'add'])->name('add');
     });
 });

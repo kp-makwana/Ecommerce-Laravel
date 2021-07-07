@@ -21,3 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Route::post('/getStates',[\App\Http\Controllers\AddressController::class, 'fetchStates'])->name('fetchStates');
 //Route::post('/getCities',[\App\Http\Controllers\AddressController::class, 'fetchCities'])->name('fetchCities');
+
+
+Route::get('/download',[\App\Http\Controllers\Admin\ProductController::class, 'pdfCreate']);
