@@ -7,7 +7,9 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use PDF;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -47,20 +49,24 @@ class ProductController extends Controller
         $product->save();
 
         foreach ($request->file('upload_file') as $key => $file) {
+            $image_resize = Image::make($file->getRealPath());
+            $image_resize->resize(1280, 720);
             $rand =  $this->generateRandomString();
-            $image_name = time() .'_'.$rand. '.' . $upload_files[$key]->extension();
+            $image_name = time() .'_'.$rand. '.' . $file->extension();
 
             #save data
             $img = new ProductImage;
             $img->product_id = $product->id;
             $img->name = $image_name;
-            $img->original_name = $upload_files[$key]->getClientOriginalName();
-            $img->mime_type = $upload_files[$key]->getMimeType();
-            $img->size = $upload_files[$key]->getSize();
+            $img->original_name = $file->getClientOriginalName();
+            $img->mime_type = $file->getMimeType();
+            $img->size = $file->getSize();
             $img->save();
 
-            $file = $request->upload_file;
-            $file[$key]->move(public_path('/storage/ProductImages/'), $image_name);
+//            #upload image
+            $image_resize->save(public_path('/storage/ProductImages/' . $image_name));
+//            $size = File::get(public_path('/storage/ProductImages/' . $image_name));
+//            dd($size->getSize());
         }
 
         return redirect()->route('admin.index');
