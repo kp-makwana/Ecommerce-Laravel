@@ -6,7 +6,8 @@
             <li>
                 <div class="py-4">
                     <span class="off bg-secondary">OFFER</span>
-                    <span class="rating fa fa-star bg-success">&nbsp;&nbsp;5</span>
+                    <span
+                        class="rating fa fa-star bg-success">&nbsp;&nbsp;{{ $bladeService->rating($product->id) }}</span>
                     <span
                         class="on bg-{{ $product->quantity == 0 ? "danger":"success" }}">{{ $product->quantity }}</span>
                 </div>
@@ -29,8 +30,23 @@
                 </div> <!-- cd-item-info -->
 
             </li>
+
         @endforeach
+        {{--            <nav aria-label="Page navigation example">--}}
+        {{--                <ul class="pagination justify-content-end">--}}
+        {{--                    <li class="page-item disabled">--}}
+        {{--                        <a class="page-link" href="#" tabindex="-1">Previous</a>--}}
+        {{--                    </li>--}}
+        {{--                    <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
+        {{--                    <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
+        {{--                    <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
+        {{--                    <li class="page-item">--}}
+        {{--                        <a class="page-link" href="#">Next</a>--}}
+        {{--                    </li>--}}
+        {{--                </ul>--}}
+        {{--            </nav>--}}
     </ul> <!-- cd-gallery -->
+
 @endsection
 @push('style')
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
