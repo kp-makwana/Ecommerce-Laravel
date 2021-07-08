@@ -51,13 +51,13 @@
 
                 <!-- Social Login -->
                 <div class="form-group col-lg-12 mx-auto">
-                    <a href="#" class="btn btn-primary btn-block py-2 btn-facebook">
+                    <a href="https://www.facebook.com/" class="btn btn-primary btn-block py-2 btn-facebook">
                         <i class="fa fa-facebook-f mr-2"></i>
-                        <span class="font-weight-bold">Continue with Facebook</span>
+                        <span class="font-weight-bold">Facebook Page</span>
                     </a>
-                    <a href="#" class="btn btn-primary btn-block py-2 btn-twitter">
-                        <i class="fa fa-google mr-2"></i>
-                        <span class="font-weight-bold">Continue with Google</span>
+                    <a href="https://twitter.com/home" class="btn btn-primary btn-block py-2 btn-twitter">
+                        <i class="fa fa-twitter mr-2"></i>
+                        <span class="font-weight-bold">Twitter Page </span>
                     </a>
                 </div>
 

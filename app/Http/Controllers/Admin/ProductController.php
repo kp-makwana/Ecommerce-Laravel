@@ -7,15 +7,16 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use PDF;
-use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        return view('admin.product');
+        $products = Product::with('productImage')->orderBy('id', 'DESC')->get();
+        return view('admin.product', ['products' => $products]);
     }
 
     public function add(Request $request)
@@ -48,11 +49,19 @@ class ProductController extends Controller
         $product->description = $description;
         $product->save();
 
-        foreach ($request->file('upload_file') as $key => $file) {
+        foreach ($request->file('upload_file') as $file) {
+            #resize
             $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(1280, 720);
-            $rand =  $this->generateRandomString();
-            $image_name = time() .'_'.$rand. '.' . $file->extension();
+            $image_resize->resize(400, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $rand = $this->generateRandomString();
+            $image_name = time() . '_' . $rand . '.' . $file->extension();
+
+            #upload image
+            $storagePath = storage_path('app/public/ProductImages/' . $image_name);
+            $image_resize->save($storagePath);
 
             #save data
             $img = new ProductImage;
@@ -60,16 +69,11 @@ class ProductController extends Controller
             $img->name = $image_name;
             $img->original_name = $file->getClientOriginalName();
             $img->mime_type = $file->getMimeType();
-            $img->size = $file->getSize();
+            $img->size = number_format(File::size($storagePath) / 1000, 2);
             $img->save();
-
-//            #upload image
-            $image_resize->save(public_path('/storage/ProductImages/' . $image_name));
-//            $size = File::get(public_path('/storage/ProductImages/' . $image_name));
-//            dd($size->getSize());
         }
 
-        return redirect()->route('admin.index');
+        return redirect()->route('admin.product.index');
     }
 
     public function pdfCreate()
@@ -77,6 +81,7 @@ class ProductController extends Controller
         $pdf = PDF::loadview('test', ['test' => State::all()]);
         return $pdf->download('1.pdf');
     }
+
     private function generateRandomString(): string
     {
         $characters = '0123456789abcdefghilkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
