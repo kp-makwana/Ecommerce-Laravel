@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('productImage')->orderBy('id', 'DESC')->get();
+        $products = Product::with('productImage')->orderBy('id', 'DESC')->paginate(10);
         return view('admin.product', ['products' => $products]);
     }
 
@@ -24,7 +24,7 @@ class ProductController extends Controller
         return view('admin.add-product');
     }
 
-    public function save(Request $request)
+    public function save(Request $request): \Illuminate\Http\RedirectResponse
     {
         #parmas
         $product_name = $request->input('product_name');

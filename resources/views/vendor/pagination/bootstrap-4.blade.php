@@ -1,31 +1,37 @@
 @if ($paginator->hasPages())
-    <nav>
-        <ul class="pagination">
+    <div class="dataTables_wrapper text-lg-right">
+        <div class="dataTables_paginate paging_simple_numbers" id="data-table-custom_paginate">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-                <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
-                </li>
+                <a class="paginate_button previous disabled mr-2" aria-label="@lang('pagination.previous')">Previous</a>
             @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
-                </li>
+                <a class="paginate_button previous mr-2" href="{{ $paginator->previousPageUrl() }}"
+                   aria-label="@lang('pagination.previous')">Previous</a>
             @endif
-
             {{-- Pagination Elements --}}
             @foreach ($elements as $element)
-                {{-- "Three Dots" Separator --}}
-                @if (is_string($element))
-                    <li class="page-item disabled" aria-disabled="true"><span class="page-link">{{ $element }}</span></li>
-                @endif
-
                 {{-- Array Of Links --}}
                 @if (is_array($element))
+                    @php
+                        $left = false;
+                        $right = false;
+                    @endphp
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
-                        @else
-                            <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                            <a class="paginate_button current mr-2">{{ $page }}</a>
+                        @elseif (($page === 1 || $page === 2 || ($paginator->currentPage() === 1 && $page === 3) || $page === $paginator->currentPage() + 1 || $page === $paginator->currentPage() - 1)
+             || (($paginator->currentPage() === $paginator->lastPage() && $page === $paginator->lastPage() - 2) || $page === $paginator->lastPage() || $page === $paginator->lastPage() - 1))
+                            <a href="{{ $url }}" class="paginate_button mr-2">{{ $page }}</a>
+                        @elseif (!$left && $paginator->currentPage() - 2 > 2 && $page < $paginator->currentPage())
+                            @php
+                                $left = true;
+                            @endphp
+                            <a class="paginate_button mr-2"><span>…</span></a>
+                        @elseif (!$right && $paginator->currentPage() + 2 < $paginator->lastPage() - 1 && $page > $paginator->currentPage())
+                            @php
+                                $right = true;
+                            @endphp
+                            <a class="paginate_button mr-2"><span>…</span></a>
                         @endif
                     @endforeach
                 @endif
@@ -33,14 +39,12 @@
 
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</a>
-                </li>
+                <a class="paginate_button next mr-2" href="{{ $paginator->nextPageUrl() }}"
+                   aria-label="@lang('pagination.next')">Next</a>
             @else
-                <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                    <span class="page-link" aria-hidden="true">&rsaquo;</span>
-                </li>
+                <a class="paginate_button next disabled mr-2" onclick="javascript:void(0);"
+                   aria-label="@lang('pagination.next')">Next</a>
             @endif
-        </ul>
-    </nav>
+        </div>
+    </div>
 @endif

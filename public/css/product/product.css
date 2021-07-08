@@ -338,8 +338,8 @@ table {
 }
 
 .cd-item-info .cd-price {
-    /*color: #a5d05e; */
-    color: #e76363;
+    color: #17a2b8;
+    /*color: #e76363;*/
     position: relative;
     margin-left: 20px;
     -webkit-transition: color 0.2s;

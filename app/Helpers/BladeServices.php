@@ -21,4 +21,20 @@ class BladeServices
         return $value;
 
     }
+
+    public function ratingClass($product_rate): string
+    {
+        if ($product_rate === "N/A") {
+            return "info";
+        } else {
+            if (3 <= $product_rate) {
+                return "success";
+            } elseif (2 <= $product_rate) {
+                return "warning";
+            }
+            else{
+                return "danger";
+            }
+        }
+    }
 }
