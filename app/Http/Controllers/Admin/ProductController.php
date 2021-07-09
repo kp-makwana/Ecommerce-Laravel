@@ -19,9 +19,14 @@ class ProductController extends Controller
         return view('admin.product', ['products' => $products]);
     }
 
+    Public function sortBy()
+    {
+        $products = Product::with('productImage')->orderBy('id', 'DESC')->paginate(10);
+        return  view('admin.add-product',['products' => $products]);
+    }
     public function add(Request $request)
     {
-        return view('admin.add-product');
+        return  redirect()->view('admin.add-product');
     }
 
     public function save(Request $request): \Illuminate\Http\RedirectResponse

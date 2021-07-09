@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index'])->name('index');
+        Route::post('/index', [ProductController::class, 'sortBy'])->name('sortBy');
         Route::get('/add', [ProductController::class, 'add'])->name('add');
         Route::post('/save', [ProductController::class, 'save'])->name('save');
     });

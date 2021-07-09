@@ -64,6 +64,9 @@
                 <li>
                     <a href="#">Orders</a>
                 </li>
+                <li class="">
+                    <a class="nav-link text-danger" href="{{ route('admin.logout') }}">Logout</a>
+                </li>
             </ul>
 
             <div class="footer">
@@ -79,10 +82,9 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
-
+        @yield('nav')
         <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
-
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
                     <i class="fa fa-bars"></i>
                     <span class="sr-only">Toggle Menu</span>
@@ -126,10 +128,6 @@
                                 <a class="dropdown-item" href="{{ route('admin.brand.index') }}">All Brand</a>
                                 <a class="dropdown-item" href="{{ route('admin.brand.add') }}">Add Brand</a>
                             </div>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" href="{{ route('admin.logout') }}">Logout</a>
                         </li>
                     </ul>
                 </div>

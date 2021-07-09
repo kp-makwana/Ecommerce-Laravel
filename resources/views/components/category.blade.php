@@ -1,5 +1,4 @@
-<select id="category" name="category"
-        class="bg-dark text-white form-control">
+<select id="category" name="category" class="bg-dark text-white form-control">
     <option value="" selected disabled>-- Select Category --</option>
     @foreach($categories as $category)
         <option
