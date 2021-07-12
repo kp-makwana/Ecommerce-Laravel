@@ -8,14 +8,16 @@ use Illuminate\View\Component;
 class ProductRating extends Component
 {
     public $ratings;
+    public $selectedRating;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($selectedRating)
     {
         $this->ratings = \App\Models\ProductRating::RATING;
+        $this->selectedRating = $selectedRating;
     }
 
     /**

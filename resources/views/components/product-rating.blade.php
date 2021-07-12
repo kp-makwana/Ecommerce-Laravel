@@ -2,6 +2,6 @@
         class="bg-dark text-white form-control">
     <option value="" selected disabled>-- SortBy Rating --</option>
     @foreach($ratings as $key => $value)
-        <option value="{{ $key }}">{{ $value }}</option>
+        <option value="{{ $key }}" {{ ($selectedRating == $key) ? "selected":"" }}>{{ $value }}</option>
     @endforeach
 </select>

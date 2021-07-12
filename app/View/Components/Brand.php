@@ -7,15 +7,17 @@ use Illuminate\View\Component;
 class Brand extends Component
 {
     public $brands;
+    public $selectedBrand;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($brand = null)
     {
         $this->brands = \App\Models\Brand::orderBy('name')->get();
+        $this->selectedBrand = $brand;
     }
 
     /**

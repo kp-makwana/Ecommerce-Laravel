@@ -24,15 +24,14 @@ class BladeServices
 
     public function ratingClass($product_rate): string
     {
-        if ($product_rate === "N/A") {
+        if ($product_rate == null) {
             return "info";
         } else {
-            if (3 <= $product_rate) {
+            if (4 <= $product_rate) {
                 return "success";
-            } elseif (2 <= $product_rate) {
+            } elseif (3 <= $product_rate) {
                 return "warning";
-            }
-            else{
+            } else {
                 return "danger";
             }
         }

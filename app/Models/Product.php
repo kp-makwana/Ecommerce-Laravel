@@ -19,5 +19,9 @@ class Product extends Model
         return $this->hasMany(ProductRating::class, 'product_id', 'id');
     }
 
+    public function averageRatings()
+    {
+        return $this->hasMany(ProductRating::class, 'product_id', 'id')->average('rating');
+    }
 
 }

@@ -21,7 +21,9 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('product_type_id');
-            $table->integer('quantity');
+            $table->integer('quantity')->nullable();
+            $table->integer('number_of_rating')->nullable();
+            $table->double('avg_rating')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

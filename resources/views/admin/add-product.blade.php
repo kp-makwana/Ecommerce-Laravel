@@ -140,14 +140,14 @@
         $(function () {
             $("#product_add").validate({
                 rules: {
-                    // product_name: "required",
-                    // purchase_price: "required",
-                    // sale_price: "required",
-                    // brands: "required",
-                    // category: "required",
-                    // product_type: "required",
-                    // quantity: "required",
-                    // description: "required",
+                    product_name: "required",
+                    purchase_price: "required",
+                    sale_price: "required",
+                    brands: "required",
+                    category: "required",
+                    product_type: "required",
+                    quantity: "required",
+                    description: "required",
                     'upload_file[]': {
                         required: true,
                         extension: "jpg|jpeg|png|ico|bmp"

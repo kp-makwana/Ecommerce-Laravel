@@ -2,31 +2,59 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\BladeServices;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use PDF;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('productImage')->orderBy('id', 'DESC')->paginate(10);
-        return view('admin.product', ['products' => $products]);
+        #
+        $request = $request->all();
+        // Default
+        // Sorting
+        // Filter
+        $queryBuilder = Product::with('productImage');
+
+        if (isset($request['category'])) {
+            $queryBuilder->where('category_id', '=', $request['category']);
+        }
+        if (isset($request['brands'])) {
+            $queryBuilder->where('brand_id', '=', $request['brands']);
+        }
+        if (isset($request['rating'])) {
+            $queryBuilder->where('avg_rating','>=',$request['rating']);
+        }
+        if (isset($request['search'])) {
+            $query = $request['search'];
+            $queryBuilder->where('name','LIKE',$query.'%');
+        }
+        $products = $queryBuilder->orderBy('products.id', 'DESC')->paginate(10);
+        return view('admin.product', ['products' => $products, 'request' => $request]);
     }
 
-    Public function sortBy()
+    public function filter(Request $request)
     {
-        $products = Product::with('productImage')->orderBy('id', 'DESC')->paginate(10);
-        return  view('admin.add-product',['products' => $products]);
+        $queryBuilder = Product::with('productImage');
+        if (isset($request['search'])) {
+            $query = $request['search'];
+            $queryBuilder->where('name','LIKE',$query.'%');
+        }
+        $products = $queryBuilder->orderBy('products.id', 'DESC')->paginate(10);
+        return view('test', ['products' => $products, 'request' => $request]);
     }
+
     public function add(Request $request)
     {
-        return  redirect()->view('admin.add-product');
+        return view('admin.add-product');
     }
 
     public function save(Request $request): \Illuminate\Http\RedirectResponse
