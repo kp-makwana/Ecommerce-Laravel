@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\BladeServices;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\State;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use PDF;
@@ -22,35 +20,60 @@ class ProductController extends Controller
         // Default
         // Sorting
         // Filter
-        $queryBuilder = Product::with('productImage');
+        $queryBuilder = Product::with('productImage','category','brand');
 
-        if (isset($request['category'])) {
+
+        if (isset($request['category'])) {                  //category sortings
             $queryBuilder->where('category_id', '=', $request['category']);
         }
-        if (isset($request['brands'])) {
+
+
+        if (isset($request['brands'])) {   //brand sorting
             $queryBuilder->where('brand_id', '=', $request['brands']);
         }
-        if (isset($request['rating'])) {
-            $queryBuilder->where('avg_rating','>=',$request['rating']);
+
+        if (isset($request['rating'])) {          //rating sorting
+            if ($request['rating'] == 'none') {
+                $queryBuilder->where('avg_rating', '=', null);
+            } else {
+                $queryBuilder->where('avg_rating', '>=', $request['rating']);
+            }
         }
-        if (isset($request['search'])) {
+
+        if (isset($request['search'])) {        //Searching
             $query = $request['search'];
-            $queryBuilder->where('name','LIKE',$query.'%');
+
+            if (ctype_digit($query)) {
+                $queryBuilder->where('purchase_price', '=', $query)
+                    ->orWhere('sale_price', '=', $query);
+            } else {
+                $queryBuilder->where('name', 'LIKE', '%' . $query . '%')
+                    ->orWhereHas('category', function ($q) use ($query) {
+                        $q->where('name', 'LIKE', '%' . $query . '%');
+                    })
+                    ->orWhereHas('brand', function ($q) use ($query) {
+                        $q->where('name', 'LIKE', '%' . $query . '%');
+                    });
+            }
         }
-        $products = $queryBuilder->orderBy('products.id', 'DESC')->paginate(10);
+
+        if(isset($request['sorting'])){    //orderBy
+            $queryBuilder->orderBy('products.id', $request['sorting']);
+        }
+        else{
+            $queryBuilder->orderBy('products.id', 'desc');
+        }
+//        dd($queryBuilder->toSql());
+
+        if(isset($request['no_of_record'])) // pagination
+        {
+            $products = $queryBuilder->paginate($request['no_of_record']);
+        }else{
+            $products = $queryBuilder->paginate(10);
+        }
         return view('admin.product', ['products' => $products, 'request' => $request]);
     }
 
-    public function filter(Request $request)
-    {
-        $queryBuilder = Product::with('productImage');
-        if (isset($request['search'])) {
-            $query = $request['search'];
-            $queryBuilder->where('name','LIKE',$query.'%');
-        }
-        $products = $queryBuilder->orderBy('products.id', 'DESC')->paginate(10);
-        return view('test', ['products' => $products, 'request' => $request]);
-    }
 
     public function add(Request $request)
     {

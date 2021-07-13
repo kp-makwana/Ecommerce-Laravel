@@ -1,33 +1,59 @@
 @extends('admin.layout.sidebar',['title'=>'Product'])
 @section('content')
-    <div id="main">
-        <form action="{{ route('admin.product.index') }}" method="GET">
-            <div class="col-md-12 row">
-                <div class="col-md-2">
-                    <x-Category category="{{ $request['category'] ?? null }}"/>
+    <div>
+        <div class="col-md-12">
+            <form action="{{ route('admin.product.index') }}" name="sortingForm" id="sortingForm" method="GET">
+                <div class="col-md-12 row my-4">
+                    <div class="col-md-2">
+                        <div class="text-lg-left mx-3">Latest Product <a
+                                href="{{ route('admin.product.index') }}">Here</a>.
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <lable for="sorting">Sort By:</lable>
+                    </div>
+                    <div class="col-md-1">
+                        <x-Sorting sorting="{{ $request['sorting'] ?? 'desc' }}"/>
+                    </div>
+                    <div class="col-md-1">
+                        <lable for="orderBy">Number of rows:</lable>
+                    </div>
+                    <div class="col-md-1">
+                        <x-NumberOfRow record="{{ $request['no_of_record'] ?? 10}}"/>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 text-lg-right"><a href="{{ route('admin.product.add') }}"
+                                                                class="btn btn-success">Add New
+                                Product</a></div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <x-Brand brand="{{ $request['brands'] ?? null }}"/>
+                <div class="col-md-12 row">
+                    <div class="col-md-2">
+                        <x-Category category="{{ $request['category'] ?? null }}"/>
+                    </div>
+                    <div class="col-md-2">
+                        <x-Brand brand="{{ $request['brands'] ?? null }}"/>
+                    </div>
+                    <div class="col-md-2">
+                        <x-ProductRating selectedRating="{{ $request['rating'] ?? null }}"/>
+                    </div>
+                    <div class="col-md-4 float-right pl-5">
+                        <div class="col-md-12 text-lg-right">
+                            <input type="search" name="search" id="search"
+                                   class="form-control float-right bg-dark text-white"
+                                   placeholder="Search..." value="{{ $request['search'] ?? null }}"
+                                   aria-label="Search">
+                        </div>
+                    </div>
+                    <div class="col-md-2 float-right">
+                        <div class="col-md-12 text-lg-right">
+                            <a href="" class="ml-4">
+                                <input type="submit" class="px-5 btn btn-primary"/>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <x-ProductRating selectedRating="{{ $request['rating'] ?? null }}"/>
-                </div>
-                <div class="col-md-4 float-right">
-                    <input type="search" name="search" id="search" class="form-control float-right bg-dark text-white"
-                           placeholder="Search..." value="{{ $request['search'] ?? null }}"
-                           aria-label="Search">
-                </div>
-                <div class="col-md-2 float-right">
-                    <a href="" class="ml-5">
-                        <input type="submit" class="btn btn-primary"/>
-                    </a>
-                </div>
-            </div>
-        </form>
-        <div class="my-3">
-            <div class="text-lg-left mx-3">Latest Product <a href="{{ route('admin.product.index') }}">Here</a>.</div>
-            <div class="text-lg-right"><a href="{{ route('admin.product.add') }}" class="btn btn-success">Add New
-                    Product</a></div>
+            </form>
         </div>
         <ul class="cd-gallery">
             @forelse($products as $product)
@@ -57,6 +83,8 @@
                         <em class="cd-price"><em style="font-size: small">Purchase Price:</em>
                             &#8377; {{ $product->purchase_price }}</em>
                     </div> <!-- cd-item-info -->
+                    {{--                    <span class="text-sm-left text-danger">{{ $product->brand }}</span>--}}
+                    {{--                    <span class="text-sm-right text-danger">{{ $product->category }}</span>--}}
 
                 </li>
             @empty
@@ -122,27 +150,12 @@
 @endpush
 @push('script')
     <script src="{{ asset('js/product/product.js') }}"></script>
-
     <script>
-        var searchRequest = null;
-        var minlength = 3;
-        $("#search").keyup(function () {
-            value = $(this).val();
-            if (value.length >= minlength) {
-                if (searchRequest != null)
-                    searchRequest.abort();
-                searchRequest = $.ajax({
-                    type: 'GET',
-                    url: "{{ route('admin.product.filter') }}",
-                    data: {
-                        'search': value
-                    },
-                    dataType: 'text',
-                    success: function (data) {
-                        $("#main").html(data)
-                    }
-                });
-            }
+        function submit() {
+            $('#sortingForm').submit();
+        }
+        $('#category,#brands,#rating,#sorting,#no_of_record') .change(function () {
+            submit();
         });
     </script>
 

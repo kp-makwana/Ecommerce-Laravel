@@ -22,7 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index'])->name('index');
-        Route::post('/index', [ProductController::class, 'index'])->name('filter');
+//        Route::post('/filter', [ProductController::class, 'filter'])->name('filter');
         Route::get('/add', [ProductController::class, 'add'])->name('add');
         Route::post('/save', [ProductController::class, 'save'])->name('save');
     });

@@ -23,5 +23,13 @@ class Product extends Model
     {
         return $this->hasMany(ProductRating::class, 'product_id', 'id')->average('rating');
     }
+    public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Brand::class,'brand_id','id');
+    }
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class,'category_id','id');
+    }
 
 }
