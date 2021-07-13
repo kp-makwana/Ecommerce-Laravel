@@ -15,7 +15,7 @@ class BrandSeeder extends Seeder
     public function run()
     {
 
-        $category = ['Mi', 'Apple', 'OnePlus', 'Samsung', 'LG', 'HP', 'Lenovo', 'Dell'];
+        $category = ['mi', 'apple', 'oneplus', 'samsung', 'lg', 'hp', 'lenovo', 'dell'];
         foreach ($category as $data) {
             DB::table('brands')->insert([
                 'name' => $data,

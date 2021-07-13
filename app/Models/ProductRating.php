@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductRating extends Model
 {
     public const RATING = [
-        'all'=>'All Rating',
+        null=>'All Rating',
         '4' => '4 & Above',
         '3' => '3 & Above',
         '2' => '2 & Above',

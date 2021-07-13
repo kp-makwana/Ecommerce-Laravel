@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     public function run()
     {
 
-        $category = ['Laptop', 'Phone', 'PC', 'Fan', 'Mobile-Accessories', 'Smart Wearable Tech', 'Health Care Appliances', 'Desktop PCs', 'Tablets', 'Speakers', 'Camera'];
+        $category = ['laptop', 'phone', 'pc', 'tablets'];
         foreach ($category as $data) {
             DB::table('categories')->insert([
                 'name' => $data,

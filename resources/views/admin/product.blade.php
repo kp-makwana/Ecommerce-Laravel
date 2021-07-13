@@ -21,11 +21,11 @@
                     <div class="col-md-1">
                         <x-NumberOfRow record="{{ $request['no_of_record'] ?? 10}}"/>
                     </div>
-                    <div class="col-md-6">
-                        <div class="col-md-12 text-lg-right"><a href="{{ route('admin.product.add') }}"
-                                                                class="btn btn-success">Add New
-                                Product</a></div>
-                    </div>
+{{--                    <div class="col-md-6">--}}
+{{--                        <div class="col-md-12 text-lg-right"><a href="{{ route('admin.product.add') }}"--}}
+{{--                                                                class="btn btn-success">Add New--}}
+{{--                                Product</a></div>--}}
+{{--                    </div>--}}
                 </div>
                 <div class="col-md-12 row">
                     <div class="col-md-2">
