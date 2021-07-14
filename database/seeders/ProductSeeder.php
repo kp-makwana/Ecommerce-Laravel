@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'phone')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
-            'avg_rating'=>4.4
+            'avg_rating' => 4.4
         ], [
             'name' => 'Iphone 12 pro max',
             'purchase_price' => 100000,
@@ -34,7 +34,7 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'phone')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
-            'avg_rating'=>3.3
+            'avg_rating' => 3.3
         ], [
             'name' => 'OnePlus Nord',
             'purchase_price' => 20000,
@@ -43,7 +43,7 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'phone')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
-            'avg_rating'=>2.2
+            'avg_rating' => 2.2
         ], [
             'name' => 'HP 15s',
             'purchase_price' => 35000,
@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'laptop')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
-            'avg_rating'=>4
+            'avg_rating' => 4
         ], [
             'name' => 'Parallels Desktop 16',
             'purchase_price' => 150000,
@@ -61,7 +61,7 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'pc')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
-            'avg_rating'=>1.1
+            'avg_rating' => 1.1
         ], [
             'name' => 'Lenovo Tab M10',
             'purchase_price' => 14000,
@@ -70,25 +70,17 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'tablets')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
+            'avg_rating' => 2.2
         ], [
             'name' => 'redmi note 8',
-            'purchase_price' => 7500,
+            'purchase_price' => 7000,
             'sale_price' => 10000,
             'brand_id' => Brand::where('name', 'mi')->first()->id,
             'category_id' => Category::where('name', 'phone')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
-            'avg_rating'=>3.5
-        ], [
-            'name' => 'Apple mac book pro',
-            'purchase_price' => 150000,
-            'sale_price' => 222000,
-            'brand_id' => Brand::where('name', 'apple')->first()->id,
-            'category_id' => Category::where('name', 'laptop')->first()->id,
-            'product_type_id' => ProductType::where('name', 'electric')->first()->id,
-            'quantity' => rand(50, 100),
-            'avg_rating'=>1.1
-        ]
+            'avg_rating' => 4
+        ],
         ]);
     }
 }
