@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->integer('quantity')->nullable();
             $table->integer('number_of_rating')->nullable();
             $table->double('avg_rating')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

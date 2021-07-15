@@ -1,66 +1,50 @@
-<div id="main">
-    <form action="{{ route('admin.product.index') }}" method="GET">
-        <div class="col-md-12 row">
-            <div class="col-md-2">
-                <x-Category category="{{ $request['category'] ?? null }}"/>
-            </div>
-            <div class="col-md-2">
-                <x-Brand brand="{{ $request['brands'] ?? null }}"/>
-            </div>
-            <div class="col-md-2">
-                <x-ProductRating selectedRating="{{ $request['rating'] ?? null }}"/>
-            </div>
-            <div class="col-md-4 float-right">
-                <input type="search" name="search" id="search" class="form-control float-right bg-dark text-white" placeholder="Search..." value="{{ $request['search'] ?? null }}"
-                       aria-label="Search">
-            </div>
-            <div class="col-md-2 float-right">
-                <a href="" class="ml-5">
-                    <input type="submit" class="btn btn-primary"/>
-                </a>
-            </div>
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+{{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Hello, world!</title>
+</head>
+<body>
+<div id="carouselExampleControls" class="bg-dark slide col-md-3" data-ride="carousel">
+    <div class="carousel-inner col-md-6">
+        <div class="carousel-item active">
+            <img class="d-block w-25 rounded mx-auto d-block" src="{{ asset('/storage/ProductImages/macbook_1.jpg') }}" alt="First slide">
         </div>
-    </form>
-    <div class="my-3">
-        <div class="text-lg-left mx-3">Latest Product <a href="{{ route('admin.product.index') }}">Here</a>.</div>
-        <div class="text-lg-right"><a href="{{ route('admin.product.add') }}" class="btn btn-success">Add New
-                Product</a></div>
+        <div class="carousel-item">
+            <img class="d-block w-25 rounded mx-auto d-block" src="{{ asset('/storage/ProductImages/macbook_2.jpg') }}" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-25 rounded mx-auto d-block" src="{{ asset('/storage/ProductImages/macbook_3.jpg') }}" alt="Third slide">
+        </div>
     </div>
-    <ul class="cd-gallery">
-        @forelse($products as $product)
-            <li>
-                <div class="py-4">
-                    <span class="off bg-secondary">OFFER</span>
-                    @php
-                        $class = $bladeService->ratingClass($product->avg_rating);
-                    @endphp
-                    <span
-                        class="rating fa fa-star bg-{{ $class }}">&nbsp;&nbsp;{{$product->avg_rating ?? "N/A"}}</span>
-                    <span
-                        class="on bg-{{ $product->quantity == 0 ? "danger":"success" }}">{{ $product->quantity }}</span>
-                </div>
-                <ul class="cd-item-wrapper">
-                    @foreach($product->productImage as $key => $product_img)
-                        <li class="{{ $key == 0 ? "selected":"move-right"}}" data-sale="true"
-                            data-price="&#8377; {{ $product->sale_price }}">
-                            <img src="{{ asset('/storage/ProductImages/'.$product_img->name) }}"
-                                 alt="Preview image">
-                        </li>
-                    @endforeach
-                </ul> <!-- cd-item-wrapper -->
-
-                <div class="cd-item-info">
-                    <b><a href="">{{ $product->name }}</a></b>
-                    <em class="cd-price"><em style="font-size: small">Purchase Price:</em>
-                        &#8377; {{ $product->purchase_price }}</em>
-                </div> <!-- cd-item-info -->
-
-            </li>
-        @empty
-            <div class="w-75 col-md-10">
-                <div class="text-lg-center"><h4 class="text-danger">No Data Found</h4></div>
-                <img src="{{asset('images/no-data.png')}}" class="img-fluid" alt="No Data Found"></div>
-        @endforelse
-        {{ $products->appends($request)->links() }}
-    </ul>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+{{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>--}}
+
+{{--<!-- Option 2: Separate Popper and Bootstrap JS -->--}}
+{{--<!----}}
+{{--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>--}}
+{{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>--}}
+{{---->--}}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

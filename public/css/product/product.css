@@ -101,7 +101,7 @@ table {
 
 .cd-item-wrapper {
     position: relative;
-    overflow: hidden;
+    /*overflow: hidden;*/
     margin: 3em 0;
 }
 

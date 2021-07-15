@@ -140,13 +140,6 @@ class ProductController extends Controller
 
         return redirect()->route('admin.product.index');
     }
-
-    public function pdfCreate()
-    {
-        $pdf = PDF::loadview('test', ['test' => State::all()]);
-        return $pdf->download('1.pdf');
-    }
-
     private function generateRandomString(): string
     {
         $characters = '0123456789abcdefghilkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -157,4 +150,18 @@ class ProductController extends Controller
         }
         return $randomString;
     }
+
+    public function pdfCreate()
+    {
+        $pdf = PDF::loadview('test', ['test' => State::all()]);
+        return $pdf->download('1.pdf');
+    }
+
+    public function show($id)
+    {
+        $product = Product::find($id);
+        return view('admin.showProduct',['product'=>$product]);
+    }
+
+
 }
