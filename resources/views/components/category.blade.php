@@ -2,6 +2,6 @@
     <option value="" selected disabled>-- Select Category --</option>
     @foreach($categories as $category)
         <option
-            value="{{  $category->id }}" {{ ($category->id == $selectedCategory) ? "selected" : "" }}>{{ $category->name }}</option>
+            value="{{  $category->id }}" {{ ($category->id == $selectedCategory) ? "selected" : "" }}>{{ ucfirst($category->name) }}</option>
     @endforeach
 </select>

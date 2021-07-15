@@ -15,7 +15,7 @@ class StateSeeder extends Seeder
      */
     public function run()
     {
-        $state = ['Gujarat','Maharashtra','Rajasthan','Chennai'];
+        $state = ['gujarat','maharashtra','rajasthan','chennai'];
 
         foreach ($state as $count)
         {

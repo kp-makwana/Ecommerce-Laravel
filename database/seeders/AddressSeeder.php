@@ -18,7 +18,7 @@ class AddressSeeder extends Seeder
         for ($i = 1; $i < 3; $i++){
             Address::insert([
                 'user_id'=>$i,
-                'address'=>'Ahmedabad',
+                'address'=>'ahmedabad',
                 'city_id'=>1,
                 'state_id'=>1,
                 'country_id'=>1,

@@ -13,7 +13,7 @@ class Sorting extends Component
      *
      * @return void
      */
-    public function __construct($sorting = 'desc')
+    public function __construct($sorting = '0')
     {
         $this->sorting = $sorting;
     }

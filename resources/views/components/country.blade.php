@@ -3,7 +3,7 @@
 
     @foreach($countries as $count)
         <option
-            value="{{ $count->id }}" {{ $count->id == Auth::user()->address->country_id ? "selected":"" }}>{{ $count->name }}</option>
+            value="{{ $count->id }}" {{ $count->id == Auth::user()->address->country_id ? "selected":"" }}>{{ ucfirst($count->name) }}</option>
     @endforeach
 </select>
 

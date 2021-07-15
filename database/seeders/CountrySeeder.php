@@ -15,7 +15,7 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-        $countries = [91=>'India',61=>'Australia',44=>'England',27=>'South Africa',971=>'U.A.E',1=>'U.S.A'];
+        $countries = [91=>'india',61=>'australia',44=>'england',27=>'south africa',971=>'U.A.E',1=>'U.S.A'];
         foreach ($countries as $key=>$count)
         {
             Country::insert([

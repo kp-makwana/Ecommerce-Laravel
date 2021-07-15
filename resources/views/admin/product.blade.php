@@ -13,10 +13,10 @@
                         <lable for="sorting">Sort By:</lable>
                     </div>
                     <div class="col-md-1">
-                        <x-Sorting sorting="{{ $request['sorting'] ?? 'desc' }}"/>
+                        <x-Sorting sorting="{{ $request['sorting'] ?? '0' }}"/>
                     </div>
                     <div class="col-md-1">
-                        <lable for="orderBy">Number of rows:</lable>
+                        <lable for="orderBy">Number of Product:</lable>
                     </div>
                     <div class="col-md-1">
                         <x-NumberOfRow record="{{ $request['no_of_record'] ?? 10}}"/>

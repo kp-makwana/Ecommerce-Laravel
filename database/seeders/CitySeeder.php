@@ -17,7 +17,7 @@ class CitySeeder extends Seeder
     {
         $type = 'non_metro';
 
-        $city = ['Ahmedabad','Bhavanagar','Surat','Rajkot','Baroda'];
+        $city = ['ahmedabad','bhavanagar','surat','rajkot','baroda'];
         foreach ($city as $count)
         {
             $type = $city == 'Ahmedabad' ? 'metro':'non_metro';

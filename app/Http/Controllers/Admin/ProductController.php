@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        #
+        #params
         $request = $request->all();
 
         // Default
@@ -57,9 +57,16 @@ class ProductController extends Controller
         }
 
         // Sorting
-        if (isset($request['sorting'])) {    //orderBy
-            $queryBuilder->orderBy('products.id', $request['sorting']);
-        } else {
+        if(isset($request['sorting'])){
+            if (in_array($request['sorting'],config('constants.orderBy'))) {    //orderBy
+                if(isset($request['rating'])){
+                    $queryBuilder->orderBy('products.avg_rating', $request['sorting']);
+                }else{
+                    $queryBuilder->orderBy('products.id', $request['sorting']);
+                }
+            }
+
+        }else{
             $queryBuilder->orderBy('products.id', 'desc');
         }
 
