@@ -64,8 +64,13 @@ class ProductController extends Controller
         }
 
         // pagination
-        if (in_array($request['no_of_record'], config('constants.num_of_raw'))) {
-            $products = $queryBuilder->paginate($request['no_of_record']);
+        if (isset($request['no_of_record'])) {
+            if(in_array($request['no_of_record'], config('constants.num_of_raw'))){
+                $products = $queryBuilder->paginate($request['no_of_record']);
+            }
+            else{
+                $products = $queryBuilder->paginate(10);
+            }
         } else {
             $products = $queryBuilder->paginate(10);
         }

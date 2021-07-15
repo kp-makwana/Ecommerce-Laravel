@@ -98,6 +98,15 @@ class ProductSeeder extends Seeder
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
             'avg_rating' => 4
+        ],[
+            'name' => 'OnePlus Nord 2 5G',
+            'purchase_price' => 20000,
+            'sale_price' => 27999,
+            'brand_id' => Brand::where('name', 'oneplus')->first()->id,
+            'category_id' => Category::where('name', 'phone')->first()->id,
+            'product_type_id' => ProductType::where('name', 'electric')->first()->id,
+            'quantity' => rand(50, 100),
+            'avg_rating' => 2.2
         ]
         ]);
     }

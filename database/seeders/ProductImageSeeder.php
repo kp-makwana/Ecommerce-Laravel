@@ -190,6 +190,30 @@ class ProductImageSeeder extends Seeder
                 'original_name' => 'ideapad_3_3.jpg',
                 'mime_type' => 'image/jpeg',
                 'size' => 120,
+            ], [
+                'product_id' => Product::where('name', 'OnePlus Nord 2 5G')->first()->id,
+                'name' => 'oneplus_nord_1.jpg',
+                'original_name' => 'oneplus_nord_1.jpg',
+                'mime_type' => 'image/jpeg',
+                'size' => 120,
+            ], [
+                'product_id' => Product::where('name', 'OnePlus Nord 2 5G')->first()->id,
+                'name' => 'oneplus_nord_2.jpg',
+                'original_name' => 'oneplus_nord_1.jpg',
+                'mime_type' => 'image/jpeg',
+                'size' => 120,
+            ], [
+                'product_id' => Product::where('name', 'OnePlus Nord 2 5G')->first()->id,
+                'name' => 'oneplus_nord_3.jpg',
+                'original_name' => 'oneplus_nord_1.jpg',
+                'mime_type' => 'image/jpeg',
+                'size' => 120,
+            ], [
+                'product_id' => Product::where('name', 'OnePlus Nord 2 5G')->first()->id,
+                'name' => 'oneplus_nord_4.jpg',
+                'original_name' => 'oneplus_nord_1.jpg',
+                'mime_type' => 'image/jpeg',
+                'size' => 120,
             ]
         ]);
     }
