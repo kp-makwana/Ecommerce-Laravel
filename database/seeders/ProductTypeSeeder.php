@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProductType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class ProductTypeSeeder extends Seeder
     {
         $category = ['electric','sports', 'book', 'health', 'grocery'];
         foreach ($category as $data) {
-            DB::table('product_types')->insert([
+            ProductType::insert([
                 'name' => $data,
             ]);
         }

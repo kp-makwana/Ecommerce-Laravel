@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('products')->insert([[
+        Product::insert([[
             'name' => 'Iphone 12',
             'purchase_price' => 50000,
             'brand_id' => Brand::where('name', 'apple')->first()->id,
@@ -79,8 +79,26 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'phone')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
+            'avg_rating' => 4.4
+        ], [
+            'name' => 'macbook',
+            'purchase_price' => 40000,
+            'sale_price' => 50000,
+            'brand_id' => Brand::where('name', 'apple')->first()->id,
+            'category_id' => Category::where('name', 'laptop')->first()->id,
+            'product_type_id' => ProductType::where('name', 'electric')->first()->id,
+            'quantity' => rand(50, 100),
             'avg_rating' => 4
-        ],
+        ], [
+            'name' => 'lenovo ideapad 3',
+            'purchase_price' => 40000,
+            'sale_price' => 50000,
+            'brand_id' => Brand::where('name', 'lenovo')->first()->id,
+            'category_id' => Category::where('name', 'laptop')->first()->id,
+            'product_type_id' => ProductType::where('name', 'electric')->first()->id,
+            'quantity' => rand(50, 100),
+            'avg_rating' => 4
+        ]
         ]);
     }
 }

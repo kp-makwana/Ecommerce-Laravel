@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class AddressSeeder extends Seeder
     public function run()
     {
         for ($i = 1; $i < 3; $i++){
-            DB::table('addresses')->insert([
+            Address::insert([
                 'user_id'=>$i,
                 'address'=>'Ahmedabad',
                 'city_id'=>1,

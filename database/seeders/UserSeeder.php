@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        DB::table('users')->insert([
+        User::insert([[
             'role'=>'admin',
             'f_name'=>'Ecommerce',
             'l_name'=>'Admin',
@@ -28,8 +29,7 @@ class UserSeeder extends Seeder
             'username'=>'ecommerce@admin.com',
             'password'=>Hash::make('password'),
             'description'=>'this is admin'
-        ]);
-        DB::table('users')->insert([
+        ],[
             'role'=>'user',
             'f_name'=>'Ecommerce',
             'l_name'=>'user',
@@ -41,7 +41,8 @@ class UserSeeder extends Seeder
             'username'=>'ecommerce@user.com',
             'password'=>Hash::make('password'),
             'description'=>'this is user'
-        ]);
+        ]]);
+
 
     }
 }

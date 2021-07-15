@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,7 @@ class BrandSeeder extends Seeder
 
         $category = ['mi', 'apple', 'oneplus', 'samsung', 'lg', 'hp', 'lenovo', 'dell'];
         foreach ($category as $data) {
-            DB::table('brands')->insert([
+            Brand::insert([
                 'name' => $data,
             ]);
         }

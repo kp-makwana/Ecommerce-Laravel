@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\OrderStatus;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class OrderStatusSeeder extends Seeder
     {
         $statues = ['ordered', 'packed', 'shipped', 'delivered', 'return', 'return_approved', 'pickup', 'refund'];
         foreach ($statues as $status) {
-            DB::table('order_statuses')->insert([
+            OrderStatus::insert([
                 'name' => $status,
             ]);
         }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\State;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class StateSeeder extends Seeder
 
         foreach ($state as $count)
         {
-            DB::table('states')->insert([
+            State::insert([
                 'name'=>$count,
                 'country_id'=>1,
             ]);

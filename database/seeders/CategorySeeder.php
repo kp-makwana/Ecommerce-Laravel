@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,7 +18,7 @@ class CategorySeeder extends Seeder
 
         $category = ['laptop', 'phone', 'pc', 'tablets'];
         foreach ($category as $data) {
-            DB::table('categories')->insert([
+            Category::insert([
                 'name' => $data,
             ]);
         }

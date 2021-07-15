@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,7 @@ class CitySeeder extends Seeder
         foreach ($city as $count)
         {
             $type = $city == 'Ahmedabad' ? 'metro':'non_metro';
-            DB::table('cities')->insert([
+            City::insert([
                 'name'=>$count,
                 'state_id'=>1,
                 'city_type'=>$type,

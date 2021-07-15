@@ -17,16 +17,14 @@ class ProductController extends Controller
     {
         #
         $request = $request->all();
+
         // Default
-        // Sorting
+        $queryBuilder = Product::with('productImage', 'category', 'brand');
+
         // Filter
-        $queryBuilder = Product::with('productImage','category','brand');
-
-
-        if (isset($request['category'])) {                  //category sortings
+        if (isset($request['category'])) {                  //category
             $queryBuilder->where('category_id', '=', $request['category']);
         }
-
 
         if (isset($request['brands'])) {   //brand sorting
             $queryBuilder->where('brand_id', '=', $request['brands']);
@@ -40,7 +38,8 @@ class ProductController extends Controller
             }
         }
 
-        if (isset($request['search'])) {        //Searching
+        //Searching
+        if (isset($request['search'])) {
             $query = $request['search'];
 
             if (ctype_digit($query)) {
@@ -57,23 +56,21 @@ class ProductController extends Controller
             }
         }
 
-        if(isset($request['sorting'])){    //orderBy
+        // Sorting
+        if (isset($request['sorting'])) {    //orderBy
             $queryBuilder->orderBy('products.id', $request['sorting']);
-        }
-        else{
+        } else {
             $queryBuilder->orderBy('products.id', 'desc');
         }
-//        dd($queryBuilder->toSql());
 
-        if(isset($request['no_of_record'])) // pagination
-        {
+        // pagination
+        if (in_array($request['no_of_record'], config('constants.num_of_raw'))) {
             $products = $queryBuilder->paginate($request['no_of_record']);
-        }else{
+        } else {
             $products = $queryBuilder->paginate(10);
         }
         return view('admin.product', ['products' => $products, 'request' => $request]);
     }
-
 
     public function add(Request $request)
     {
