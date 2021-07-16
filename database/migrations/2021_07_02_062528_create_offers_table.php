@@ -22,8 +22,8 @@ class CreateOffersTable extends Migration
             $table->integer('flat_discount')->nullable();
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('inactive');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->timestamps();
             $table->softDeletes();
 

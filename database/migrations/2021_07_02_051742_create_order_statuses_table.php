@@ -16,7 +16,7 @@ class CreateOrderStatusesTable extends Migration
         Schema::create('order_statuses', function (Blueprint $table) {
             $table->id();
             $table->enum('name', ['ordered', 'packed', 'shipped', 'delivered', 'return', 'return_approved', 'pickup', 'refund']);
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

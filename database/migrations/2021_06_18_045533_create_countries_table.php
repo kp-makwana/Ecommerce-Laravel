@@ -17,7 +17,7 @@ class CreateCountriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('country_code', 10)->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

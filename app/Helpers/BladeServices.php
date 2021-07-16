@@ -36,4 +36,11 @@ class BladeServices
             }
         }
     }
+
+    public function dateFormat($date): array
+    {
+        $data['date'] = date('d-M-Y', strtotime($date));
+        $data['time'] = date(("h:i"),strtotime($date));
+        return $data;
+    }
 }
