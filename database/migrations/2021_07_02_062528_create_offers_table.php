@@ -16,9 +16,12 @@ class CreateOffersTable extends Migration
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->string('offer_price');
-            $table->string('description')->nullable();
-            $table->enum('status', ['active', 'inactive']);
+            $table->string('offer_name');
+            $table->integer('offer_price')->nullable();
+            $table->integer('percentage')->nullable();
+            $table->integer('flat_discount')->nullable();
+            $table->text('description')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

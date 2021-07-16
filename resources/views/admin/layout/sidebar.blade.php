@@ -41,7 +41,7 @@
 </head>
 <body>
 
-<div class="wrapper d-flex align-items-stretch text-white">
+<div class="wrapper d-flex align-items-stretch text-black-50">
     <nav id="sidebar">
         <div class="p-4 pt-5w">
             <a href="#" class="img logo rounded-circle mb-5"
@@ -82,9 +82,9 @@
     </nav>
 
     <!-- Page Content  -->
-    <div id="content" class="p-4 p-md-5">
+    <div id="content" class="p-4 p-md-5 bg-white ">
         @yield('nav')
-        <nav class="navbar navbar-expand-lg bg-dark">
+            <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
                     <i class="fa fa-bars"></i>

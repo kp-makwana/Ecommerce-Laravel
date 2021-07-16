@@ -105,8 +105,15 @@ table {
     margin: 3em 0;
 }
 
+li.custom-product{
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 18px #888888;
+}
 .cd-item-wrapper li {
+
     position: absolute;
+    border-radius: 10px;
     top: 0;
     left: 25%;
     height: 100%;
@@ -378,7 +385,7 @@ table {
 
 .cd-item-info .cd-new-price {
     /* new price - visible if price is on sale */
-    color: #a5d05e;
+    color: #ff0000;
     opacity: 0;
     -webkit-transform: translateX(5px);
     -moz-transform: translateX(5px);

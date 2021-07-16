@@ -51,17 +51,16 @@
     </div>
     <ul class="cd-gallery">
         @forelse($products as $product)
-            <li>
+            <li class="custom-product">
                 <div class="py-4">
-                    <span class="off bg-secondary">OFFER</span>
                     <span
                         class="rating fa fa-star bg-{{ $bladeService->ratingClass($product->avg_rating) }}">&nbsp;&nbsp;{{$product->avg_rating ?? "N/A"}}</span>
                     <span
-                        class="on bg-{{ $product->quantity == 0 ? "danger":"success" }}">{{ $product->quantity }}</span>
+                        class="on text-white bg-{{ $product->quantity == 0 ? "danger":"success" }}">{{ $product->quantity }}</span>
                 </div>
                 <ul class="cd-item-wrapper">
                     @foreach($product->productImage as $key => $product_img)
-                        <li class="{{ $key == 0 ? "selected":"move-right"}}" data-sale="true"
+                        <li class=" {{ $key == 0 ? "selected":"move-right"}}" data-sale="true"
                             data-price="&#8377; {{ $product->sale_price }}">
                             <img src="{{ asset('/storage/ProductImages/'.$product_img->name) }}"
                                  alt="Preview image">
@@ -71,7 +70,7 @@
 
                 <div class="cd-item-info">
                     <b><a href="{{ route('admin.product.productDetail',['id'=>$product->id]) }}">{{ $product->name }}</a></b>
-                    <em class="cd-price"><em style="font-size: small">Purchase Price:</em>
+                    <em class="cd-price text-success"><em style="font-size: small">Purchase Price:</em>
                         &#8377; {{ $product->purchase_price }}</em>
                 </div> <!-- cd-item-info -->
             </li>
