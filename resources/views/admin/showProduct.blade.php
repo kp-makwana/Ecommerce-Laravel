@@ -66,7 +66,9 @@
                         <div class="float-right"><a href="" class="mr-3">View Offer</a><a class="text-dark" href="#">Edit</a>
                         </div>
                         <p class="font-weight-bold">{{ $offer->offer_name }}</p>
-                        <div class="text-black-50"><strong>Current Status:</strong><span class="ml-2 {{ ($offer->status == 'active')?'text-success':'text-danger' }}">{{ $offer->status }}</span></div>
+                        <div class="text-black-50"><strong>Current Status:</strong><span
+                                class="ml-2 {{ ($offer->status == 'active')?'text-success':'text-danger' }}">{{ $offer->status }}</span>
+                        </div>
                         <div class="text-black-50">
                             <strong>{{ $offer->offer_price ? "Offer Price:":"" }}</strong> {{$offer->offer_price}}</div>
                         <div class="text-black-50">
@@ -75,9 +77,11 @@
                             <strong>{{ $offer->flat_discount ? "Flat Discount:":"" }}</strong> {{$offer->flat_discount}}
                         </div>
                         <?php $s_date = $bladeService->dateFormat($offer->start_date) ?>
-                        <div class="text-success"><strong>Start Date :</strong>{{ $s_date['date'] }} <span class="ml-2"> {{ $s_date['time'] }}</span></div>
+                        <div class="text-success"><strong>Start Date :</strong>{{ $s_date['date'] }} <span
+                                class="ml-2"> {{ $s_date['time'] }}</span></div>
                         <?php $e_date = $bladeService->dateFormat($offer->end_date) ?>
-                        <div class="text-danger"><strong>End Date :</strong>{{ $e_date['date'] }} <span class="ml-2"> {{ $e_date['time'] }}</span></div>
+                        <div class="text-danger"><strong>End Date :</strong>{{ $e_date['date'] }} <span
+                                class="ml-2"> {{ $e_date['time'] }}</span></div>
                         <div class="mt-2">
                             <p>{{ $offer->description }}</p>
                         </div>
@@ -88,25 +92,32 @@
             </ul>
         </div>
     </div>
-    <hr>
-    <div class="col-md-12">
-        <div class="col-md-6">
 
+    <div class="col-md-12 row table">
+        <div class="col-md-6">
+            <div class="pb-3">
+                <div class="float-left"><strong>Description:</strong></div>
+                <div class="float-right"><a href="#">Add Description</a></div>
+            </div>
         </div>
     </div>
-    <p>
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Link with href
-        </a>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Button with data-target
-        </button>
-    </p>
-    <div class="collapse" id="collapseExample">
+    <div class="col-md-12">
         <div class="">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+               aria-controls="collapseExample">
+                Link with href
+            </a>
+        </div>
+        <div>
+            <div class="collapse" id="collapseExample">
+                <div class="">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim
+                    keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+            </div>
         </div>
     </div>
+
 @endsection
 @push('script')
     <script src="{{ asset('js/product/product.js') }}"></script>
@@ -119,8 +130,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-{{--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>--}}
-{{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>--}}
+    {{--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>--}}
+    {{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>--}}
 
 @endpush
 @push('style')
@@ -156,5 +167,5 @@
             background: #69c;
         }
     </style>
-{{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">--}}
+    {{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">--}}
 @endpush
