@@ -160,8 +160,7 @@ class ProductController extends Controller
 
     public function show(Request $request,$id)
     {
-        $product = Product::with('offers')->where('id',10);
-//        dd($product);
+        $product = Product::with('offers')->where('id',$id)->first();
         $ratings = ProductRating::where('product_id',$id)->paginate(10);
         return view( 'admin.showProduct',['product'=>$product,'ratings'=>$ratings]);
 

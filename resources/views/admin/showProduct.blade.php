@@ -62,7 +62,8 @@
             <hr>
             <ul>
                 @forelse($product->offers as $offer)
-                    <li class="col-md-12">
+
+                  <li class="col-md-12">
                         <div class="float-right"><a href="#view_offer"  data-bs-toggle="modal" class="mr-3 text-dark"><strong>View Offer</strong></a><a class="text-info" href="#">Edit</a>
                         </div>
                         <p class="font-weight-bold">{{ $offer->offer_name }}</p>
@@ -86,7 +87,8 @@
                             <p>{{ $offer->description }}</p>
                         </div>
                     </li>
-                    <x-OfferView :id="$offer->id" action="Edit"/>
+
+                    <x-OfferView id="{{ $offer->id }}" action="Edit"/>
                 @empty
                     <span class="text-info">No offer Found</span>
                 @endforelse

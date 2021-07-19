@@ -10,6 +10,10 @@
             <div class="modal-body">
                 {{ $offer }}
             </div>
+            <div class="modal-footer">
+                <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"  aria-label="Close">Cancel</button>
+                <button type="submit" class="btn btn-success">{{ $action }}</button>
+            </div>
         </div>
     </div>
 </div>
