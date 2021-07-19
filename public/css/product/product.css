@@ -110,6 +110,12 @@ li.custom-product{
     padding: 10px;
     box-shadow: 5px 10px 18px #888888;
 }
+.userRating{
+    border: 1px;
+    padding: 20px;
+    box-shadow: 10px 11px 29px -7px #888888;
+}
+
 .cd-item-wrapper li {
 
     position: absolute;

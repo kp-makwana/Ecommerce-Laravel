@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductRating;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -157,10 +158,13 @@ class ProductController extends Controller
         return $pdf->download('1.pdf');
     }
 
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        $product = Product::find($id);
-        return view('admin.showProduct',['product'=>$product]);
+        $product = Product::with('offers')->where('id',10);
+//        dd($product);
+        $ratings = ProductRating::where('product_id',$id)->paginate(10);
+        return view( 'admin.showProduct',['product'=>$product,'ratings'=>$ratings]);
+
     }
 
 

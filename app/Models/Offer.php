@@ -13,4 +13,8 @@ class Offer extends Model
         'active' => 'Active',
         'inactive' => 'Inactive',
     ];
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Product::class,'product_id','id');
+    }
 }

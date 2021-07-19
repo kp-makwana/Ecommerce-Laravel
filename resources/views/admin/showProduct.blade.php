@@ -46,7 +46,7 @@
         <div class="col-md-6">
             <div class="pb-3">
                 <div class="float-left"><strong>Description:</strong></div>
-                <div class="float-right"><a href="#">Add Description</a></div>
+                <div class="float-right"><a href="#_description"  data-bs-toggle="modal" class="text-info">Edit Description</a></div>
             </div>
             <hr>
             <div class="col-md-12">
@@ -57,13 +57,13 @@
         <div class="col-md-6">
             <div class="pb-3">
                 <div class="float-left"><strong>Offers:</strong></div>
-                <div class="float-right"><a href="#">Add Offer</a></div>
+                <div class="float-right"><a href="#" class="text-success">Add Offer</a></div>
             </div>
             <hr>
             <ul>
                 @forelse($product->offers as $offer)
                     <li class="col-md-12">
-                        <div class="float-right"><a href="" class="mr-3">View Offer</a><a class="text-dark" href="#">Edit</a>
+                        <div class="float-right"><a href="#view_offer"  data-bs-toggle="modal" class="mr-3 text-dark"><strong>View Offer</strong></a><a class="text-info" href="#">Edit</a>
                         </div>
                         <p class="font-weight-bold">{{ $offer->offer_name }}</p>
                         <div class="text-black-50"><strong>Current Status:</strong><span
@@ -76,7 +76,7 @@
                         <div class="text-black-50">
                             <strong>{{ $offer->flat_discount ? "Flat Discount:":"" }}</strong> {{$offer->flat_discount}}
                         </div>
-                        <?php $s_date = $bladeService->dateFormat($offer->start_date) ?>
+                        @php $s_date = $bladeService->dateFormat($offer->start_date) @endphp
                         <div class="text-success"><strong>Start Date :</strong>{{ $s_date['date'] }} <span
                                 class="ml-2"> {{ $s_date['time'] }}</span></div>
                         <?php $e_date = $bladeService->dateFormat($offer->end_date) ?>
@@ -86,38 +86,69 @@
                             <p>{{ $offer->description }}</p>
                         </div>
                     </li>
+                    <x-OfferView :id="$offer->id" action="Edit"/>
                 @empty
                     <span class="text-info">No offer Found</span>
                 @endforelse
+
+
             </ul>
         </div>
     </div>
 
-    <div class="col-md-12 row table">
+    <div class="col-md-12 row table" id="review">
         <div class="col-md-6">
             <div class="pb-3">
-                <div class="float-left"><strong>Description:</strong></div>
-                <div class="float-right"><a href="#">Add Description</a></div>
+                <div class="float-left"><strong><a class="" data-toggle="collapse" href="#collapseExample" role="button"
+                                                   aria-expanded="false"
+                                                   aria-controls="collapseExample">
+                            See All Rating & review
+                        </a></strong></div>
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="">
-            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-               aria-controls="collapseExample">
-                Link with href
-            </a>
-        </div>
-        <div>
-            <div class="collapse" id="collapseExample">
-                <div class="">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim
-                    keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                </div>
-            </div>
-        </div>
-    </div>
+    <hr>
+    <div class="px-5 row">
+        <ul class="">
+            <div class="userRating bg-light">{{--            collapse--}}
+                @forelse($ratings as $rating)
+                    <li class="col-md-12 row mt-1 bg-light text-black-50">
+                        <div class="col-md-2 card-img-top">
+                            <img class="rounded-circle"
+                                 src="{{ $rating->user->ProfilePicture ? asset('storage/UserProfile/'.$rating->user->ProfilePicture->name) : asset('images/user.png') }}"
+                                 height="120"
+                                 alt="Profile Pic">
+                        </div>
+                        <div class="col-md-10 row">
+                            <div class="col-md-1">
+                            <span
+                                class="fa px-2 py-2 text-white rounded fa-star bg-{{ $bladeService->ratingClass($rating->rating) }}">&nbsp;&nbsp;{{$rating->rating ?? "N/A"}} </span>
+                            </div>
+                            <div class="col-md-11">
+                                <span class="font-weight-bolder table">{{ $rating->title }}</span>
+                            </div>
+                            <div class="col-md-12 my-3 table">
+                                {{ $rating->description }}
+                            </div>
+                            <div class="col-md-12 text-sm-left row">
+                                <p class="ont-weight-light">{{ $rating->user->FullName }}</p>
+                            </div>
+                        </div>
 
+
+                    </li>
+                    <hr>
+                @empty
+                    NO Rating Found
+                @endforelse
+                @php
+                $request['review'] = "review";
+                    @endphp
+                {{ $ratings->fragment('review')->links() }}
+            </div>
+        </ul>
+    </div>
+    <x-Description :id="$product->id"/>
 @endsection
 @push('script')
     <script src="{{ asset('js/product/product.js') }}"></script>
@@ -130,42 +161,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    {{--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>--}}
-    {{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>--}}
-
-@endpush
-@push('style')
-    <style>
-        /* The heart of the matter */
-        .testimonial-group > .row {
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .testimonial-group > .row > .col-xs-4 {
-            display: inline-block;
-            float: none;
-        }
-
-        /* Decorations */
-        .col-xs-4 {
-            color: #fff;
-            font-size: 48px;
-            padding-bottom: 20px;
-            padding-top: 18px;
-        }
-
-        .col-xs-4:nth-child(3n+1) {
-            background: #c69;
-        }
-
-        .col-xs-4:nth-child(3n+2) {
-            background: #9c6;
-        }
-
-        .col-xs-4:nth-child(3n+3) {
-            background: #69c;
-        }
-    </style>
-    {{--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">--}}
 @endpush

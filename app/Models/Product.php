@@ -34,8 +34,8 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function offers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function offer(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Offer::class, 'product_id', 'id');
+        return $this->hasMany(Offer::class);
     }
 }
