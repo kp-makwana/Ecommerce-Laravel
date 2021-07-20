@@ -1,4 +1,4 @@
-<select id="stateList" name="state" class="bg-dark text-white form-control">
+<select id="stateList" name="state" class="form-control">
     <option value="" disabled selected>-- Select State --</option>
     @foreach($getStates as $states)
         <option

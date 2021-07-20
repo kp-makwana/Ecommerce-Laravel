@@ -58,36 +58,35 @@ class ProductController extends Controller
         }
 
         // Sorting
-        if(isset($request['sorting'])){
-            if (in_array($request['sorting'],config('constants.orderBy'))) {    //orderBy
-                if(isset($request['rating'])){
+        if (isset($request['sorting'])) {
+            if (in_array($request['sorting'], config('constants.orderBy'))) {    //orderBy
+                if (isset($request['rating'])) {
                     $queryBuilder->orderBy('products.avg_rating', $request['sorting']);
-                }else{
+                } else {
                     $queryBuilder->orderBy('products.id', $request['sorting']);
                 }
             }
 
-        }else{
+        } else {
             $queryBuilder->orderBy('products.id', 'desc');
         }
 
         // pagination
         if (isset($request['no_of_record'])) {
-            if(in_array($request['no_of_record'], config('constants.num_of_raw'))){
+            if (in_array($request['no_of_record'], config('constants.num_of_raw'))) {
                 $products = $queryBuilder->paginate($request['no_of_record']);
-            }
-            else{
+            } else {
                 $products = $queryBuilder->paginate(10);
             }
         } else {
             $products = $queryBuilder->paginate(10);
         }
-        return view('admin.product', ['products' => $products, 'request' => $request]);
+        return view('admin.product.product', ['products' => $products, 'request' => $request]);
     }
 
     public function add(Request $request)
     {
-        return view('admin.add-product');
+        return view('admin.product.add-product');
     }
 
     public function save(Request $request): \Illuminate\Http\RedirectResponse
@@ -141,6 +140,7 @@ class ProductController extends Controller
 
         return redirect()->route('admin.product.index');
     }
+
     private function generateRandomString(): string
     {
         $characters = '0123456789abcdefghilkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -158,13 +158,29 @@ class ProductController extends Controller
         return $pdf->download('1.pdf');
     }
 
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
-        $product = Product::with('offers')->where('id',$id)->first();
-        $ratings = ProductRating::where('product_id',$id)->paginate(10);
-        return view( 'admin.showProduct',['product'=>$product,'ratings'=>$ratings]);
+        $product = Product::with('offers')->where('id', $id)->first();
+        $ratings = ProductRating::where('product_id', $id)->paginate(10);
+        return view('admin.product.showProduct', ['product' => $product, 'ratings' => $ratings]);
 
     }
 
+    public function edit($id)
+    {
+        $product = Product::find($id);
+        $ratings = ProductRating::where('product_id', $id)->paginate(10);
+        return view('admin.product.editProduct', ['product' => $product,'ratings'=>$ratings]);
+    }
 
+    public function offer_update(Request $request): \Illuminate\Http\RedirectResponse
+    {
+//        dd($request->all());
+        return redirect()->back();
+    }
+
+    public function add_Offer(Request $request)
+    {
+        dd($request->all());
+    }
 }

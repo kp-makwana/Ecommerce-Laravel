@@ -10,8 +10,8 @@ class Offer extends Model
     use HasFactory;
 
     public const STATUS = [
-        'active' => 'Active',
         'inactive' => 'Inactive',
+        'active' => 'Active',
     ];
     public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

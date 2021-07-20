@@ -13,13 +13,27 @@
             </ul> <!-- cd-item-wrapper -->
         </li>
         <li class="col-md-6 py-4 px-5 bg-light text-black-50">
-            <h4 class="mb-1"><strong>{{ $product->name }}</strong></h4>
-            <div class="mb-2">
-            <span
-                class="fa px-2 py-2 text-white rounded my-2 fa-star bg-{{ $bladeService->ratingClass($product->avg_rating) }}">&nbsp;&nbsp;{{$product->avg_rating ?? "N/A"}}</span>
-                <span class="mx-3">{{ count($product->productRating) }} <span class="mx-2"> Ratings</span></span>
+            <div class="mb-3 row">
+                <label for="product_name" class="col-md-3 col-form-label text-dark font-weight-bold">Product Title</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="product_name" name="product_name" value="{{ $product->name }}">
+                </div>
             </div>
-            <h6 class=""><a href="" style="color: black">{{ $product->brand->name }}</a></h6>
+{{--            <input type="text" name="product_name" value="{{ $product->name }}">--}}
+{{--            <h5 class="mb-1"><strong>{{ $product->name }}</strong></h5>--}}
+{{--            <div class="mb-2">--}}
+{{--                <span--}}
+{{--                    class="fa px-2 py-2 text-white rounded my-2 fa-star bg-{{ $bladeService->ratingClass($product->avg_rating) }}">&nbsp;&nbsp;{{$product->avg_rating ?? "N/A"}}</span>--}}
+{{--                <span class="mx-3">{{ count($product->productRating) }} <span class="mx-2"> Ratings</span></span>--}}
+{{--            </div>--}}
+            <div class="mb-3 row">
+                <label for="product_name" class="col-md-3 col-form-label text-dark font-weight-bold">Brand Name</label>
+                <div class="col-sm-9">
+{{--                    <input type="text" class="form-control" id="product_name" name="product_name" value="{{ $product->brand->name }}">--}}
+                    <x-brand/>
+                </div>
+            </div>
+            <h6 class="mt-3"><a href="" style="color: black">{{ $product->brand->name }}</a></h6>
             <div class="my-3">
                 Purchase Price:<span class="mr-3 text-success"><strong>{{ $product->purchase_price }}</strong></span>
                 <p>Sale Price:<span class="mr-3 text-danger"><strong>&#8377;{{ $product->sale_price }}</strong></span>
@@ -46,11 +60,11 @@
         <div class="col-md-6">
             <div class="pb-3">
                 <div class="float-left"><strong>Description:</strong></div>
-                <div class="float-right"><a href="#_description"  data-bs-toggle="modal" class="text-info">Edit Description</a></div>
+                <div class="float-right"><a href="#_description" data-bs-toggle="modal" class="text-info">Edit
+                        Description</a></div>
             </div>
             <hr>
             <div class="col-md-12">
-
                 <p>{{ $product->description }}</p>
             </div>
         </div>
@@ -62,9 +76,12 @@
             <hr>
             <ul>
                 @forelse($product->offers as $offer)
-
-                  <li class="col-md-12">
-                        <div class="float-right"><a href="#view_offer"  data-bs-toggle="modal" class="mr-3 text-dark"><strong>View Offer</strong></a><a class="text-info" href="#">Edit</a>
+                    <x-OfferView id="{{ $offer->id }}" action="Edit"/>
+                    <span id="{{ $offer->id }}">ID: {{ $offer->id }}</span>
+                    <li class="col-md-12">
+                        <div class="float-right"><a href="#view_offer" data-bs-toggle="modal"
+                                                    class="mr-3 text-dark"><strong>View Offer</strong></a><a
+                                class="text-info" href="#">Edit</a>
                         </div>
                         <p class="font-weight-bold">{{ $offer->offer_name }}</p>
                         <div class="text-black-50"><strong>Current Status:</strong><span
@@ -87,13 +104,10 @@
                             <p>{{ $offer->description }}</p>
                         </div>
                     </li>
-
-                    <x-OfferView id="{{ $offer->id }}" action="Edit"/>
                 @empty
                     <span class="text-info">No offer Found</span>
                 @endforelse
-
-
+                {{--                <x-OfferView id="{{ $offer->id }}" action="Edit"/>--}}
             </ul>
         </div>
     </div>
@@ -144,8 +158,8 @@
                     NO Rating Found
                 @endforelse
                 @php
-                $request['review'] = "review";
-                    @endphp
+                    $request['review'] = "review";
+                @endphp
                 {{ $ratings->fragment('review')->links() }}
             </div>
         </ul>
@@ -154,13 +168,13 @@
 @endsection
 @push('script')
     <script src="{{ asset('js/product/product.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+{{--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"--}}
+{{--            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"--}}
+{{--            crossorigin="anonymous"></script>--}}
+{{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"--}}
+{{--            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"--}}
+{{--            crossorigin="anonymous"></script>--}}
+{{--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"--}}
+{{--            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"--}}
+{{--            crossorigin="anonymous"></script>--}}
 @endpush

@@ -14,7 +14,7 @@
                             <label for="product_name">Product Name</label>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input class="bg-dark text-white form-control" id="product_name" name="product_name"
+                            <input class="form-control" id="product_name" name="product_name"
                                    type="text"/>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                             <label for="purchase_price">Purchase Price</label>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input class="bg-dark text-white form-control" id="purchase_price" name="purchase_price"
+                            <input class="form-control" id="purchase_price" name="purchase_price"
                                    onkeypress="return isNumberKey(event)" type="text"/>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                             <label for="sale_price">Sale Price</label>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input class="bg-dark text-white form-control" id="sale_price" name="sale_price"
+                            <input class="form-control" id="sale_price" name="sale_price"
                                    onkeypress="return isNumberKey(event)" type="text"/>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                             <label for="quantity">Quantity</label>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input class="bg-dark text-white form-control" id="quantity" name="quantity" type="text" onkeypress="return isNumberKey(event)"/>
+                            <input class="form-control" id="quantity" name="quantity" type="text" onkeypress="return isNumberKey(event)"/>
                         </div>
                     </div>
                     <div class="row">
@@ -73,7 +73,7 @@
                             <label for="description">Description</label>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <textarea class="bg-dark text-white form-control" id="description" name="description" rows="3"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -139,6 +139,7 @@
     <script>
         $(function () {
             $("#product_add").validate({
+                errorClass: 'text-danger',
                 rules: {
                     product_name: "required",
                     purchase_price: "required",

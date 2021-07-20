@@ -34,7 +34,7 @@
                 <div class="col-md-4 float-right pl-5">
                     <div class="col-md-12 text-lg-right">
                         <input type="search" name="search" id="search"
-                               class="form-control float-right bg-dark text-white"
+                               class="form-control float-right"
                                placeholder="Search..." value="{{ $request['search'] ?? null }}"
                                aria-label="Search">
                     </div>
@@ -69,7 +69,7 @@
                 </ul> <!-- cd-item-wrapper -->
 
                 <div class="cd-item-info">
-                    <b><a href="{{ route('admin.product.productDetail',['id'=>$product->id]) }}">{{ $product->name }}</a></b>
+                    <b><a href="{{ route('admin.product.productDetail',$product->id) }}">{{ $product->name }}</a></b>
                     <em class="cd-price text-success"><em style="font-size: small">Purchase Price:</em>
                         &#8377; {{ $product->purchase_price }}</em>
                 </div> <!-- cd-item-info -->

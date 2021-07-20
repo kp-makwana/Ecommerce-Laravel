@@ -40,7 +40,14 @@ class BladeServices
     public function dateFormat($date): array
     {
         $data['date'] = date('d-M-Y', strtotime($date));
-        $data['time'] = date(("h:i"),strtotime($date));
+        $data['time'] = date(("h:i"), strtotime($date));
         return $data;
+    }
+
+    public function date_time($date)
+    {
+
+//        dd($date,date('Y-m-d h:m:s', strtotime($date)),now()->toDateTime());
+        return date('Y-m-d h:m:s', strtotime($date));
     }
 }

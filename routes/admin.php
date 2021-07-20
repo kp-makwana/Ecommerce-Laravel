@@ -22,9 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index'])->name('index');
-        Route::get('/productDetail/{id}/{name?}', [ProductController::class, 'show'])->name('productDetail');
         Route::get('/add', [ProductController::class, 'add'])->name('add');
         Route::post('/save', [ProductController::class, 'save'])->name('save');
+        Route::get('/productDetail/{id}', [ProductController::class, 'show'])->name('productDetail');
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
+        Route::prefix('offer')->as('offer.')->group(function (){
+            Route::post('/update',[ProductController::class,'offer_update'])->name('update');
+            Route::post('/add',[ProductController::class,'add_Offer'])->name('add');
+        });
     });
     Route::prefix('category')->as('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');

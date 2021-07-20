@@ -8,16 +8,19 @@ use Illuminate\View\Component;
 class OfferView extends Component
 {
     public $offer;
+    public $action;
+    public $id;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct($id,$action = "Edit")
     {
-//        dd($id);
+        $this->action = $action;
         $this->offer = Offer::find($id);
+        $this->id = $id;
     }
 
     /**
