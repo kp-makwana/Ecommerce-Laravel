@@ -2,25 +2,25 @@
 
 namespace App\View\Components;
 
-use App\Models\Offer;
+use App\Models\Offer as offers;
 use Illuminate\View\Component;
 
-class OfferView extends Component
+class Offer extends Component
 {
     public $offer;
-    public $action;
     public $id;
+    public $product_id;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($id,$action = "Edit")
+    public function __construct($id,$product)
     {
-        $this->action = $action;
-        $this->offer = Offer::find($id);
+        $this->offer = offers::find($id);
         $this->id = $id;
+        $this->product_id = $product;
     }
 
     /**
@@ -30,6 +30,6 @@ class OfferView extends Component
      */
     public function render()
     {
-        return view('components.offer-view');
+        return view('components.offer');
     }
 }

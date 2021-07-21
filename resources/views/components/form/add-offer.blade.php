@@ -2,13 +2,14 @@
 <div class="modal fade" id="add_offer" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{ route('admin.product.offer.add') }}" name="add_offer" id="add_offer" method="POST">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Add New Offer</strong></h5>
+                <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                   style="font-size: 18px;">x</a>
+            </div>
+            <form action="{{ route('admin.product.offer.offer_add_update') }}" id="add_offer1" method="POST">
                 @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Add New Offer</strong></h5>
-                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                       style="font-size: 18px;">x</a>
-                </div>
+                <input type="hidden" name="product_id" value="{{ $product_id }}">
                 <div class="modal-body">
                     <div class="col-md-12">
                         <div class="mb-3 row">
@@ -27,20 +28,26 @@
                                 <div class="mb-3 row">
                                     <label for="offer_price" class="col-sm-3 col-form-label">Offer price:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="offer_price" id="offer_price">
+                                        <input type="text" class="form-control discount" name="offer_price"
+                                               onkeypress="return isNumberKey(event)"
+                                               id="offer_price">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="percentage" class="col-sm-3 col-form-label">Discount in
                                         Percentage:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="percentage" id="percentage">
+                                        <input type="text" class="form-control discount" name="percentage"
+                                               onkeypress="return isNumberKey(event)"
+                                               id="percentage">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
                                     <label for="flat_discount" class="col-sm-3 col-form-label">Flat Discount:</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="flat_discount" id="flat_discount">
+                                        <input type="text" class="form-control discount" name="flat_discount"
+                                               onkeypress="return isNumberKey(event)"
+                                               id="flat_discount">
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +94,64 @@
                     <input type="submit" class="btn btn-success"/>
                 </div>
             </form>
+
+            @push('script')
+                <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+                <script>
+                    $("#add_offer1").validate({
+                        errorClass: 'text-danger',
+                        rules: {
+                            offer_name: {
+                                required: true,
+                            },
+                            offer_price: {
+                                require_from_group: [1, ".discount"],
+                            },
+                            percentage: {
+                                require_from_group: [1, ".discount"],
+                            },
+                            flat_discount: {
+                                require_from_group: [1, ".discount"],
+                            },
+                            description: {
+                                required: true,
+                            },
+                            start_date: {
+                                required: true,
+                            },
+                            end_date: {
+                                required: true,
+                            }
+                        },
+                        messages: {
+                            offer_name: {
+                                required: "Offer Name not Empty.",
+                                min: "Minimum Character is 3."
+                            },
+                            offer_price: {
+                                require_from_group: ""
+                            },
+                            percentage: {
+                                require_from_group: ""
+                            },
+                            flat_discount: {
+                                require_from_group: "At least 1 Discount field is Required",
+                            },
+                            description: {
+                                required: "Description is Required.",
+                            },
+                            start_date: {
+                                required: "Offer Start Date is Required.",
+                            },
+                            end_date: {
+                                required: "Offer End Date is Required.",
+                            }
+                        }
+                    });
+
+                </script>
+            @endpush
+
         </div>
     </div>
 </div>
-

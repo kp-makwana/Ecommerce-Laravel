@@ -44,10 +44,8 @@ class BladeServices
         return $data;
     }
 
-    public function date_time($date)
+    public function date_time($date): string
     {
-
-//        dd($date,date('Y-m-d h:m:s', strtotime($date)),now()->toDateTime());
-        return date('Y-m-d h:m:s', strtotime($date));
+        return date(date('Y-m-d', strtotime($date))).'T'.date(date('h:m', strtotime($date)));
     }
 }

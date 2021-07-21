@@ -1,54 +1,104 @@
-<!doctype html>
-<html lang="en">
+@extends('admin.layout.sidebar',['title'=>'DashBoard'])
+@section('content')
+    <!DOCTYPE html>
+<html>
+
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Import bootstrap cdn -->
+    <link rel="stylesheet" href=
+    "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity=
+          "sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+          crossorigin="anonymous">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Import jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity=
+            "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous">
+    </script>
 
-    <title>Hello, world!</title>
+    <script src=
+            "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity=
+            "sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous">
+    </script>
 </head>
+
 <body>
-<h1>Hello, world!</h1>
+<div class="container mt-2">
 
-<p>Link 1</p>
-<a data-toggle="modal" data-id="ISBN564541" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">test</a>
+    <!-- Input field to accept user input -->
+    Name: <input type="text" name="name"
+                 id="name"><br><br>
 
-<p>&nbsp;</p>
+    Marks: <input type="text" name="marks"
+                  id="marks"><br><br>
 
+    <!-- Button to invoke the modal -->
+    <button type="button" class="btn btn-primary
+			btn-sm" data-toggle="modal"
+            data-target="#exampleModal"
+            id="submit">
+        Submit
+    </button>
 
-<p>Link 2</p>
-<a data-toggle="modal" data-id="ISBN-001122" title="Add this item" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">test</a>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal"
+         tabindex="-1"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
 
-<div class="modal hide" id="addBookDialog">
-    <div class="modal-header">
-        <button class="close" data-dismiss="modal">×</button>
-        <h3>Modal header</h3>
-    </div>
-    <div class="modal-body">
-        <p>some content</p>
-        <input type="text" name="bookId" id="bookId" value=""/>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        id="exampleModalLabel">
+                        Confirmation
+                    </h5>
+
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+							<span aria-hidden="true">
+								×
+							</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <!-- Data passed is displayed
+                        in this part of the
+                        modal body -->
+                    <h6 id="modal_body"></h6>
+                    <button type="button"
+                            class="btn btn-success btn-sm"
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                            id="submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<!-- Optional JavaScript; choose one of the two! -->
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script>
-    $(document).on("click", ".open-AddBookDialog", function () {
-        var myBookId = $(this).data('id');
-        $(".modal-body #bookId").val( myBookId );
-        // As pointed out in comments,
-        // it is unnecessary to have to manually call the modal.
-        // $('#addBookDialog').modal('show');
+<script type="text/javascript">
+    $("#submit").click(function () {
+        var name = $("#name").val();
+        var marks = $("#marks").val();
+        var str = "You Have Entered "
+            + "Name: " + name
+            + " and Marks: " + marks;
+        $("#modal_body").html(str);
     });
 </script>
-<!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
--->
 </body>
+
 </html>
+
+@endsection

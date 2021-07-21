@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Offer;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductRating;
 use App\Models\State;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -170,17 +172,38 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $ratings = ProductRating::where('product_id', $id)->paginate(10);
-        return view('admin.product.editProduct', ['product' => $product,'ratings'=>$ratings]);
+        return view('admin.product.editProduct', ['product' => $product, 'ratings' => $ratings]);
     }
 
-    public function offer_update(Request $request): \Illuminate\Http\RedirectResponse
+    public function offer_add_update(Request $request, $id = null): \Illuminate\Http\RedirectResponse
     {
-//        dd($request->all());
+        #params
+        $product_id = $request->input('product_id');
+        $offer_name = $request->input('offer_name');
+        $offer_price = $request->input('offer_price');
+        $percentage = $request->input('percentage');
+        $flat_discount = $request->input('flat_discount');
+        $description = $request->input('description');
+        $status = $request->input('status');
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+
+        if (empty($id)) {
+            $offer = new Offer();
+        } else {
+            $offer = Offer::findOrFail($id);
+        }
+        $offer->product_id = $product_id;
+        $offer->offer_name = $offer_name;
+        $offer->offer_price = $offer_price;
+        $offer->percentage = $percentage;
+        $offer->flat_discount = $flat_discount;
+        $offer->description = $description;
+        $offer->status = $status;
+        $offer->start_date = $start_date;
+        $offer->end_date = $end_date;
+        $offer->save();
         return redirect()->back();
     }
 
-    public function add_Offer(Request $request)
-    {
-        dd($request->all());
-    }
 }

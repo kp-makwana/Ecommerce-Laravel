@@ -6,14 +6,16 @@ use Illuminate\View\Component;
 
 class AddOffer extends Component
 {
+    public $product_id;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($id)
     {
-        //
+        $this->product_id = $id;
     }
 
     /**

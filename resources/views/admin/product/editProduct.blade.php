@@ -76,8 +76,8 @@
             <hr>
             <ul>
                 @forelse($product->offers as $offer)
-                    <x-OfferView id="{{ $offer->id }}" action="Edit"/>
-                    <span id="{{ $offer->id }}">ID: {{ $offer->id }}</span>
+{{--                    <x-Offer id="{{ $offer->id }}" action="Edit"/>--}}
+
                     <li class="col-md-12">
                         <div class="float-right"><a href="#view_offer" data-bs-toggle="modal"
                                                     class="mr-3 text-dark"><strong>View Offer</strong></a><a
@@ -107,7 +107,7 @@
                 @empty
                     <span class="text-info">No offer Found</span>
                 @endforelse
-                {{--                <x-OfferView id="{{ $offer->id }}" action="Edit"/>--}}
+                {{--                <x-Offer id="{{ $offer->id }}" action="Edit"/>--}}
             </ul>
         </div>
     </div>

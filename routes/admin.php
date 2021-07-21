@@ -27,8 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/productDetail/{id}', [ProductController::class, 'show'])->name('productDetail');
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
         Route::prefix('offer')->as('offer.')->group(function (){
-            Route::post('/update',[ProductController::class,'offer_update'])->name('update');
-            Route::post('/add',[ProductController::class,'add_Offer'])->name('add');
+            Route::post('/offer_add_update/{id?}',[ProductController::class,'offer_add_update'])->name('offer_add_update');
         });
     });
     Route::prefix('category')->as('category.')->group(function () {

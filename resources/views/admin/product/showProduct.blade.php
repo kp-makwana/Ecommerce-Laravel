@@ -28,7 +28,6 @@
                 <p>Sale Price:<span class="mr-3 text-danger"><strong>&#8377;{{ $product->sale_price }}</strong></span>
                 </p>
             </div>
-            {{--            <p class="pt-1">{{ $product->description }}</p>--}}
             <div class="table-responsive">
                 <table class="table table-sm table-borderless mb-0">
                     <tbody>
@@ -48,9 +47,7 @@
     <div class="col-md-12 row table">
         <div class="col-md-6">
             <div class="pb-3">
-                <div class="float-left"><strong>Description:</strong></div>
-                <div class="float-right"><a href="#_description" data-bs-toggle="modal" class="text-info"><strong>Edit
-                            Description</strong></a></div>
+                <div class="float-left"><strong>Description</strong></div>
             </div>
             <hr>
             <div class="col-md-12">
@@ -59,20 +56,22 @@
         </div>
         <div class="col-md-6">
             <div class="pb-3">
-                <div class="float-left"><strong>Offers:</strong></div>
+                <div class="float-left"><strong>Offers</strong></div>
                 <div class="float-right"><a href="#add_offer"
-                                            data-bs-toggle="modal" class="text-success"><strong>Add Offer</strong></a></div>
+                                            data-bs-toggle="modal" class="text-success"><strong>Add Offer</strong></a>
+                </div>
             </div>
+            <x-Form.Add-Offer :id="$product->id"/>
             <hr>
             <ul>
                 @forelse($product->offers as $offer)
-                    <x-OfferView id="{{ $offer->id }}"/>
+                    <x-offer :id="$offer->id" :product="$product->id"/>
                     <li class="col-md-12">
                         <div class="float-right">
                             <a class="text-info mr-3" href="#view_offer_{{ $offer->id }}"
                                data-bs-toggle="modal">Edit</a>
-                            <a href="#" class="text-danger">Delete Offer</a>
-
+                            {{--                            <a href="#delete_offer" data-toggle="modal" data-id="my_id_value">Open Modal</a>--}}
+                                                        <a class="text-danger" href="#delete_offer" data-bs-toggle="modal" data-name="{{ $offer->name }}" data-id="{{ $offer->id }}">Delete Offer</a>
                         </div>
                         <p class="font-weight-bold">{{ $offer->offer_name }}</p>
                         <div class="text-black-50"><strong>Current Status:</strong><span
@@ -91,27 +90,20 @@
                         <?php $e_date = $bladeService->dateFormat($offer->end_date) ?>
                         <div class="text-danger"><strong>End Date :</strong>{{ $e_date['date'] }} <span
                                 class="ml-2"> {{ $e_date['time'] }}</span></div>
-                        <div class="mt-2">
-                            <p>{{ $offer->description }}</p>
+                        <div class="mt-2 text-black-50">
+                            <strong>Offer Description: </strong>{{ $offer->description }}
                         </div>
                     </li>
                 @empty
                     <span class="text-info">No offer Found</span>
                 @endforelse
-
-                {{--                <x-OfferView id="{{ $offer->id }}" action="Edit"/>--}}
             </ul>
         </div>
     </div>
-
     <div class="col-md-12 row table" id="review">
         <div class="col-md-6">
             <div class="pb-3">
-                <div class="float-left"><strong><a class="" data-toggle="collapse" href="#collapseExample" role="button"
-                                                   aria-expanded="false"
-                                                   aria-controls="collapseExample">
-                            See All Rating & review
-                        </a></strong></div>
+                <div class="float-left"><strong> See All Rating & review </strong></div>
             </div>
         </div>
     </div>
@@ -155,9 +147,36 @@
         </ul>
     </div>
     <x-Description :id="$product->id"/>
-    <x-Form.Add-Offer/>
+
+    {{--  Offer Delete Modal  --}}
+    <div class="modal fade" id="delete_offer" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete The
+                            Offer</strong></h5>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                       style="font-size: 18px;">x</a>
+
+                </div>
+                <div class="modal-body">
+                    <p>Offer Name</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
+                            aria-label="Close">Cancel
+                    </button>
+                    <input type="submit" class="btn btn-danger"/>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 @push('script')
+    <script>
+
+    </script>
     <script src="{{ asset('js/product/product.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -169,41 +188,82 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script>
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+    <script>
+
+        $('button[name="remove_levels"]').on('click', function (e) {
+            var $form = $(this).closest('form');
+            e.preventDefault();
+            $('#confirm').modal({
+                backdrop: 'static',
+                keyboard: false
+            })
+                .on('click', '#delete', function (e) {
+                    $form.trigger('submit');
+                });
+            $("#cancel").on('click', function (e) {
+                e.preventDefault();
+                $('#confirm').modal.model('hide');
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script>
         $("#add_offer").validate({
             errorClass: 'text-danger',
-            // groups: {
-            //     names:"offer_price percentage flat_discount"
-            // },
             rules: {
                 offer_name: {
                     required: true,
                 },
-                // offer_price:{
-                //     require_from_group: [1, ".send"],
-                // },
-                // percentage:{
-                //     require_from_group: [1, ".send"],
-                // },
-                // flat_discount:{
-                //     require_from_group: [1, ".send"],
-                // },
-                // description: {
-                //     required: true,
-                // },
-                // start_date: {
-                //     required: true,
-                // },
-                // end_date: {
-                //     required: true,
-                // }
+                offer_price: {
+                    require_from_group: [1, ".discount"],
+                },
+                percentage: {
+                    require_from_group: [1, ".discount"],
+                },
+                flat_discount: {
+                    require_from_group: [1, ".discount"],
+                },
+                description: {
+                    required: true,
+                },
+                start_date: {
+                    required: true,
+                },
+                end_date: {
+                    required: true,
+                }
             },
             messages: {
                 offer_name: {
                     required: "Offer Name not Empty.",
-                    // min: "Minimum Character is 3."
+                    min: "Minimum Character is 3."
                 },
+                offer_price: {
+                    require_from_group: ""
+                },
+                percentage: {
+                    require_from_group: ""
+                },
+                flat_discount: {
+                    require_from_group: "At least 1 Discount field is Required",
+                },
+                description: {
+                    required: "Description is Required.",
+                },
+                start_date: {
+                    required: "Offer Start Date is Required.",
+                },
+                end_date: {
+                    required: "Offer End Date is Required.",
+                }
             }
         });
     </script>
-
 @endpush
