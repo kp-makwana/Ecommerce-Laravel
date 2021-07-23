@@ -27,7 +27,7 @@ class CreateOffersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

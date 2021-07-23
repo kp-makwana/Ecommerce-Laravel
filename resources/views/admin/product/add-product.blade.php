@@ -65,7 +65,8 @@
                             <label for="quantity">Quantity</label>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <input class="form-control" id="quantity" name="quantity" type="text" onkeypress="return isNumberKey(event)"/>
+                            <input class="form-control" id="quantity" name="quantity" type="text"
+                                   onkeypress="return isNumberKey(event)"/>
                         </div>
                     </div>
                     <div class="row">
@@ -95,23 +96,23 @@
             </div>
         </form>
         <div class="col-md-12 mt-3 row">
-            <div id="image_preview" ></div>
+            <div id="image_preview"></div>
         </div>
     </div>
 @endsection
 @push('style')
-<style type="text/css">
-    .image_preview {
-        display: flex;
-        gap: 20px;
-    }
+    <style type="text/css">
+        .image_preview {
+            display: flex;
+            gap: 20px;
+        }
 
-    .preview-image {
-        display: flex;
-        gap: 20px;
-        width: 150px;
-    }
-</style>
+        .preview-image {
+            display: flex;
+            gap: 20px;
+            width: 150px;
+        }
+    </style>
 @endpush
 @push('script')
     <script>

@@ -103,6 +103,7 @@
                     <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
                             aria-label="Close">Cancel
                     </button>
+                    <button type="reset" class="btn btn-info">Reset</button>
                     <input type="submit" class="btn btn-success" value="Update"/>
                 </div>
             </form>

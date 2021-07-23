@@ -1,6 +1,10 @@
 @extends('admin.layout.sidebar',['title'=>$product->name])
 @section('content')
-    <form action="{{ route('admin.product.save',$product->id) }}" method="POST" id="update_product" name="update_product">
+    <div class="col-md-12">
+        <a href="">Home</a>&nbsp;&gt; <a href="">Product</a>
+    </div>
+    <form action="{{ route('admin.product.save',$product->id) }}" method="POST" id="update_product"
+          name="update_product" enctype="multipart/form-data">
         @csrf
         <ul class="cd-gallery">
             <li class="col-md-6 custom-product">
@@ -28,19 +32,21 @@
                     <label for="brand" class="col-md-3 col-form-label text-dark font-weight-bold">Brand
                         Name</label>
                     <div class="col-sm-9">
-                        <x-brand :brand="$product->brand_id" />
+                        <x-brand :brand="$product->brand_id"/>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="category" class="col-md-3 col-form-label text-dark font-weight-bold">Category Name</label>
+                    <label for="category" class="col-md-3 col-form-label text-dark font-weight-bold">Category
+                        Name</label>
                     <div class="col-sm-9">
-                        <x-Category :category="$product->category_id" />
+                        <x-Category :category="$product->category_id"/>
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="product_type" class="col-md-3 col-form-label text-dark font-weight-bold">Product Type</label>
+                    <label for="product_type" class="col-md-3 col-form-label text-dark font-weight-bold">Product
+                        Type</label>
                     <div class="col-sm-9">
-                        <x-ProductType :type="$product->product_type_id" />
+                        <x-ProductType :type="$product->product_type_id"/>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -67,7 +73,6 @@
                                value="{{ $product->quantity }}">
                     </div>
                 </div>
-
             </li>
         </ul>
         <div class="col-md-12">
@@ -76,72 +81,89 @@
             </div>
             <hr>
             <div class="col-md-12">
-                <textarea class="form-control" name="description" id="description" placeholder="Leave a comment here" id="floatingTextarea2"
+                <textarea class="form-control" name="description" id="description" placeholder="Leave a comment here"
+                          id="floatingTextarea2"
                           style="height: 250px">{{ $product->description }}</textarea>
             </div>
             <input type="file" style="display: none" id="imageUpload" accept="image/*"
                    name="upload_file[]" onchange="preview_image();" multiple/>
-{{--            <input type="file" style="display: none" id="imageUpload" accept="image/*"--}}
-{{--                   name="upload_file[]" onchange="preview_image();" multiple/>--}}
         </div>
-{{--        <hr>--}}
-
         <div class="col-md-12 mt-5">
             <div class="pb-3">
                 <div class="float-left"><strong>Product Images:</strong></div>
-                <div class="float-right"><a id="OpenImgUpload" href="#">Select Images</a></div>
+                <div class="float-right"><a id="OpenImgUpload" href="#">Upload Product Images</a></div>
             </div>
             <hr>
             <div class="col-md-12">
-{{--                <form action="{{ route('admin.product.delete_img') }}" method="POST">--}}
-{{--                    @csrf--}}
-                    <div class="col-md-12 row mb-2">
-                        <?php $img = [] ?>
-                        @foreach($product->productImage as $key => $product_img)
-                            <label class="col-md-3 cd-item-wrapper row">
-                                <img src="{{ asset('/storage/ProductImages/'.$product_img->name) }}" class="mb-2"
-                                     style="display: flex;
+                <div class="col-md-12 row mb-2">
+                    <?php $img = [] ?>
+                    @foreach($product->productImage as $key => $product_img)
+                        <label class="col-md-3 cd-item-wrapper row">
+                            <img src="{{ asset('/storage/ProductImages/'.$product_img->name) }}" class="mb-2"
+                                 style="display: flex;
                                 gap: 20px;
                                 width: 150px;"
-                                     alt="Preview image">
-                                <input type="checkbox" name="img[{{ $img = $product_img->id}}]"
-                                       class="text-center cb-element">
-                            </label>
-                        @endforeach
-                        <hr>
-                    </div>
-                    <div class="pb-3">
-                        <div class="float-left">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="checkAll">
-                                <label class="form-check-label" for="flexSwitchCheckChecked">Checked Images is Deleting</label>
-                            </div>
+                                 alt="Preview image">
+                            <input type="checkbox" name="img[{{ $product_img->id}}]" value="{{ $product_img->name }}"
+                                   class="text-center cb-element">
+                        </label>
+                    @endforeach
+                    <hr>
+                </div>
+                <div class="pb-3">
+                    <div class="float-left">
+                        <div class="form-check text-danger form-switch">
+
+                            <label class="form-check-label" for="checkAll"><input class="form-check-input"
+                                                                                  type="checkbox" id="checkAll">Checked
+                                Images is Deleting</label>
                         </div>
-{{--                        <div class="float-right">--}}
-{{--                            <button id="Delete_img" type="submit" class="btn btn-danger">Delete Selected Images</button>--}}
-{{--                        </div>--}}
                     </div>
-{{--                </form>--}}
+                </div>
                 <div id="image_preview" style="margin-top: 50px"></div>
             </div>
         </div>
         <div class="col-md-12">
             <div class="pb-3">
-                <div class="float-right ml-2">
-                    <button id="submit" type="submit" class="btn btn-success">Save Changes</button>
-                </div>
-                <div class="float-right ml-2"><a href="{{ route('admin.product.edit',$product->id) }}">
-                        <button id="submit" class="btn btn-info">Reset</button>
-                    </a></div>
+                <button id="submit" type="submit" class="btn btn-success">Save Changes</button>
+                <button id="submit" type="reset" class="btn btn-info">Reset</button>
+                <a href="{{ route('admin.product.productDetail',$product->id) }}">
+                    <button type="button" style="background: #c6c8ca" class="btn">Cancel</button>
+                </a>
                 <div class="float-right">
-                    <a href="{{ route('admin.product.productDetail',$product->id) }}">
-                        <button type="button" style="background: #c6c8ca" class="btn">Cancel</button>
-                    </a>
+                    <a class="btn btn-danger" href="#delete_product" data-bs-toggle="modal" >Delete Product</a>
                 </div>
             </div>
         </div>
     </form>
-{{--    <hr>--}}
+
+{{--    Product Delete Modal--}}
+    <div class="modal fade" id="delete_product" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete This Product</strong></h5>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                       style="font-size: 18px;">x</a>
+
+                </div>
+                <div class="modal-body">
+                    <p>You can Also Restore from trash bin</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
+                            aria-label="Close">Cancel
+                    </button>
+                    <form action="{{ route('admin.product.delete') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                        <a href=""><input type="submit" class="btn btn-danger" value="Delete"/></a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 @push('style')
     <style>
@@ -180,37 +202,36 @@
                 $("#checkAll").prop('checked', false);
         });
     </script>
-
     <script>
-            // $("#update_product").validate({
-            //     errorClass: 'text-danger',
-            //     rules: {
-            //         product_name: "required",
-            //         purchase_price: "required",
-            //         sale_price: "required",
-            //         brands: "required",
-            //         category: "required",
-            //         product_type: "required",
-            //         quantity: "required",
-            //         description: "required",
-            //         'upload_file[]': {
-            //             required: true,
-            //             extension: "jpg|jpeg|png|ico|bmp"
-            //         }
-            //     },
-            //     messages: {
-            //         product_name: "Enter Product Name",
-            //         product_price: "Please Enter Product Price",
-            //         brands: "Please Select Brand",
-            //         category: "Please Select Category",
-            //         product_type: "Please Select Product Type",
-            //         quantity: "Please Enter Product Quantity",
-            //         description: "Please Enter Description",
-            //         'upload_file[]': {
-            //             required: "Please upload Product Image",
-            //             extension: "Please Select Valid Image Format,Accept Only jpg,jpeg,png,icon,bpm File Format"
-            //         },
-            //     },
-            // });
+        // $("#update_product").validate({
+        //     errorClass: 'text-danger',
+        //     rules: {
+        //         product_name: "required",
+        //         purchase_price: "required",
+        //         sale_price: "required",
+        //         brands: "required",
+        //         category: "required",
+        //         product_type: "required",
+        //         quantity: "required",
+        //         description: "required",
+        //         'upload_file[]': {
+        //             required: true,
+        //             extension: "jpg|jpeg|png|ico|bmp"
+        //         }
+        //     },
+        //     messages: {
+        //         product_name: "Enter Product Name",
+        //         product_price: "Please Enter Product Price",
+        //         brands: "Please Select Brand",
+        //         category: "Please Select Category",
+        //         product_type: "Please Select Product Type",
+        //         quantity: "Please Enter Product Quantity",
+        //         description: "Please Enter Description",
+        //         'upload_file[]': {
+        //             required: "Please upload Product Image",
+        //             extension: "Please Select Valid Image Format,Accept Only jpg,jpeg,png,icon,bpm File Format"
+        //         },
+        //     },
+        // });
     </script>
 @endpush

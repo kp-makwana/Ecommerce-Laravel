@@ -30,8 +30,8 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('shipping_address_id')->references('id')->on('addresses');
             $table->foreign('billing_address_id')->references('id')->on('addresses');
             $table->foreign('order_status_id')->references('id')->on('order_statuses');

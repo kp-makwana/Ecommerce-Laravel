@@ -74,7 +74,6 @@
                                                         <a class="text-danger" href="#delete_offer_{{ $offer->id }}" data-bs-toggle="modal" data-name="{{ $offer->name }}" data-id="{{ $offer->id }}">Delete Offer</a>
                         </div>
 
-
                         {{--  Offer Delete Modal  --}}
                         <div class="modal fade" id="delete_offer_{{ $offer->id }}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
                             <div class="modal-dialog modal-dialog-centered">
@@ -93,13 +92,13 @@
                                         <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
                                                 aria-label="Close">Cancel
                                         </button>
+
                                         <form action="{{ route('admin.product.offer.delete',$offer->id) }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="deleted_id" id="deleted_id" value="{{ $offer->id }}">
                                         <input type="submit" class="btn btn-danger"/>
                                         </form>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

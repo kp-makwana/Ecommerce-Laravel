@@ -84,7 +84,7 @@ class UserController extends Controller
             #params
             $original_name = $fileUpload->getClientOriginalName();
             $mimeType = $fileUpload->getMimeType();
-            $getsize = $fileUpload->getSize();
+            $getSize = $fileUpload->getSize();
             $image_name = time() . '.' . $fileUpload->extension();
 
             #resize image & store
@@ -96,7 +96,7 @@ class UserController extends Controller
             $profile->name = $image_name;
             $profile->original_name = $original_name;
             $profile->mime_type = $mimeType;
-            $profile->size = $getsize;
+            $profile->size = $getSize;
             $image_resize->save(public_path('/storage/UserProfile/' . $image_name));
             $profile->save();
         }

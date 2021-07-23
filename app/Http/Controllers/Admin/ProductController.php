@@ -81,6 +81,7 @@ class ProductController extends Controller
         } else {
             $products = $queryBuilder->paginate(10);
         }
+
         return view('admin.product.product', ['products' => $products, 'request' => $request]);
     }
 
@@ -89,11 +90,10 @@ class ProductController extends Controller
         return view('admin.product.add-product');
     }
 
-    public function save_update(Request $request,$id = null): \Illuminate\Http\RedirectResponse
+    public function save_update(Request $request, $id = null): \Illuminate\Http\RedirectResponse
     {
-//        dd($request->all(),$id);
-        $del_img = $request->input('img');
         #parmas
+
         $product_name = $request->input('product_name');
         $purchase_price = $request->input('purchase_price');
         $sale_price = $request->input('sale_price');
@@ -103,13 +103,14 @@ class ProductController extends Controller
         $quantity = $request->input('quantity');
         $description = $request->input('description');
         $upload_files[] = $request->file('upload_file');
-
+        $deleting_img = $request->input('img');
 
         if (empty($id)) {
             $product = new Product();
         } else {
             $product = Product::findOrFail($id);
         }
+
         //add product
         $product->name = $product_name;
         $product->purchase_price = $purchase_price;
@@ -120,7 +121,7 @@ class ProductController extends Controller
         $product->quantity = $quantity;
         $product->description = $description;
         $product->save();
-        if($request->has('upload_file')){
+        if ($request->hasFile('upload_file')) {
             foreach ($request->file('upload_file') as $file) {
                 #resize
                 $image_resize = Image::make($file->getRealPath());
@@ -146,8 +147,27 @@ class ProductController extends Controller
             }
         }
 
+        //Deleting File
+        if ($deleting_img) {
+            foreach ($deleting_img as $key => $value) {
+                ProductImage::find($key)->delete();
+                unlink(public_path('/storage/ProductImages/' . $value));
+            }
+        }
 
+        return redirect()->route('admin.product.productDetail', $product->id);
+    }
+
+    public function delete_product(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        Product::find($request->input('id'))->delete();
         return redirect()->route('admin.product.index');
+    }
+
+    public function deleted_Product(Request $request)
+    {
+        $products = Product::onlyTrashed()->get();
+        return view('admin.product.trashBin', ['products' => $products]);
     }
 
     private function generateRandomString(): string
@@ -172,8 +192,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $ratings = ProductRating::where('product_id', $id)->paginate(10);
-        return view('admin.product.editProduct', ['product' => $product, 'ratings' => $ratings]);
+        return view('admin.product.editProduct', ['product' => $product]);
     }
 
     public function offer_add_update(Request $request, $id = null): \Illuminate\Http\RedirectResponse
