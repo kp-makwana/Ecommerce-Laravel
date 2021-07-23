@@ -23,12 +23,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index'])->name('index');
         Route::get('/add', [ProductController::class, 'add'])->name('add');
-        Route::post('/save', [ProductController::class, 'save'])->name('save');
+        Route::post('/save_update/{id?}', [ProductController::class, 'save_update'])->name('save');
         Route::get('/productDetail/{id}', [ProductController::class, 'show'])->name('productDetail');
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
         Route::prefix('offer')->as('offer.')->group(function (){
             Route::post('/offer_add_update/{id?}',[ProductController::class,'offer_add_update'])->name('offer_add_update');
+            Route::post('/delete/{id}',[ProductController::class,'delete_offer'])->name('delete');
         });
+        Route::post('/delete_img',[ProductController::class,'delete_images'])->name('delete_img');
     });
     Route::prefix('category')->as('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');

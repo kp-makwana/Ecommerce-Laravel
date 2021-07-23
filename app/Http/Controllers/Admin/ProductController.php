@@ -7,8 +7,6 @@ use App\Models\Offer;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductRating;
-use App\Models\State;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -91,8 +89,10 @@ class ProductController extends Controller
         return view('admin.product.add-product');
     }
 
-    public function save(Request $request): \Illuminate\Http\RedirectResponse
+    public function save_update(Request $request,$id = null): \Illuminate\Http\RedirectResponse
     {
+//        dd($request->all(),$id);
+        $del_img = $request->input('img');
         #parmas
         $product_name = $request->input('product_name');
         $purchase_price = $request->input('purchase_price');
@@ -102,10 +102,15 @@ class ProductController extends Controller
         $product_type = $request->input('product_type');
         $quantity = $request->input('quantity');
         $description = $request->input('description');
-        $upload_files = $request->file('upload_file');
+        $upload_files[] = $request->file('upload_file');
 
+
+        if (empty($id)) {
+            $product = new Product();
+        } else {
+            $product = Product::findOrFail($id);
+        }
         //add product
-        $product = new Product;
         $product->name = $product_name;
         $product->purchase_price = $purchase_price;
         $product->sale_price = $sale_price;
@@ -115,30 +120,32 @@ class ProductController extends Controller
         $product->quantity = $quantity;
         $product->description = $description;
         $product->save();
+        if($request->has('upload_file')){
+            foreach ($request->file('upload_file') as $file) {
+                #resize
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+                $rand = $this->generateRandomString();
+                $image_name = time() . '_' . $rand . '.' . $file->extension();
 
-        foreach ($request->file('upload_file') as $file) {
-            #resize
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(400, 400, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $rand = $this->generateRandomString();
-            $image_name = time() . '_' . $rand . '.' . $file->extension();
+                #upload image
+                $storagePath = storage_path('app/public/ProductImages/' . $image_name);
+                $image_resize->save($storagePath);
 
-            #upload image
-            $storagePath = storage_path('app/public/ProductImages/' . $image_name);
-            $image_resize->save($storagePath);
-
-            #save data
-            $img = new ProductImage;
-            $img->product_id = $product->id;
-            $img->name = $image_name;
-            $img->original_name = $file->getClientOriginalName();
-            $img->mime_type = $file->getMimeType();
-            $img->size = number_format(File::size($storagePath) / 1000, 2);
-            $img->save();
+                #save data
+                $img = new ProductImage;
+                $img->product_id = $product->id;
+                $img->name = $image_name;
+                $img->original_name = $file->getClientOriginalName();
+                $img->mime_type = $file->getMimeType();
+                $img->size = number_format(File::size($storagePath) / 1000, 2);
+                $img->save();
+            }
         }
+
 
         return redirect()->route('admin.product.index');
     }
@@ -152,12 +159,6 @@ class ProductController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
-    }
-
-    public function pdfCreate()
-    {
-        $pdf = PDF::loadview('test', ['test' => State::all()]);
-        return $pdf->download('1.pdf');
     }
 
     public function show(Request $request, $id)
@@ -206,4 +207,10 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    public function delete_offer(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $id = $request->input('deleted_id');
+        Offer::find($id)->delete();
+        return redirect()->back();
+    }
 }
