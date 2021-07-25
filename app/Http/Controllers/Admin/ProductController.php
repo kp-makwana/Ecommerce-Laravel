@@ -217,6 +217,7 @@ class ProductController extends Controller
         $offer->offer_name = $offer_name;
         $offer->offer_price = $offer_price;
         $offer->percentage = $percentage;
+
         $offer->flat_discount = $flat_discount;
         $offer->description = $description;
         $offer->status = $status;
