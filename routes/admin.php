@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,5 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('brand')->as('brand.')->group(function () {
         Route::get('/index', [BrandController::class, 'index'])->name('index');
         Route::get('/add', [BrandController::class, 'add'])->name('add');
+    });
+    Route::prefix('user')->as('user.')->group(function () {
+        Route::get('/index', [UserController::class, 'index'])->name('index');
     });
 });

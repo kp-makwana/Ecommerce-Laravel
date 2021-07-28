@@ -1,11 +1,7 @@
 @extends('admin.layout.sidebar',['title'=>'Product'])
 @section('content')
     <div class="col-md-12">
-{{--        <div class="">--}}
-
-{{--        </div>--}}
         <form action="{{ route('admin.product.index') }}" name="sortingForm" id="sortingForm" method="GET">
-
             <div class="col-md-12 row my-4">
                 <div class="col-md-2">
                     <div class="float-left mx-3">Latest Product <a

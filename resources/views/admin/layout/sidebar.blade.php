@@ -20,6 +20,7 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('css/product/product.css') }}">
+{{--    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">--}}
     @stack('style')
     <style>
         input::-webkit-outer-spin-button,
@@ -53,14 +54,14 @@
                 <li class="{{ request()->is('admin/product/*') ? 'active' : '' }}">
                     <a href="{{ route('admin.product.index') }}">Product</a>
                 </li>
-                <li>
-                    <a href="#">Category</a>
+                <li class="{{ request()->is('admin/category/*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.category.index') }}">Category</a>
                 </li>
-                <li>
+                <li class="{{ route('admin.category.index') }}">
                     <a href="#">Brand</a>
                 </li>
-                <li>
-                    <a href="#">Users</a>
+                <li class="{{ request()->is('admin/user/*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.user.index') }}">Users</a>
                 </li>
                 <li>
                     <a href="#">Orders</a>
@@ -134,6 +135,15 @@
                 </div>
             </div>
         </nav>
+{{--        <div class="col-md-12">--}}
+{{--            @php--}}
+{{--                $route = Request::route()->getName();--}}
+{{--                $pieces = explode(".", $route);--}}
+{{--            @endphp--}}
+{{--            @foreach($pieces as $path)--}}
+{{--                <a href="{{ $path == "admin" ? route('admin.index'):"" }}">{{ $path }}</a>&nbsp;&gt;--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
         @yield('content')
     </div>
 </div>

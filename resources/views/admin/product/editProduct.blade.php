@@ -1,10 +1,8 @@
 @extends('admin.layout.sidebar',['title'=>$product->name])
 @section('content')
-    <div class="col-md-12">
-        <a href="">Home</a>&nbsp;&gt; <a href="">Product</a>
-    </div>
-    <form action="{{ route('admin.product.save',$product->id) }}" method="POST" id="update_product"
-          name="update_product" enctype="multipart/form-data">
+
+    <form action="{{ route('admin.product.save',$product->id) }}" method="POST" id="update_product_validation"
+          enctype="multipart/form-data">
         @csrf
         <ul class="cd-gallery">
             <li class="col-md-6 custom-product">
@@ -58,13 +56,21 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="sale_price" class="col-md-3 col-form-label text-danger"><strong>Sale
+                        <label for="sale" class="col-md-3 col-form-label"><strong class="text-danger">Sale
                             Price:</strong></label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="sale_price" name="sale_price"
                                value="{{ $product->sale_price }}">
                     </div>
                 </div>
+{{--                <div class="mb-3 row">--}}
+{{--                    <label for="sale_price" class="col-md-3 col-form-label text-danger"><strong>Sale--}}
+{{--                            Price:</strong></label>--}}
+{{--                    <div class="col-sm-9">--}}
+{{--                        <input type="text" class="form-control" id="sale_price" name="sale_price"--}}
+{{--                               value="{{ $product->sale_price }}">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="mb-3 row">
                     <label for="quantity" class="col-md-3 col-form-label text-dark"><strong>Available
                             Stock:</strong></label>
@@ -124,25 +130,28 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="pb-3">
-                <button id="submit" type="submit" class="btn btn-success">Save Changes</button>
-                <button id="submit" type="reset" class="btn btn-info">Reset</button>
+            <div class="pb-3 float-right">
                 <a href="{{ route('admin.product.productDetail',$product->id) }}">
                     <button type="button" style="background: #c6c8ca" class="btn">Cancel</button>
                 </a>
-                <div class="float-right">
-                    <a class="btn btn-danger" href="#delete_product" data-bs-toggle="modal" >Delete Product</a>
-                </div>
+                <button id="submit" type="reset" class="btn btn-info">Reset</button>
+                <button id="submit" type="submit" class="btn btn-success">Save Changes</button>
+
+
+            </div>
+            <div class="float-left">
+                <a class="btn btn-danger" href="#delete_product" data-bs-toggle="modal">Delete Product</a>
             </div>
         </div>
     </form>
 
-{{--    Product Delete Modal--}}
+    {{--    Product Delete Modal--}}
     <div class="modal fade" id="delete_product" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete This Product</strong></h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete This
+                            Product</strong></h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                        style="font-size: 18px;">x</a>
 
@@ -175,13 +184,18 @@
     </style>
 @endpush
 @push('script')
-    <script src="{{ asset('js/product/product.js') }}"></script>
     <script>
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
         $("#OpenImgUpload").click(function () {
             $("#imageUpload").trigger('click');
         });
-    </script>
-    <script>
+
         function preview_image() {
             Array.from(event.target.files).filter(f => {
                 return f.type.startsWith('image/')
@@ -189,8 +203,7 @@
                 $('#image_preview').append("<img class='preview-image' src='" + URL.createObjectURL(f) + "'><br>");
             });
         }
-    </script>
-    <script>
+
         $("#checkAll").change(function () {
             $("input:checkbox").prop('checked', $(this).prop("checked"));
         });
@@ -201,37 +214,37 @@
             else
                 $("#checkAll").prop('checked', false);
         });
+        $("#update_product_validation").validate({
+            errorClass: 'text-danger',
+            rules: {
+                product_name: "required",
+                purchase_price: "required",
+                sale_price: "required",
+                brands: "required",
+                category: "required",
+                product_type: "required",
+                quantity: "required",
+                description: "required",
+                'upload_file[]': {
+                    required: true,
+                    extension: "jpg|jpeg|png|ico|bmp"
+                }
+            },
+            messages: {
+                product_name: "Enter Product Name",
+                product_price: "Please Enter Product Price",
+                brands: "Please Select Brand",
+                category: "Please Select Category",
+                product_type: "Please Select Product Type",
+                quantity: "Please Enter Product Quantity",
+                description: "Please Enter Description",
+                'upload_file[]': {
+                    required: "Please upload Product Image",
+                    extension: "Please Select Valid Image Format,Accept Only jpg,jpeg,png,icon,bpm File Format"
+                },
+            },
+        });
     </script>
-    <script>
-        // $("#update_product").validate({
-        //     errorClass: 'text-danger',
-        //     rules: {
-        //         product_name: "required",
-        //         purchase_price: "required",
-        //         sale_price: "required",
-        //         brands: "required",
-        //         category: "required",
-        //         product_type: "required",
-        //         quantity: "required",
-        //         description: "required",
-        //         'upload_file[]': {
-        //             required: true,
-        //             extension: "jpg|jpeg|png|ico|bmp"
-        //         }
-        //     },
-        //     messages: {
-        //         product_name: "Enter Product Name",
-        //         product_price: "Please Enter Product Price",
-        //         brands: "Please Select Brand",
-        //         category: "Please Select Category",
-        //         product_type: "Please Select Product Type",
-        //         quantity: "Please Enter Product Quantity",
-        //         description: "Please Enter Description",
-        //         'upload_file[]': {
-        //             required: "Please upload Product Image",
-        //             extension: "Please Select Valid Image Format,Accept Only jpg,jpeg,png,icon,bpm File Format"
-        //         },
-        //     },
-        // });
-    </script>
+    <script src="{{ asset('js/product/product.js') }}"></script>
+
 @endpush

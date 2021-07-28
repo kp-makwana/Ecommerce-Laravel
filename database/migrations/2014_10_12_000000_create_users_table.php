@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('description')->nullable();
+            $table->dateTime('activity');
             $table->timestamps();
             $table->softDeletes();
 
