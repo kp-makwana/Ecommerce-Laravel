@@ -12,6 +12,7 @@ use App\Models\State;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
@@ -97,7 +98,12 @@ class UserController extends Controller
             $profile->original_name = $original_name;
             $profile->mime_type = $mimeType;
             $profile->size = $getSize;
-            $image_resize->save(public_path('/storage/UserProfile/' . $image_name));
+
+            $path = public_path().'/storage/UserProfile/';
+            if (file_exists($path)) {
+                File::makeDirectory($path,0777, true, true);
+            }
+            $image_resize->save($path . $image_name);
             $profile->save();
         }
         return redirect()->route('user.profile.index');
