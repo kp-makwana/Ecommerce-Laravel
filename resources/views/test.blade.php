@@ -1,104 +1,98 @@
-@extends('admin.layout.sidebar',['title'=>'DashBoard'])
-@section('content')
-    <!DOCTYPE html>
-<html>
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <!-- Import bootstrap cdn -->
-    <link rel="stylesheet" href=
-    "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-          integrity=
-          "sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-          crossorigin="anonymous">
-
-    <!-- Import jquery cdn -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity=
-            "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous">
-    </script>
-
-    <script src=
-            "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-            integrity=
-            "sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-            crossorigin="anonymous">
-    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laravel 8 Phone Number OTP Auth Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-<div class="container mt-2">
+<div class="container mt-5" style="max-width: 550px">
 
-    <!-- Input field to accept user input -->
-    Name: <input type="text" name="name"
-                 id="name"><br><br>
+    <div class="alert alert-danger" id="error" style="display: none;"></div>
 
-    Marks: <input type="text" name="marks"
-                  id="marks"><br><br>
+    <h3>Add Phone Number</h3>
 
-    <!-- Button to invoke the modal -->
-    <button type="button" class="btn btn-primary
-			btn-sm" data-toggle="modal"
-            data-target="#exampleModal"
-            id="submit">
-        Submit
-    </button>
+    <div class="alert alert-success" id="successAuth" style="display: none;"></div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal"
-         tabindex="-1"
-         aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+    <form>
+        <label>Phone Number:</label>
 
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"
-                        id="exampleModalLabel">
-                        Confirmation
-                    </h5>
+        <input type="text" id="number" class="form-control" placeholder="+91 ********">
 
-                    <button type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close">
-							<span aria-hidden="true">
-								×
-							</span>
-                    </button>
-                </div>
+        <div id="recaptcha-container"></div>
 
-                <div class="modal-body">
+        <button type="button" class="btn btn-primary mt-3" onclick="sendOTP();">Send OTP</button>
+    </form>
 
-                    <!-- Data passed is displayed
-                        in this part of the
-                        modal body -->
-                    <h6 id="modal_body"></h6>
-                    <button type="button"
-                            class="btn btn-success btn-sm"
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                            id="submit">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </div>
+
+    <div class="mb-5 mt-5">
+        <h3>Add verification code</h3>
+
+        <div class="alert alert-success" id="successOtpAuth" style="display: none;"></div>
+
+        <form>
+            <input type="text" id="verification" class="form-control" placeholder="Verification code">
+            <button type="button" class="btn btn-danger mt-3" onclick="verify()">Verify code</button>
+        </form>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyAm44aEdYQuE1Fntt20Zzf2HEH1IMb6Eqk",
+        authDomain: "otp-varification-check.firebaseapp.com",
+        projectId: "otp-varification-check",
+        storageBucket: "otp-varification-check.appspot.com",
+        messagingSenderId: "566051753123",
+        appId: "1:566051753123:web:8e1ca5e7f1baed5cadc316",
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
 <script type="text/javascript">
-    $("#submit").click(function () {
-        var name = $("#name").val();
-        var marks = $("#marks").val();
-        var str = "You Have Entered "
-            + "Name: " + name
-            + " and Marks: " + marks;
-        $("#modal_body").html(str);
-    });
+    window.onload = function () {
+        render();
+    };
+
+    function render() {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        recaptchaVerifier.render();
+    }
+
+    function sendOTP() {
+        var number = $("#number").val();
+        firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+            window.confirmationResult = confirmationResult;
+            coderesult = confirmationResult;
+            console.log(coderesult);
+            $("#successAuth").text("Message sent");
+            $("#successAuth").show();
+        }).catch(function (error) {
+            $("#error").text(error.message);
+            $("#error").show();
+        });
+    }
+
+    function verify() {
+        var code = $("#verification").val();
+        coderesult.confirm(code).then(function (result) {
+            var user = result.user;
+            console.log(user);
+            $("#successOtpAuth").text("Auth is successful");
+            $("#successOtpAuth").show();
+        }).catch(function (error) {
+            $("#error").text(error.message);
+            $("#error").show();
+        });
+    }
 </script>
 </body>
 
 </html>
-
-@endsection

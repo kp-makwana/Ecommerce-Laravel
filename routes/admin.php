@@ -27,13 +27,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/save_update/{id?}', [ProductController::class, 'save_update'])->name('save');
         Route::get('/productDetail/{id}', [ProductController::class, 'show'])->name('productDetail');
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
+        Route::get('/bulk_product_upload', [ProductController::class, 'bulkProductUpload'])->name('bulk_product_upload');
         Route::post('/delete', [ProductController::class, 'delete_product'])->name('delete');
         Route::get('/deleted', [ProductController::class, 'deleted_Product'])->name('deleted');
-        Route::prefix('offer')->as('offer.')->group(function (){
-            Route::post('/offer_add_update/{id?}',[ProductController::class,'offer_add_update'])->name('offer_add_update');
-            Route::post('/delete/{id}',[ProductController::class,'delete_offer'])->name('delete');
+        Route::prefix('offer')->as('offer.')->group(function () {
+            Route::post('/offer_add_update/{id?}', [ProductController::class, 'offer_add_update'])->name('offer_add_update');
+            Route::post('/delete/{id}', [ProductController::class, 'delete_offer'])->name('delete');
         });
-        Route::post('/delete_img',[ProductController::class,'delete_images'])->name('delete_img');
+        Route::post('/delete_img', [ProductController::class, 'delete_images'])->name('delete_img');
+
+        // Product Import & Export
+        Route::get('download', [\App\Http\Controllers\Admin\ProductController::class, 'demoSheetDownload'])->name('download');
+        Route::post('upload', [\App\Http\Controllers\Admin\ProductController::class, 'productUpdate'])->name('upload');
     });
     Route::prefix('category')->as('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');

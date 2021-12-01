@@ -20,7 +20,7 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('css/product/product.css') }}">
-{{--    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">--}}
+    {{--    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">--}}
     @stack('style')
     <style>
         input::-webkit-outer-spin-button,
@@ -31,12 +31,12 @@
     </style>
 
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-{{--    form validation--}}
-        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+    {{--    form validation--}}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
     {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
 
 </head>
@@ -52,7 +52,19 @@
                     <a href="{{ route('admin.index') }}">Home</a>
                 </li>
                 <li class="{{ request()->is('admin/product/*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.product.index') }}">Product</a>
+                    <a href="#product" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Product</a>
+                    <ul class="collapse list-unstyled {{ request()->is('admin/product/*') ? 'show' : '' }}"
+                        id="product">
+                        <li class="{{ request()->is('admin/product/index') ? 'active' : '' }}">
+                            <a href="{{ route('admin.product.index') }}">All Products</a>
+                        </li>
+                        <li class="{{ request()->is('admin/product/add') ? 'active' : '' }}">
+                            <a href="{{ route('admin.product.add') }}">Add Products</a>
+                        </li>
+                        <li class="{{ request()->is('admin/product/bulk_product_upload') ? 'active' : '' }}">
+                            <a href="{{ route('admin.product.bulk_product_upload') }}">Bulk Product Uploads</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="{{ request()->is('admin/category/*') ? 'active' : '' }}">
                     <a href="{{ route('admin.category.index') }}">Category</a>
@@ -85,7 +97,7 @@
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 bg-white ">
         @yield('nav')
-            <nav class="navbar navbar-expand-lg bg-dark">
+        <nav class="navbar navbar-expand-lg bg-dark">
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="btn btn-primary">
                     <i class="fa fa-bars"></i>
@@ -135,15 +147,15 @@
                 </div>
             </div>
         </nav>
-{{--        <div class="col-md-12">--}}
-{{--            @php--}}
-{{--                $route = Request::route()->getName();--}}
-{{--                $pieces = explode(".", $route);--}}
-{{--            @endphp--}}
-{{--            @foreach($pieces as $path)--}}
-{{--                <a href="{{ $path == "admin" ? route('admin.index'):"" }}">{{ $path }}</a>&nbsp;&gt;--}}
-{{--            @endforeach--}}
-{{--        </div>--}}
+        {{--        <div class="col-md-12">--}}
+        {{--            @php--}}
+        {{--                $route = Request::route()->getName();--}}
+        {{--                $pieces = explode(".", $route);--}}
+        {{--            @endphp--}}
+        {{--            @foreach($pieces as $path)--}}
+        {{--                <a href="{{ $path == "admin" ? route('admin.index'):"" }}">{{ $path }}</a>&nbsp;&gt;--}}
+        {{--            @endforeach--}}
+        {{--        </div>--}}
         @yield('content')
     </div>
 </div>

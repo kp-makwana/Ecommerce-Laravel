@@ -67,7 +67,7 @@ class UserController extends Controller
         $address->user_id = $user->id;
         $address->save();
 
-        return redirect()->route('login');
+        return ['success'=>'form submit successfully'];
     }
 
     public function login(LoginRequest $request)

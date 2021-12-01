@@ -47,27 +47,6 @@
                            class="form-control bg-white border-left-0 border-md">
                 </div>
                 @error('email')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
-
-            <!-- Phone Number -->
-                <div class="input-group col-lg-12 mb-4">
-                    <div class="input-group-prepend">
-                            <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                <i class="fa fa-phone-square text-muted"></i>
-                            </span>
-                    </div>
-                    <select id="country_code" name="country_code" style="max-width: 80px"
-                            class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
-                        {{ $country = App\Models\Country::all() }}
-
-                        @foreach($country as $count)
-                            <option value="{{ $count->country_code }}">+{{ $count->country_code }}</option>
-                        @endforeach
-                    </select>
-                    <input id="phone" type="tel" name="phone" placeholder="Phone Number" value="{{ old('phone') }}"
-                           class="form-control bg-white border-md border-left-0 pl-3">
-                </div>
-                @error('phone')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
-
             <!-- gender -->
                 <div class="input-group col-lg-12 mb-4">
                     <div class="input-group-prepend">
@@ -115,6 +94,8 @@
                 </div>
                 @error('password')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
 
+
+
             <!-- Password Confirmation -->
                 <div class="input-group col-lg-12 mb-4">
                     <div class="input-group-prepend">
@@ -128,13 +109,44 @@
                 @error('c_password')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
                 <p id="pass" class="text-danger ml-3"></p>
 
+                <!-- Phone Number -->
+                <div class="input-group col-lg-12 mb-4">
+                    <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-phone-square text-muted"></i>
+                            </span>
+                    </div>
+                    <select id="country_code" name="country_code" style="max-width: 80px"
+                            class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
+                        {{ $country = App\Models\Country::all() }}
+
+                        @foreach($country as $count)
+                            <option value="{{ $count->country_code }}">+{{ $count->country_code }}</option>
+                        @endforeach
+                    </select>
+                    <input id="phone" type="tel" name="phone" placeholder="Phone Number" value="{{ old('phone') }}"
+                           class="form-control bg-white border-md border-left-0 pl-3">
+                </div>
+                @error('phone')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
+                <p id="error" style="display: none;"></p>
+                <div id="recaptcha-container"></div>
+
                 <!-- Submit Button -->
-                <div class="form-group col-lg-12 mx-auto mb-0">
-                    <button type="submit" class="btn btn-primary btn-block py-2">
-                        <span class="font-weight-bold">Create your account</span>
+                <div class="form-group col-lg-12 mx-auto mb-4 mt-3">
+                    <button type="button" class="btn btn-primary btn-block py-2">
+                        <span class="font-weight-bold" id="otp_send_button" onclick="sendOTP()">Send OTP in your Mobile Number</span>
                     </button>
                 </div>
 
+                {{--    verify OTP    --}}
+                <div class="input-group col-lg-12 mb-4" id="otp_verify" style="display: none">
+                    <input type="text" id="verification"  class="form-control bg-white border-md border-left-0 pl-3" placeholder="Verification code">
+                </div>
+                <div class="form-group col-lg-12 mx-auto mb-4 mt-3">
+                    <button type="button" class="btn btn-primary btn-block py-2">
+                        <span class="font-weight-bold" onclick="verify()" >verify OTP</span>
+                    </button>
+                </div>
                 <!-- Divider Text -->
                 <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
                     <div class="border-bottom w-100 ml-5"></div>
@@ -164,4 +176,103 @@
         </form>
     </div>
 @endsection
+
+@push('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAm44aEdYQuE1Fntt20Zzf2HEH1IMb6Eqk",
+            authDomain: "otp-varification-check.firebaseapp.com",
+            projectId: "otp-varification-check",
+            storageBucket: "otp-varification-check.appspot.com",
+            messagingSenderId: "566051753123",
+            appId: "1:566051753123:web:8e1ca5e7f1baed5cadc316",
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script type="text/javascript">
+        window.onload = function () {
+            render();
+        };
+
+        function render() {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+            recaptchaVerifier.render();
+        }
+
+        function sendOTP() {
+            var country_code = $("#country_code").val();
+            var phone = $("#phone").val();
+
+            var number = '+'.concat(country_code, phone);
+
+            firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+                window.confirmationResult = confirmationResult;
+                coderesult = confirmationResult;
+                console.log(coderesult);
+                $("#error").removeClass();
+                $("#error").addClass("text-success ml-3");
+                $("#error").text("OTP Send Success");
+                $("#otp_send_button").text("OTP Send Again");
+                $("#error").show();
+                $("#otp_verify").show();
+
+            }).catch(function (error) {
+                $("#error").removeClass();
+                $("#error").addClass("text-danger ml-3");
+                $("#error").text(error.message);
+                $("#error").show();
+            });
+        }
+
+        function verify() {
+            var code = $("#verification").val();
+            coderesult.confirm(code).then(function (result) {
+                var user = result.user;
+                $('#registration_form').attr('action', '{{ route('user.register') }}');
+                submit()
+            }).catch(function (error) {
+                $("#error").text(error.message);
+                $("#error").show();
+            });
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function submit()
+        {
+            let first_name = $('#first_name').val();
+            let last_name = $('#last_name').val();
+            let dob = $('#dob').val();
+            let country_code = $('#country_code').val();
+            let phone = $('#phone').val();
+            let gender = $('#gender').val();
+            let email = $('#email').val();
+            let password = $('#password').val();
+            let c_password = $('#c_password').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('user.register') }}",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            first_name:first_name,
+                            last_name:last_name,
+                            dob:dob,
+                            country_code:country_code,
+                            phone:phone,
+                            gender:gender,
+                            email:email,
+                            password:password,
+                            c_password:c_password
+                        },
+                    }).done(function (data) {
+                        console.log(data);
+                        window.location="{{ route('login') }}"
+                    });
+        }
+    </script>
+@endpush
 

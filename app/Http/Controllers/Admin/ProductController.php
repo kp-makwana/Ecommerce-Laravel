@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
+use App\Imports\ProductDataImport;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -10,7 +12,7 @@ use App\Models\ProductRating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
-use PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -151,6 +153,24 @@ class ProductController extends Controller
         }
 
         return redirect()->route('admin.product.productDetail', $product->id);
+    }
+
+    public function bulkProductUpload()
+    {
+        return view('admin.product.bulkProductUpload');
+    }
+
+    public function productUpdate(Request $request)
+    {
+
+        Excel::import(new ProductDataImport(), $request->file('productUpdate'));
+        return redirect()->back();
+
+    }
+
+    public function demoSheetDownload()
+    {
+        return Excel::download(new ProductExport(), 'product_bulk_upload_demo.xlsx');
     }
 
     public function delete_product(Request $request): \Illuminate\Http\RedirectResponse
