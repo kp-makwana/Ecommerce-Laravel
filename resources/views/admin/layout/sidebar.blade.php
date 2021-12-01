@@ -45,8 +45,11 @@
 <div class="wrapper d-flex align-items-stretch text-black-50">
     <nav id="sidebar">
         <div class="p-4 pt-5w">
-            <a href="#" class="img logo rounded-circle mb-5"
-               style="background-image: {{ asset('images/user.png') }};"></a>
+            @php $user = App\Models\User::find(Auth::user()->id) @endphp
+            <img
+                src="{{ $user->ProfilePicture? asset('storage/UserProfile/'.$user->ProfilePicture->name) : asset('images/user.png') }}"
+                class="img logo rounded-circle mb-5">
+            <a class="mb-5">{{ $user->fullname  }}</a>
             <ul class="list-unstyled components mb-5">
                 <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
                     <a href="{{ route('admin.index') }}">Home</a>
