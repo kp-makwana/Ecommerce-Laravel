@@ -23,9 +23,12 @@
                 <div class="col-md-6 float-right">
                     <a href="{{ route('admin.product.deleted') }}">
                         <button type="button" class="float-right btn btn-outline-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
-                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                <path fill-rule="evenodd"
+                                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
                             </svg>
                             Deleted Product
                         </button>
@@ -65,9 +68,9 @@
             <thead>
             <tr>
                 <th></th>
-{{--                <th>--}}
-{{--                    <input class="form-check-input select-all" type="checkbox" data-select-all-target="#customers" id="defaultCheck1">--}}
-{{--                </th>--}}
+                {{--                <th>--}}
+                {{--                    <input class="form-check-input select-all" type="checkbox" data-select-all-target="#customers" id="defaultCheck1">--}}
+                {{--                </th>--}}
                 <th>ID</th>
                 <th>Photo</th>
                 <th>Fullname</th>
@@ -101,13 +104,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -135,13 +143,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -169,13 +182,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -203,13 +221,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -237,13 +260,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -271,13 +299,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -305,13 +338,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -339,13 +377,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -373,13 +416,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -407,13 +455,18 @@
                 <td class="text-end">
                     <div class="d-flex">
                         <div class="dropdown ms-auto">
-                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#" data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true" aria-expanded="false">
+                            <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                               data-bs-toggle="dropdown" class="btn btn-floating" aria-haspopup="true"
+                               aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Show</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Edit</a>
-                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#" class="dropdown-item">Delete</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Show</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Edit</a>
+                                <a href="https://vetra.laborasyon.com/demos/default/customers.html#"
+                                   class="dropdown-item">Delete</a>
                             </div>
                         </div>
                     </div>

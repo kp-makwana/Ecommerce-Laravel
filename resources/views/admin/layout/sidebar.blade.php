@@ -58,11 +58,11 @@
                     <a href="#product" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Product</a>
                     <ul class="collapse list-unstyled {{ request()->is('admin/product/*') ? 'show' : '' }}"
                         id="product">
-                        <li class="{{ request()->is('admin/product/index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.product.index') }}">All Products</a>
-                        </li>
                         <li class="{{ request()->is('admin/product/add') ? 'active' : '' }}">
                             <a href="{{ route('admin.product.add') }}">Add Products</a>
+                        </li>
+                        <li class="{{ request()->is('admin/product/index') ? 'active' : '' }}">
+                            <a href="{{ route('admin.product.index') }}">All Products</a>
                         </li>
                         <li class="{{ request()->is('admin/product/bulk_product_upload') ? 'active' : '' }}">
                             <a href="{{ route('admin.product.bulk_product_upload') }}">Bulk Product Uploads</a>

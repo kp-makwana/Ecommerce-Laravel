@@ -140,11 +140,12 @@
 
                 {{--    verify OTP    --}}
                 <div class="input-group col-lg-12 mb-4" id="otp_verify" style="display: none">
-                    <input type="text" id="verification"  class="form-control bg-white border-md border-left-0 pl-3" placeholder="Verification code">
+                    <input type="text" id="verification" class="form-control bg-white border-md border-left-0 pl-3"
+                           placeholder="Verification code">
                 </div>
                 <div class="form-group col-lg-12 mx-auto mb-4 mt-3">
                     <button type="button" class="btn btn-primary btn-block py-2">
-                        <span class="font-weight-bold" onclick="verify()" >verify OTP</span>
+                        <span class="font-weight-bold" onclick="verify()">verify OTP</span>
                     </button>
                 </div>
                 <!-- Divider Text -->
@@ -240,10 +241,11 @@
             });
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        function submit()
-        {
+        function submit() {
             let first_name = $('#first_name').val();
             let last_name = $('#last_name').val();
             let dob = $('#dob').val();
@@ -253,25 +255,25 @@
             let email = $('#email').val();
             let password = $('#password').val();
             let c_password = $('#c_password').val();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('user.register') }}",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            first_name:first_name,
-                            last_name:last_name,
-                            dob:dob,
-                            country_code:country_code,
-                            phone:phone,
-                            gender:gender,
-                            email:email,
-                            password:password,
-                            c_password:c_password
-                        },
-                    }).done(function (data) {
-                        console.log(data);
-                        window.location="{{ route('login') }}"
-                    });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('user.register') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    first_name: first_name,
+                    last_name: last_name,
+                    dob: dob,
+                    country_code: country_code,
+                    phone: phone,
+                    gender: gender,
+                    email: email,
+                    password: password,
+                    c_password: c_password
+                },
+            }).done(function (data) {
+                console.log(data);
+                window.location = "{{ route('login') }}"
+            });
         }
     </script>
 @endpush

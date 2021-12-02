@@ -162,7 +162,17 @@ class ProductController extends Controller
 
     public function productUpdate(Request $request)
     {
-
+        $request->validate([
+            'productUpdate' => 'required|mimes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+            application/vnd.ms-excel.sheet.binary.macroEnabled.12,
+            application/vnd.ms-excel,
+            application/vnd.ms-excel.sheet.macroEnabled.12,
+            xlsx,
+            text/csv,
+            text/plain,
+            application/csv,
+            application/json'
+        ]);
         Excel::import(new ProductDataImport(), $request->file('productUpdate'));
         return redirect()->back();
 
