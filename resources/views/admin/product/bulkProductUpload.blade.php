@@ -20,7 +20,7 @@
                     <p>4. After uploading products you need to edit them and set product's images and choices.</p>
                 </div>
                 <div class="">
-                    <a href="{{ route('admin.product.download') }}" download="">
+                    <a href="{{ route('admin.product.demoSheetDownload') }}" download="">
                         <button class="btn btn-primary">Download Product Stock update Demo Sheet</button>
                     </a>
                 </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="card-body">
             <div class="alert mb-3">
-                <form action="{{ route('admin.product.upload') }}" method="POST" id="productStockUpdate"
+                <form action="{{ route('admin.product.productStockUpdate') }}" method="POST" id="productStockUpdate"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="input-group">

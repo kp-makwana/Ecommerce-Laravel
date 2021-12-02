@@ -61,8 +61,11 @@
                         <li class="{{ request()->is('admin/product/add') ? 'active' : '' }}">
                             <a href="{{ route('admin.product.add') }}">Add Products</a>
                         </li>
-                        <li class="{{ request()->is('admin/product/index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.product.index') }}">All Products</a>
+                        <li class="{{ request()->is('admin/product/listview') ? 'active' : '' }}">
+                            <a href="{{ route('admin.product.listview') }}">List View</a>
+                        </li>
+                        <li class="{{ request()->is('admin/product/gridView') ? 'active' : '' }}">
+                            <a href="{{ route('admin.product.gridView') }}">Grid View</a>
                         </li>
                         <li class="{{ request()->is('admin/product/bulk_product_upload') ? 'active' : '' }}">
                             <a href="{{ route('admin.product.bulk_product_upload') }}">Bulk Product Uploads</a>
@@ -122,7 +125,7 @@
                                 Product
                             </a>
                             <div class="dropdown-menu" id="menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('admin.product.index') }}">All Product</a>
+                                <a class="dropdown-item" href="{{ route('admin.product.listview') }}">All Product</a>
                                 <a class="dropdown-item" href="{{ route('admin.product.add') }}">Add Product</a>
                             </div>
                         </li>

@@ -1,11 +1,11 @@
 @extends('admin.layout.sidebar',['title'=>'Product'])
 @section('content')
     <div class="col-md-12">
-        <form action="{{ route('admin.product.index') }}" name="sortingForm" id="sortingForm" method="GET">
+        <form action="{{ route('admin.product.gridView') }}" name="sortingForm" id="sortingForm" method="GET">
             <div class="col-md-12 row my-4">
                 <div class="col-md-2">
                     <div class="float-left mx-3">Latest Product <a
-                            href="{{ route('admin.product.index') }}">Here</a>.
+                            href="{{ route('admin.product.gridView') }}">Here</a>.
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -99,7 +99,7 @@
     {{ $products->appends($request)->links() }}
 @endsection
 @push('style')
-    {{--    <link rel="stylesheet" href="{{ asset('css/product/product.css') }}">--}}
+    <link rel="stylesheet" href="{{ asset('css/product/product.css') }}">
 @endpush
 @push('script')
     <script src="{{ asset('js/product/product.js') }}"></script>

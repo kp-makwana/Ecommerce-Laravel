@@ -83,7 +83,6 @@ class User extends Authenticatable
     public function getCounty_NameAttribute()
     {
         $country = Country::where('country_code',$this->country_code)->first();
-//        dd($country);
         return $country;
 
     }

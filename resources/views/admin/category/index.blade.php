@@ -1,11 +1,11 @@
 @extends('admin.layout.sidebar',['title'=>"Category"])
 @section('content')
     <div class="col-md-12">
-        <form action="{{ route('admin.product.index') }}" name="sortingForm" id="sortingForm" method="GET">
+        <form action="{{ route('admin.product.listview') }}" name="sortingForm" id="sortingForm" method="GET">
             <div class="col-md-12 row my-4">
                 <div class="col-md-2">
                     <div class="float-left mx-3">Latest Product <a
-                            href="{{ route('admin.product.index') }}">Here</a>.
+                            href="{{ route('admin.product.listview') }}">Here</a>.
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -477,5 +477,5 @@
     </div>
 @endsection
 @push('style')
-    <link rel="stylesheet" href="{{ asset('css/us er.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 @endpush

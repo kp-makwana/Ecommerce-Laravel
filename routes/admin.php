@@ -22,7 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('index');
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
     Route::prefix('product')->as('product.')->group(function () {
-        Route::get('/index', [ProductController::class, 'index'])->name('index');
+        Route::get('gridView', [ProductController::class, 'gridView'])->name('gridView');
+        Route::get('/listview', [ProductController::class, 'listview'])->name('listview');
         Route::get('/add', [ProductController::class, 'add'])->name('add');
         Route::post('/save_update/{id?}', [ProductController::class, 'save_update'])->name('save');
         Route::get('/productDetail/{id}', [ProductController::class, 'show'])->name('productDetail');
@@ -37,8 +38,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/delete_img', [ProductController::class, 'delete_images'])->name('delete_img');
 
         // Product Import & Export
-        Route::get('download', [\App\Http\Controllers\Admin\ProductController::class, 'demoSheetDownload'])->name('download');
-        Route::post('upload', [\App\Http\Controllers\Admin\ProductController::class, 'productUpdate'])->name('upload');
+        Route::get('/demoSheetDownload', [\App\Http\Controllers\Admin\ProductController::class, 'demoSheetDownload'])->name('demoSheetDownload');
+        Route::post('/productStockUpdate', [\App\Http\Controllers\Admin\ProductController::class, 'productStockUpdate'])->name('productStockUpdate');
     });
     Route::prefix('category')->as('category.')->group(function () {
         Route::get('/index', [CategoryController::class, 'index'])->name('index');

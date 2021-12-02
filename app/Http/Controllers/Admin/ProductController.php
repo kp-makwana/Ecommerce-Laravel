@@ -16,13 +16,26 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function gridView(Request $request)
     {
-        #params
-        $request = $request->all();
+        $result = $this->productData($request);
+        return view('admin.product.product-grid', ['products' => $result['products'], 'request' => $result['request']]);
+    }
 
+    public function listview(Request $request)
+    {
+        $result = $this->productData($request);
+        return view('admin.product.product-list', ['products' => $result['products'], 'request' => $result['request']]);
+//        return view('admin.product.product-list', ['products' => Product::with('productImage', 'category', 'brand')->sortable()->paginate(10), 'request' => NULL]);
+    }
+
+    private function productData($request)
+    {
         // Default
         $queryBuilder = Product::with('productImage', 'category', 'brand');
+        $queryBuilder->sortable();
+
+        $request = $request->all();
 
         // Filter
         if (isset($request['category'])) {                  //category
@@ -77,9 +90,11 @@ class ProductController extends Controller
         if (!isset($request['no_of_record']) || !in_array($request['no_of_record'], config('constants.num_of_raw'))) {
             $request['no_of_record'] = 10;
         }
-        $products = $queryBuilder->paginate($request['no_of_record']);
+        $products = $queryBuilder->sortable()->paginate($request['no_of_record']);
+        $result['products'] = $products;
+        $result['request'] = $request;
 
-        return view('admin.product.product', ['products' => $products, 'request' => $request]);
+        return $result;
     }
 
     public function add(Request $request)
@@ -160,19 +175,10 @@ class ProductController extends Controller
         return view('admin.product.bulkProductUpload');
     }
 
-    public function productUpdate(Request $request)
+    public function productStockUpdate(Request $request)
     {
         $request->validate([
-            'productUpdate' => 'required|mimes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-            application/vnd.ms-excel.sheet.binary.macroEnabled.12,
-            application/vnd.ms-excel,
-            application/vnd.ms-excel.sheet.macroEnabled.12,
-            xlsx,
-            text/csv,
-            text/plain,
-            application/csv,
-            application/json'
-        ]);
+            'productUpdate' => 'required|mimes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.binary.macroEnabled.12,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12,xlsx,text/csv,text/plain,application/csv,application/json']);
         Excel::import(new ProductDataImport(), $request->file('productUpdate'));
         return redirect()->back();
 
