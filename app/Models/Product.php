@@ -14,9 +14,10 @@ class Product extends Model
     public $sortable = [
         'id',
         'name',
-        'purchase_price',
+        'sale_price',
+        'avg_rating',
         'quantity',
-        'created_at',
+        'updated_at',
     ];
 
     public function productImage(): \Illuminate\Database\Eloquent\Relations\HasMany

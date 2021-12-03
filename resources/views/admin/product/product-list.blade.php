@@ -1,6 +1,6 @@
 @extends('admin.layout.sidebar',['title'=>"Category"])
 @section('content')
-    <div class="col-md-12">
+    <div class="col-md-12 mb-3">
         <form action="{{ route('admin.product.listview') }}" name="sortingForm" id="sortingForm" method="GET">
             <div class="col-md-12 row my-4">
                 <div class="col-md-2">
@@ -68,25 +68,25 @@
             <thead>
             <tr>
                 <th><b>@sortablelink('id')</b></th>
-                <th><b><a href="">Photo</a></b></th>
+                <th><b><a href="#">Photo</a></b></th>
                 <th><b>@sortablelink('name')</b></th>
                 <th><b>@sortablelink('sale_price','Price')</b></th>
                 <th><b>@sortablelink('quantity','Stock')</b></th>
                 <th><b>@sortablelink('avg_rating','Rating')</b></th>
                 <th><b>@sortablelink('updated_at','Last Update Date')</b></th>
-                <th class="text-center"><b>Actions</b></th>
+                <th class="text-center"><b><a href="#">Actions</a></b></th>
             </tr>
             </thead>
             <tbody>
             @forelse($products as $product)
                 <tr>
                     <td>
-                        <a href="">#{{ $product->id }}</a>
+                        <span>#{{ $product->id }}</span>
                     </td>
                     <td>
                         <div class="avatar avatar-info">
                             @if($product->productImage[0])
-                                <img class="rounded-circle" width="40"
+                                <img class="" width="40"
                                      src="{{ $product->productImage[0] ? asset('storage/ProductImages/'.$product->productImage[0]->name) : asset('images/user.png') }}"
                                      alt="">
                             @else
@@ -95,7 +95,7 @@
                             @endif
                         </div>
                     </td>
-                    <td>{{ $product->name }}</td>
+                    <td><a href="{{ route('admin.product.productDetail',$product->id) }}" class="text-dark">{{ $product->name }}</a></td>
                     <td>
                         <span>{{ $product->sale_price }}</span>
                     </td>
@@ -108,19 +108,20 @@
                     <td>
                         <span>{{ $product->updated_at }}</span>
                     </td>
-                    <td class="text-end">
-                        <a href="" class="mx-1"><span class="badge bg-dark">Show</span></a>
-                        <a href="" class="mx-1"><span class="badge bg-info">Edit</span></a>
-                        <a href="" class="mx-1"><span class="badge bg-danger">Delete</span></a>
+                    <td class="text-center">
+                        <a href="{{ route('admin.product.productDetail',$product->id) }}" class="mx-1"><span class="badge bg-dark">Show</span></a>
+                        <a href="{{ route('admin.product.edit',$product->id) }}" class="mx-1"><span class="badge bg-info">Edit</span></a>
+                        <a href="{{ route('admin.product.delete',$product->id) }}" class="mx-1"><span class="badge bg-danger">Delete</span></a>
                     </td>
-                    @empty
-                        No Data Found
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="8" class="text-center">No Data Found</td>
                 </tr>
             @endforelse
             </tbody>
         </table>
         {{ $products->appends($request)->links() }}
-        {!! $products->appends(\Request::except('page'))->render() !!}
     </div>
 @endsection
 @push('style')

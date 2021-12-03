@@ -18,35 +18,39 @@ class ProductController extends Controller
 {
     public function gridView(Request $request)
     {
-        $result = $this->productData($request);
+        $queryBuilder = Product::query();
+        $result = $this->productData($request,$queryBuilder);
         return view('admin.product.product-grid', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
     public function listview(Request $request)
     {
-        $result = $this->productData($request);
+        $queryBuilder = Product::query();
+        $result = $this->productData($request,$queryBuilder);
         return view('admin.product.product-list', ['products' => $result['products'], 'request' => $result['request']]);
-//        return view('admin.product.product-list', ['products' => Product::with('productImage', 'category', 'brand')->sortable()->paginate(10), 'request' => NULL]);
     }
 
-    private function productData($request)
+    private function productData($request,$queryBuilder)
     {
         // Default
-        $queryBuilder = Product::with('productImage', 'category', 'brand');
+        $queryBuilder->with('productImage', 'category', 'brand');
         $queryBuilder->sortable();
 
         $request = $request->all();
 
         // Filter
-        if (isset($request['category'])) {                  //category
+        //category
+        if (isset($request['category'])) {
             $queryBuilder->where('category_id', '=', $request['category']);
         }
 
-        if (isset($request['brands'])) {   //brand sorting
+        //brand sorting
+        if (isset($request['brands'])) {
             $queryBuilder->where('brand_id', '=', $request['brands']);
         }
 
-        if (isset($request['rating'])) {          //rating sorting
+        //rating sorting
+        if (isset($request['rating'])) {
             if ($request['rating'] == 'none') {
                 $queryBuilder->where('avg_rating', '=', null);
             } else {
@@ -74,7 +78,7 @@ class ProductController extends Controller
 
         // Sorting
         if (isset($request['sorting'])) {
-            if (in_array($request['sorting'], config('constants.orderBy'))) {    //orderBy
+            if (in_array($request['sorting'], config('constants.orderBy'))) {
                 if (isset($request['rating'])) {
                     $queryBuilder->orderBy('products.avg_rating', $request['sorting']);
                 } else {
@@ -90,7 +94,8 @@ class ProductController extends Controller
         if (!isset($request['no_of_record']) || !in_array($request['no_of_record'], config('constants.num_of_raw'))) {
             $request['no_of_record'] = 10;
         }
-        $products = $queryBuilder->sortable()->paginate($request['no_of_record']);
+
+        $products = $queryBuilder->paginate($request['no_of_record']);
         $result['products'] = $products;
         $result['request'] = $request;
 
@@ -192,13 +197,15 @@ class ProductController extends Controller
     public function delete_product(Request $request): \Illuminate\Http\RedirectResponse
     {
         Product::find($request->input('id'))->delete();
-        return redirect()->route('admin.product.index');
+        return redirect()->route('admin.product.listview');
     }
 
     public function deleted_Product(Request $request)
     {
-        $products = Product::onlyTrashed()->get();
-        return view('admin.product.trashBin', ['products' => $products]);
+        $queryBuilder = Product::query();
+        $queryBuilder->onlyTrashed();
+        $result = $this->productData($request,$queryBuilder);
+        return view('admin.product.trashBin', ['products' => $result['products'],'request'=>$result['request']]);
     }
 
     private function generateRandomString(): string
