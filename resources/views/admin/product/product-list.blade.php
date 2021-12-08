@@ -111,7 +111,8 @@
                     <td class="text-center">
                         <a href="{{ route('admin.product.productDetail',$product->id) }}" class="mx-1"><span class="badge bg-dark">Show</span></a>
                         <a href="{{ route('admin.product.edit',$product->id) }}" class="mx-1"><span class="badge bg-info">Edit</span></a>
-                        <a href="{{ route('admin.product.delete',$product->id) }}" class="mx-1"><span class="badge bg-danger">Delete</span></a>
+                        <a href="#delete_product" data-id="{{ $product->id }}" class="mx-1 passingID" data-bs-toggle="modal"><span class="badge bg-danger">Delete</span></a>
+{{--                        <a href="{{ route('admin.product.delete',$product->id) }}" onclick="return confirm('Are you sure?')" class="mx-1"><span class="badge bg-danger">Delete</span></a>--}}
                     </td>
                 </tr>
             @empty
@@ -123,12 +124,37 @@
         </table>
         {{ $products->appends($request)->links() }}
     </div>
+    <div class="modal fade" id="delete_product" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete This
+                            Product</strong></h5>
+                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                       style="font-size: 18px;">x</a>
+                </div>
+                <div class="modal-body">
+                    <p>You can Also Restore from trash bin</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
+                            aria-label="Close">Cancel
+                    </button>
+                    <form action="{{ route('admin.product.delete') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" id="id">
+                        <a href=""><input type="submit" class="btn btn-danger" value="Delete"/></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/product/product.css') }}">
 @endpush
 @push('script')
-    {{--    <script src="{{ asset('js/product/product.js') }}"></script>--}}
+        <script src="{{ asset('js/product/custom.js') }}"></script>
     <script>
         function submit() {
             $('#sortingForm').submit();
@@ -136,6 +162,13 @@
 
         $('#category,#brands,#rating,#sorting,#no_of_record').change(function () {
             submit();
+        });
+    </script>
+    <script>
+        $(".passingID").click(function () {
+            var ids = $(this).attr('data-id');
+            $("#id").val( ids );
+            $('#delete_product').modal('show');
         });
     </script>
 @endpush

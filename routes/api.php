@@ -18,9 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login',[\App\Http\Controllers\API\Auth\LoginController::class, 'login']);
 
-//Route::post('/getStates',[\App\Http\Controllers\AddressController::class, 'fetchStates'])->name('fetchStates');
-//Route::post('/getCities',[\App\Http\Controllers\AddressController::class, 'fetchCities'])->name('fetchCities');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/product',[\App\Http\Controllers\API\ProductController::class,'index']);
 
-
-Route::get('/download',[\App\Http\Controllers\Admin\ProductController::class, 'pdfCreate']);
+    Route::get('/logout',[\App\Http\Controllers\API\Auth\LoginController::class, 'logout']);
+});

@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{asset('images/logo.png')}}" type="image/ico"/>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/user.style.css') }}">
@@ -19,8 +21,20 @@
     {{--    <script src="{{ asset('js/popper.js') }}"></script>--}}
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     {{--    <script src="{{asset('js/main.js')}}"></script>--}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('css/product/product.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @stack('style')
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -38,6 +52,9 @@
                 </li>
                 <li class="{{ request()->is('user/profile/*') ? 'active' : '' }}">
                     <a href="{{ route('user.profile.index') }}">My Profile</a>
+                </li>
+                <li class="{{ request()->is('user/product/*') ? 'active' : '' }}">
+                    <a href="{{ route('user.product.index') }}">Product</a>
                 </li>
                 <li class="{{ request()->is('user/order/*') ? 'active' : '' }}">
                     <a href="{{ route('user.order.index') }}">Order</a>
@@ -100,6 +117,7 @@
         @yield('content')
     </div>
 </div>
+@stack('script')
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/popper.js') }}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>

@@ -49,4 +49,30 @@ class Product extends Model
     {
         return $this->hasMany(Offer::class);
     }
+    public function getBrandNameAttribute()
+    {
+        $brand = Brand::find($this->brand_id);
+        return $brand->name;
+    }
+    public function getCategoryNameAttribute()
+    {
+        $category = Category::find($this->category_id);
+        return $category->name;
+    }
+    public function getProductTypeAttribute()
+    {
+        $product_type = ProductType::find($this->product_type_id);
+        return $product_type->name;
+    }
+    public function getNoOfRatingAttribute()
+    {
+        return ProductRating::count();
+    }
+
+    public function getImageAttribute()
+    {
+        $image = ProductImage::where('product_id',$this->id)->first();
+        return $image['name'];
+    }
+
 }

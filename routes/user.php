@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
             return view('user.order');
         })->name('index');
     });
+    Route::prefix('product')->as('product.')->group(function () {
+        Route::get('/index', [\App\Http\Controllers\ProductController::class,'index'])->name('index');
+        Route::get('/productDetail/{id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('productDetail');
+    });
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
         Route::get('/index', function () {
             return view('user.myWishlist');

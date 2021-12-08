@@ -163,9 +163,9 @@
                     <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
                             aria-label="Close">Cancel
                     </button>
-                    <form action="{{ route('admin.product.delete') }}" method="POST">
+                    <form action="{{ route('admin.product.delete',$product->id) }}">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $product->id }}">
+                        <input type="hidden" name="id" >
                         <a href=""><input type="submit" class="btn btn-danger" value="Delete"/></a>
                     </form>
                 </div>

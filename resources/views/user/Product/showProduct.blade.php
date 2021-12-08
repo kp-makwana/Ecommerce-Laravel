@@ -1,4 +1,4 @@
-@extends('admin.layout.sidebar',['title'=>$product->name])
+@extends('user.layout.sidebar',['title'=>$product->name])
 @section('content')
     <ul class="cd-gallery">
         <li class="col-md-6 custom-product">
@@ -13,9 +13,6 @@
             </ul> <!-- cd-item-wrapper -->
         </li>
         <li class="col-md-6 py-4 px-5 bg-light text-black-50">
-            <div class="col-md-12">
-                <a class="float-right w-25 btn btn-info" href="{{ route('admin.product.edit',$product->id) }}">Edit</a>
-            </div>
             <h5 class="mb-1"><strong>{{ $product->name }}</strong></h5>
             <div class="mb-2">
                 <span
@@ -57,9 +54,6 @@
         <div class="col-md-6">
             <div class="pb-3">
                 <div class="float-left"><strong>Offers</strong></div>
-                <div class="float-right"><a href="#add_offer"
-                                            data-bs-toggle="modal" class="text-success"><strong>Add Offer</strong></a>
-                </div>
             </div>
             <x-Form.Add-Offer :id="$product->id"/>
             <hr>
@@ -67,41 +61,6 @@
                 @forelse($product->offers as $offer)
                     <x-offer :id="$offer->id" :product="$product->id"/>
                     <li class="col-md-12">
-                        <div class="float-right">
-                            <a class="text-info mr-3" href="#view_offer_{{ $offer->id }}"
-                               data-bs-toggle="modal">Edit</a>
-                            {{--                            <a href="#delete_offer" data-toggle="modal" data-id="my_id_value">Open Modal</a>--}}
-                                                        <a class="text-danger" href="#delete_offer_{{ $offer->id }}" data-bs-toggle="modal" data-name="{{ $offer->name }}" data-id="{{ $offer->id }}">Delete Offer</a>
-                        </div>
-
-                        {{--  Offer Delete Modal  --}}
-                        <div class="modal fade" id="delete_offer_{{ $offer->id }}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete The
-                                                Offer</strong></h5>
-                                        <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                           style="font-size: 18px;">x</a>
-                                    </div>
-                                    <div class="modal-body col-md-12 row">
-                                        <strong>Offer Name:</strong>
-                                                <p>{{ $offer->offer_name }}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
-                                                aria-label="Close">Cancel
-                                        </button>
-
-                                        <form action="{{ route('admin.product.offer.delete',$offer->id) }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="deleted_id" id="deleted_id" value="{{ $offer->id }}">
-                                        <input type="submit" class="btn btn-danger"/>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <p class="font-weight-bold">{{ $offer->offer_name }}</p>
                         <div class="text-black-50"><strong>Current Status:</strong><span
                                 class="ml-2 {{ ($offer->status == 'active')?'text-success':'text-danger' }}">{{ $offer->status }}</span>
@@ -177,30 +136,30 @@
     </div>
     <x-Description :id="$product->id"/>
 
-{{--    --}}{{--  Offer Delete Modal  --}}
-{{--    <div class="modal fade" id="delete_offer" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">--}}
-{{--        <div class="modal-dialog modal-dialog-centered">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete The--}}
-{{--                            Offer</strong></h5>--}}
-{{--                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"--}}
-{{--                       style="font-size: 18px;">x</a>--}}
+    {{--    --}}{{--  Offer Delete Modal  --}}
+    {{--    <div class="modal fade" id="delete_offer" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">--}}
+    {{--        <div class="modal-dialog modal-dialog-centered">--}}
+    {{--            <div class="modal-content">--}}
+    {{--                <div class="modal-header">--}}
+    {{--                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete The--}}
+    {{--                            Offer</strong></h5>--}}
+    {{--                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"--}}
+    {{--                       style="font-size: 18px;">x</a>--}}
 
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <p>Offer Name</p>--}}
-{{--                </div>--}}
-{{--                <div class="modal-footer">--}}
-{{--                    <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"--}}
-{{--                            aria-label="Close">Cancel--}}
-{{--                    </button>--}}
-{{--                    <input type="submit" class="btn btn-danger"/>--}}
-{{--                </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="modal-body">--}}
+    {{--                    <p>Offer Name</p>--}}
+    {{--                </div>--}}
+    {{--                <div class="modal-footer">--}}
+    {{--                    <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"--}}
+    {{--                            aria-label="Close">Cancel--}}
+    {{--                    </button>--}}
+    {{--                    <input type="submit" class="btn btn-danger"/>--}}
+    {{--                </div>--}}
 
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
 @endsection
 @push('script')
     <script src="{{ asset('js/product/product.js') }}"></script>
