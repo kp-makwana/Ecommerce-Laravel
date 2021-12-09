@@ -22,6 +22,11 @@ class LoginController extends Controller
         return (new UsersResource($user))->additional(['token' => $token]);
     }
 
+    public function userDetails(Request $request)
+    {
+        return (new UsersResource(auth()->user()));
+    }
+
     public function logout()
     {
         auth()->user()->tokens()->delete();

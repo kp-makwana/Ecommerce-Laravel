@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AuthCheckMiddleware
+class AdminCheck
 {
     /**
      * Handle an incoming request.
@@ -16,7 +17,13 @@ class AuthCheckMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        echo "middleware is applied";
-        return $next($request);
+        $result = Auth::check();
+        if($result && (Auth::user()->role == 'admin'))
+        {
+            return $next($request);
+        }
+        else{
+            return redirect()->route('login');
+        }
     }
 }
