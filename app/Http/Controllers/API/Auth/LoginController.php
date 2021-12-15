@@ -4,22 +4,23 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UsersResource;
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Traits\Response;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     use Response;
+
     public function login(Request $request)
     {
-        $user = User::where('email',$request->input('email'))->first();
-        if (!$user || !Hash::check($request->input('password'), $user->password)) {
+        if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+            $user = Auth::user();
+            $token = $user->createToken('auth_token', [request()->getClientIp()])->plainTextToken;
+            return (new UsersResource(auth()->user()))->additional(['token' => $token]);
+        } else {
             return $this->error("Invalid Email or Password.");
         }
-        $token = $user->createToken('api_token')->plainTextToken;
-        return (new UsersResource($user))->additional(['token' => $token]);
     }
 
     public function userDetails(Request $request)

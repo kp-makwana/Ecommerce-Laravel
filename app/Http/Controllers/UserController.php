@@ -67,7 +67,7 @@ class UserController extends Controller
         $address->user_id = $user->id;
         $address->save();
 
-        return ['success'=>'form submit successfully'];
+        return ['success' => 'form submit successfully'];
     }
 
     public function login(LoginRequest $request)
@@ -78,7 +78,7 @@ class UserController extends Controller
                 if (Auth()->user()->role === "admin") {
                     return redirect()->route('admin.index');
                 }
-                return redirect()->route('user.profile.index');
+                return redirect()->route('user.dashboard.index');
             }
             return redirect()->route('login')->with(['type' => 'error', 'message' => 'Invalid password']);
         }

@@ -32,7 +32,7 @@ class Product extends Model
 
     public function averageRatings()
     {
-        return $this->hasMany(ProductRating::class, 'product_id', 'id')->average('rating');
+        return ProductRating::where('product_id', $this->id)->average('rating');
     }
 
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -45,25 +45,22 @@ class Product extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+    public function productType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ProductType::class, 'product_type_id', 'id');
+    }
+
     public function offers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Offer::class);
     }
-    public function getBrandNameAttribute()
-    {
-        $brand = Brand::find($this->brand_id);
-        return $brand->name;
-    }
-    public function getCategoryNameAttribute()
-    {
-        $category = Category::find($this->category_id);
-        return $category->name;
-    }
+
     public function getProductTypeAttribute()
     {
         $product_type = ProductType::find($this->product_type_id);
         return $product_type->name;
     }
+
     public function getNoOfRatingAttribute()
     {
         return ProductRating::count();
@@ -71,7 +68,7 @@ class Product extends Model
 
     public function getImageAttribute()
     {
-        $image = ProductImage::where('product_id',$this->id)->first();
+        $image = ProductImage::where('product_id', $this->id)->first();
         return $image['name'];
     }
 

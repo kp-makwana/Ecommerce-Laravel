@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,17 +19,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login',[\App\Http\Controllers\API\Auth\LoginController::class, 'login']);
+Route::post('/login', [\App\Http\Controllers\API\Auth\LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/userDetails',[\App\Http\Controllers\API\Auth\LoginController::class, 'userDetails']);
-    Route::get('/logout',[\App\Http\Controllers\API\Auth\LoginController::class, 'logout']);
+    Route::get('/userDetails', [\App\Http\Controllers\API\Auth\LoginController::class, 'userDetails']);
+    Route::get('/logout', [\App\Http\Controllers\API\Auth\LoginController::class, 'logout']);
 
     Route::prefix('product')->as('product.')->group(function () {
-        Route::get('/index',[ProductController::class,'index']);
-        Route::get('/detail/{id}', [ProductController::class, 'show']);
+        Route::get('/index', [ProductController::class, 'index']);
+        Route::get('/details/{id}', [ProductController::class, 'details']);
     });
-    Route::get('/brand',[ProductController::class,'brand']);
-    Route::get('/category',[ProductController::class,'category']);
+    Route::prefix('offers')->as('offers.')->group(function () {
+        Route::get('/{id}', [ProductController::class, 'offers']);
+        Route::get('/show/{id}', [ProductController::class, 'show']);
+    });
+
+    Route::get('/brand', [ProductController::class, 'brand']);
+    Route::get('/category', [ProductController::class, 'category']);
 
 });
