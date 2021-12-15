@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
             'category_id' => Category::where('name', 'phone')->first()->id,
             'product_type_id' => ProductType::where('name', 'electric')->first()->id,
             'quantity' => rand(50, 100),
-            'avg_rating' => 2.2,
+            'avg_rating' => 4.4,
             'description' => "13+2MP Rear camera with AI Portrait, AI scene recognition, HDR, Pro mode | 5MP front facing camera 16.58 centimeters (6.53-inch) HD+ multi-touch capacitive touchscreen with 1600 x 720 pixels resolution, 268 ppi pixel density, 20:9 aspect ratio Memory, Storage & SIM: 4GB RAM | 64GB storage expandable up to 512GB| Dual SIM with dual standby (4G+4G) Android v10 operating system with 2.3GHz Mediatek Helio G35 octa core processor 5000mAH lithium-polymer battery with 10W wired charger in-box"
         ], [
             'name' => 'HP 15s',

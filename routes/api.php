@@ -29,10 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/index', [ProductController::class, 'index']);
         Route::get('/details/{id}', [ProductController::class, 'details']);
     });
-    Route::prefix('offers')->as('offers.')->group(function () {
-        Route::get('/{id}', [ProductController::class, 'offers']);
-        Route::get('/show/{id}', [ProductController::class, 'show']);
-    });
+    Route::get('offers/{id}', [ProductController::class, 'offers']);
 
     Route::get('/brand', [ProductController::class, 'brand']);
     Route::get('/category', [ProductController::class, 'category']);
