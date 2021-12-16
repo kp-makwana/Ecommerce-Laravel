@@ -19,40 +19,41 @@ class ProductController extends Controller
     public function gridView(Request $request)
     {
         $queryBuilder = Product::query();
-        $result = $this->productData($request,$queryBuilder);
+        $result = $this->productData($request, $queryBuilder);
         return view('admin.product.product-grid', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
     public function listview(Request $request)
     {
         $queryBuilder = Product::query();
-        $result = $this->productData($request,$queryBuilder);
+        $result = $this->productData($request, $queryBuilder);
         return view('admin.product.product-list', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
-    private function productData($request,$queryBuilder)
+    private function productData($request, $queryBuilder)
     {
         // Default
         $queryBuilder->with('productImage', 'category', 'brand');
         $queryBuilder->sortable();
 
         $request = $request->all();
+        //dd($request);
 
         // Filter
         //category
         if (isset($request['category'])) {
-            $queryBuilder->where('category_id', '=', $request['category']);
+            $queryBuilder->where('category_id', $request['category']);
         }
 
         //brand sorting
         if (isset($request['brands'])) {
-            $queryBuilder->where('brand_id', '=', $request['brands']);
+            $queryBuilder->where('brand_id', $request['brands']);
         }
 
         //rating sorting
         if (isset($request['rating'])) {
             if ($request['rating'] == 'none') {
-                $queryBuilder->where('avg_rating', '=', null);
+                $queryBuilder->where('avg_rating', null);
             } else {
                 $queryBuilder->where('avg_rating', '>=', $request['rating']);
             }
@@ -60,19 +61,21 @@ class ProductController extends Controller
 
         //Searching
         if (isset($request['search'])) {
-            $query = $request['search'];
-
-            if (ctype_digit($query)) {
-                $queryBuilder->where('purchase_price', '=', $query)
-                    ->orWhere('sale_price', '=', $query);
+            $search = $request['search'];
+            if (ctype_digit($search)) {
+                $queryBuilder->where(function ($query) use ($search) {
+                    $query->where('purchase_price', $search)->orWhere('sale_price', $search);
+                });
             } else {
-                $queryBuilder->where('name', 'LIKE', '%' . $query . '%')
-                    ->orWhereHas('category', function ($q) use ($query) {
-                        $q->where('name', 'LIKE', '%' . $query . '%');
-                    })
-                    ->orWhereHas('brand', function ($q) use ($query) {
-                        $q->where('name', 'LIKE', '%' . $query . '%');
-                    });
+                $queryBuilder->where(function ($query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhereHas('category', function ($q) use ($search) {
+                            $q->where('name', 'LIKE', '%' . $search . '%');
+                        })
+                        ->orWhereHas('brand', function ($q) use ($search) {
+                            $q->where('name', 'LIKE', '%' . $search . '%');
+                        });
+                });
             }
         }
 
@@ -204,8 +207,8 @@ class ProductController extends Controller
     {
         $queryBuilder = Product::query();
         $queryBuilder->onlyTrashed();
-        $result = $this->productData($request,$queryBuilder);
-        return view('admin.product.trashBin', ['products' => $result['products'],'request'=>$result['request']]);
+        $result = $this->productData($request, $queryBuilder);
+        return view('admin.product.trashBin', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
     private function generateRandomString(): string
