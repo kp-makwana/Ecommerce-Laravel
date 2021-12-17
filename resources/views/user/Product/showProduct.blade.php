@@ -41,6 +41,33 @@
             </div>
         </li>
     </ul>
+    <div class="center buttons col-md-6">
+        <div class="d-flex buttons flex-row">
+            <div class="cart"><i class="fa fa-shopping-cart"></i></div>
+            @php
+                $result = (App\Models\Cart::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first());
+            @endphp
+            @if($result != null)
+                <a id="goToCart" href="{{ route('user.cart.index') }}">
+                    <button id="addToCart" class="btn btn-info cart-button px-5 clicked"><span
+                            class="dot">{{ $result->quantity }}</span>Go To Cart</button>
+                </a>
+
+            @else
+                <a id="goToCart" href="#">
+                    <button id="addToCart" class="btn btn-success cart-button px-5 " onclick="addToCart()"><span
+                            class="dot">1</span>Add to
+                        cart
+                    </button>
+                </a>
+            @endif
+        </div>
+        <div class="px-5">
+            <a href="#">
+                <button class="btn buttons btn-primary cart-button px-5">Buy Now</button>
+            </a>
+        </div>
+    </div>
     <div class="col-md-12 row table">
         <div class="col-md-6">
             <div class="pb-3">
@@ -98,7 +125,7 @@
     <hr>
     <div class="px-5 row">
         <ul class="">
-            <div class="userRating bg-light">{{--            collapse--}}
+            <div class="userRating bg-light">
                 @forelse($ratings as $rating)
                     <li class="col-md-12 row mt-1 bg-light text-black-50">
                         <div class="col-md-2 card-img-top">
@@ -135,31 +162,6 @@
         </ul>
     </div>
     <x-Description :id="$product->id"/>
-
-    {{--    --}}{{--  Offer Delete Modal  --}}
-    {{--    <div class="modal fade" id="delete_offer" aria-hidden="true" aria-labelledby="exampleModalToggleLabel">--}}
-    {{--        <div class="modal-dialog modal-dialog-centered">--}}
-    {{--            <div class="modal-content">--}}
-    {{--                <div class="modal-header">--}}
-    {{--                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are You Sure To Delete The--}}
-    {{--                            Offer</strong></h5>--}}
-    {{--                    <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"--}}
-    {{--                       style="font-size: 18px;">x</a>--}}
-
-    {{--                </div>--}}
-    {{--                <div class="modal-body">--}}
-    {{--                    <p>Offer Name</p>--}}
-    {{--                </div>--}}
-    {{--                <div class="modal-footer">--}}
-    {{--                    <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"--}}
-    {{--                            aria-label="Close">Cancel--}}
-    {{--                    </button>--}}
-    {{--                    <input type="submit" class="btn btn-danger"/>--}}
-    {{--                </div>--}}
-
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 @endsection
 @push('script')
     <script src="{{ asset('js/product/product.js') }}"></script>
@@ -198,57 +200,116 @@
             });
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script>
-        $("#add_offer").validate({
-            errorClass: 'text-danger',
-            rules: {
-                offer_name: {
-                    required: true,
-                },
-                offer_price: {
-                    require_from_group: [1, ".discount"],
-                },
-                percentage: {
-                    require_from_group: [1, ".discount"],
-                },
-                flat_discount: {
-                    require_from_group: [1, ".discount"],
-                },
-                description: {
-                    required: true,
-                },
-                start_date: {
-                    required: true,
-                },
-                end_date: {
-                    required: true,
-                }
-            },
-            messages: {
-                offer_name: {
-                    required: "Offer Name not Empty.",
-                    min: "Minimum Character is 3."
-                },
-                offer_price: {
-                    require_from_group: ""
-                },
-                percentage: {
-                    require_from_group: ""
-                },
-                flat_discount: {
-                    require_from_group: "At least 1 Discount field is Required",
-                },
-                description: {
-                    required: "Description is Required.",
-                },
-                start_date: {
-                    required: "Offer Start Date is Required.",
-                },
-                end_date: {
-                    required: "Offer End Date is Required.",
-                }
+        function addToCart() {
+                $.ajax({
+                    'url': '{{ route('user.product.addToCart',$product->id) }}',
+                    'type': 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        $('#addToCart').addClass('clicked');
+                        var $link = $('#addToCart');
+                        var $img = $link.find('span');
+                        $link.html('Go To Cart');
+                        $link.append($img);
+                        $('#addToCart').removeClass('btn-success');
+                        $('#addToCart').addClass('btn-info');
+                        $('#goToCart').attr('href', '{{ route('user.cart.index') }}');
+                        $('#addToCart').prop("onclick", null);
+                        toastr.success(response.data.result);
+                    },
+                });
             }
-        });
     </script>
+@endpush
+@push('style')
+    <style>
+        .center {
+            /*height: 100vh;*/
+            display: flex;
+            /*justify-content: center;*/
+            align-items: center
+        }
+
+        .buttons {
+            padding: 10px;
+            background-color: #d6d4d4;
+            border-radius: 8px;
+            position: relative
+        }
+
+        .dot {
+            height: 14px;
+            width: 14px;
+            background-color: green;
+            border-radius: 50%;
+            position: absolute;
+            left: 27%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 8px;
+            color: #fff;
+            opacity: 0
+        }
+
+        .cart-button {
+            height: 48px;
+            width: 250px;
+        }
+
+        .cart-button:focus {
+            box-shadow: none
+        }
+
+        .cart {
+            position: relative;
+            height: 48px !important;
+            width: 100px;
+            margin-right: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            padding: 11px;
+            border-radius: 5px;
+            font-size: 21px
+        }
+
+        .cart-button.clicked span.dot {
+            animation: item 0.3s ease-in forwards
+        }
+
+        @keyframes item {
+            0% {
+                opacity: 1;
+                top: 30%;
+                left: 30%
+            }
+
+            25% {
+                opacity: 1;
+                left: 26%;
+                top: 0%
+            }
+
+            50% {
+                opacity: 1;
+                left: 23%;
+                top: -22%
+            }
+
+            75% {
+                opacity: 1;
+                left: 19%;
+                top: -18%
+            }
+
+            100% {
+                opacity: 1;
+                left: 14%;
+                top: 28%
+            }
+        }
+    </style>
 @endpush

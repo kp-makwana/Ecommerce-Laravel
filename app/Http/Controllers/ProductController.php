@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductRating;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -87,5 +89,20 @@ class ProductController extends Controller
         $ratings = ProductRating::where('product_id', $id)->paginate(10);
         return view('user.Product.showProduct', ['product' => $product, 'ratings' => $ratings]);
 
+    }
+
+    public function addToCarts($id)
+    {
+        $product = Product::find($id);
+        $cart = Cart::where('user_id', Auth::user()->id)->where('product_id', $product->id)->first();
+        if (!$cart) {
+            $item = new cart;
+            $item->user_id = Auth::user()->id;
+            $item->product_id = $product->id;
+            $item->quantity = 1;
+            $item->price = $product->sale_price;
+            $item->save();
+        }
+        return ['result'=>'Product Add In Your Cart'];
     }
 }
