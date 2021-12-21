@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProductController as Product_Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Brand;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Traits\Response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -135,12 +138,29 @@ class ProductController extends Controller
                     'offer_percentage' => $q->percentage . '%',
                     'flat_offer' => $q->flat_discount,
                     'description' => $q->description,
-                    'offer_date ' => Carbon::parse($q->start_date)->format('jS F Y h:m') . ' hrs to ' . Carbon::parse($q->end_date)->format('jS F Y h:m') . ' hrs',
+                    'offer_date' => Carbon::parse($q->start_date)->format('jS F Y h:m') . ' hrs to ' . Carbon::parse($q->end_date)->format('jS F Y h:m') . ' hrs',
                 ];
             });
             return $this->success($data);
         }
         return $this->error("Not available any offer in this product.");
+    }
 
+    public function addToCart($id): \Illuminate\Http\JsonResponse
+    {
+        $result = Product_Controller::addToCarts($id);
+        if ($result) {
+            return $this->success(['result' => 'Item added in your cart.']);
+        } else {
+            return $this->error('Item already in your cart.');
+        }
+    }
+
+    public function checkInCart($id): \Illuminate\Http\JsonResponse
+    {
+        if (Cart::where('user_id', Auth::user()->id)->where('product_id', $id)->first()) {
+            return response()->json(['result' => true]);
+        }
+        return response()->json(['result' => false]);
     }
 }

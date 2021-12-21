@@ -216,7 +216,9 @@
                         $('#addToCart').addClass('btn-info');
                         $('#goToCart').attr('href', '{{ route('user.cart.index') }}');
                         $('#addToCart').prop("onclick", null);
-                        toastr.success(response.data.result);
+                        if(response.data){
+                            toastr.success('Product Added in cart.');
+                        }
                     },
                 });
             }

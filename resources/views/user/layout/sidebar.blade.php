@@ -117,13 +117,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="#">{{ Auth::user()->FullName }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="#">More</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i>
+                            <a class="nav-link" href="{{ route('user.cart.index') }}"><i class="fa fa-shopping-cart"></i>
                                 cart({{ \App\Models\Cart::where('user_id',Auth::user()->id)->count() }})</a>
                         </li>
                         <li class="nav-item">

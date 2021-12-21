@@ -28,6 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index']);
         Route::get('/details/{id}', [ProductController::class, 'details']);
+        Route::get('addToCart/{id}', [ProductController::class, 'addToCart']);
+        Route::get('checkInCart/{id}', [ProductController::class, 'CheckInCart']);
+
     });
     Route::get('offers/{id}', [ProductController::class, 'offers']);
 

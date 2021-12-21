@@ -102,7 +102,8 @@ class ProductController extends Controller
             $item->quantity = 1;
             $item->price = $product->sale_price;
             $item->save();
+            return true;
         }
-        return ['result'=>'Product Add In Your Cart'];
+        return false;
     }
 }
