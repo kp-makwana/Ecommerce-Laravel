@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index(Request $request, $queryBuilder = null)
     {
-        if ($queryBuilder == null){
+        if ($queryBuilder == null) {
             $queryBuilder = Product::query();
         }
         $queryBuilder->with('productImage', 'category', 'brand');

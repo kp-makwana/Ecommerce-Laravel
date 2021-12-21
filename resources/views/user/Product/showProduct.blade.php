@@ -48,9 +48,10 @@
                 $result = (App\Models\Cart::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first());
             @endphp
             @if($result != null)
-                <a id="goToCart" href="{{ route('user.cart.index') }}">
+                <a id="goToCart" href="{{ route('user.viewCart') }}">
                     <button id="addToCart" class="btn btn-info cart-button px-5 clicked"><span
-                            class="dot">{{ $result->quantity }}</span>Go To Cart</button>
+                            class="dot">{{ $result->quantity }}</span>Go To Cart
+                    </button>
                 </a>
 
             @else
@@ -63,7 +64,7 @@
             @endif
         </div>
         <div class="px-5">
-            <a href="#">
+            <a href="{{ route('user.product.buyNow',$product->id) }}">
                 <button class="btn buttons btn-primary cart-button px-5">Buy Now</button>
             </a>
         </div>
@@ -202,26 +203,26 @@
     </script>
     <script>
         function addToCart() {
-                $.ajax({
-                    'url': '{{ route('user.product.addToCart',$product->id) }}',
-                    'type': 'GET',
-                    success: function (response) {
-                        console.log(response)
-                        $('#addToCart').addClass('clicked');
-                        var $link = $('#addToCart');
-                        var $img = $link.find('span');
-                        $link.html('Go To Cart');
-                        $link.append($img);
-                        $('#addToCart').removeClass('btn-success');
-                        $('#addToCart').addClass('btn-info');
-                        $('#goToCart').attr('href', '{{ route('user.cart.index') }}');
-                        $('#addToCart').prop("onclick", null);
-                        if(response.data){
-                            toastr.success('Product Added in cart.');
-                        }
-                    },
-                });
-            }
+            $.ajax({
+                'url': '{{ route('user.product.addToCart',$product->id) }}',
+                'type': 'GET',
+                success: function (response) {
+                    console.log(response)
+                    $('#addToCart').addClass('clicked');
+                    var $link = $('#addToCart');
+                    var $img = $link.find('span');
+                    $link.html('Go To Cart');
+                    $link.append($img);
+                    $('#addToCart').removeClass('btn-success');
+                    $('#addToCart').addClass('btn-info');
+                    $('#goToCart').attr('href', '{{ route('user.viewCart') }}');
+                    $('#addToCart').prop("onclick", null);
+                    if (response.data) {
+                        toastr.success('Product Added in cart.');
+                    }
+                },
+            });
+        }
     </script>
 @endpush
 @push('style')

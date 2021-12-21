@@ -4,12 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController as Product_Controller;
+use App\Http\Resources\ProductRatingResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Brand;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Offer;
 use App\Models\Product;
+use App\Models\ProductRating;
 use App\Traits\Response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -97,5 +99,11 @@ class ProductController extends Controller
             return response()->json(['result' => true]);
         }
         return response()->json(['result' => false]);
+    }
+
+    public function ProductReview(Request $request,$id)
+    {
+        $queryBuilder = ProductRating::where('product_id', $id)->paginate(10);
+        return $this->success(ProductRatingResource::collection($queryBuilder));
     }
 }

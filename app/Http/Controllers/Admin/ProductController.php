@@ -132,7 +132,7 @@ class ProductController extends Controller
         $queryBuilder = Product::query();
         $queryBuilder->onlyTrashed();
 
-        $result = Product_Controller::index($request,$queryBuilder);
+        $result = Product_Controller::index($request, $queryBuilder);
         return view('admin.product.trashBin', ['products' => $result['products'], 'request' => $result['request']]);
     }
 

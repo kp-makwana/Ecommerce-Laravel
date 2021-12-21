@@ -16,13 +16,25 @@ class ProductController extends Controller
         $result = Product_Controller::index($request);
         return view('user.Product.index', ['products' => $result['products'], 'request' => $result['request']]);
     }
+
     public function addToCart($id)
     {
         $result = Product_Controller::addToCarts($id);
-        if ($result){
+        if ($result) {
             return $this->success($result);
-        }else{
+        } else {
             return $this->error('Item not add to cart');
         }
+    }
+
+    public function buyNow($id)
+    {
+        Product_Controller::addToCarts($id);
+        return redirect()->route('user.viewCart');
+    }
+
+    public function viewCart()
+    {
+        return view('user.myCart');
     }
 }

@@ -78,7 +78,7 @@
                     <a href="{{ route('user.wishlist.index') }}">My Wishlist</a>
                 </li>
                 <li class="{{ request()->is('user/cart/*') ? 'active' : '' }}">
-                    <a href="{{ route('user.cart.index') }}">My Cart</a>
+                    <a href="{{ route('user.viewCart') }}">My Cart</a>
                 </li>
                 <li class="{{ request()->is('user/help/*') ? 'active' : '' }}">
                     <a href="{{ route('user.help.index') }}">Help & Support</a>
@@ -123,7 +123,7 @@
                             <a class="nav-link" href="#">More</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('user.cart.index') }}"><i class="fa fa-shopping-cart"></i>
+                            <a class="nav-link" href="{{ route('user.viewCart') }}"><i class="fa fa-shopping-cart"></i>
                                 cart({{ \App\Models\Cart::where('user_id',Auth::user()->id)->count() }})</a>
                         </li>
                         <li class="nav-item">
@@ -142,7 +142,7 @@
 <script src="{{asset('js/main.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
-    $(function(){
+    $(function () {
         @if(Session::has('success'))
         toastr.success("{{ Session::get('success') }}");
         @endif

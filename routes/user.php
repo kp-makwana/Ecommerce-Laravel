@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,18 +33,15 @@ Route::middleware(['auth','userCheck'])->group(function () {
         })->name('index');
     });
     Route::prefix('product')->as('product.')->group(function () {
-        Route::get('/index', [\App\Http\Controllers\User\ProductController::class,'index'])->name('index');
+        Route::get('/index', [ProductController::class, 'index'])->name('index');
         Route::get('/productDetail/{id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('productDetail');
-        Route::get('/addToCart/{id}', [\App\Http\Controllers\User\ProductController::class,'addToCart'])->name('addToCart');
+        Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])->name('addToCart');
+        Route::get('/buyNow/{id}', [ProductController::class, 'buyNow'])->name('buyNow');
     });
+    Route::get('/viewCart', [ProductController::class, 'viewCart'])->name('viewCart');
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
         Route::get('/index', function () {
             return view('user.myWishlist');
-        })->name('index');
-    });
-    Route::prefix('cart')->as('cart.')->group(function () {
-        Route::get('/index', function () {
-            return view('user.myCart');
         })->name('index');
     });
     Route::prefix('help')->as('help.')->group(function () {
