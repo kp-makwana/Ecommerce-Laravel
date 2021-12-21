@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $queryBuilder = null)
     {
-        $queryBuilder = Product::query();
-
+        if ($queryBuilder == null){
+            $queryBuilder = Product::query();
+        }
         $queryBuilder->with('productImage', 'category', 'brand');
         $queryBuilder->sortable();
 
@@ -79,8 +80,7 @@ class ProductController extends Controller
         $products = $queryBuilder->paginate($request['no_of_record']);
         $result['products'] = $products;
         $result['request'] = $request;
-
-        return view('user.Product.index', ['products' => $result['products'], 'request' => $result['request']]);
+        return $result;
     }
 
     public function show(Request $request, $id)

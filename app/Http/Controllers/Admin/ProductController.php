@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ProductController as Product_Controller;
 use App\Imports\ProductDataImport;
 use App\Models\Offer;
 use App\Models\Product;
@@ -18,91 +19,14 @@ class ProductController extends Controller
 {
     public function gridView(Request $request)
     {
-        $queryBuilder = Product::query();
-        $result = $this->productData($request, $queryBuilder);
+        $result = Product_Controller::index($request);
         return view('admin.product.product-grid', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
     public function listview(Request $request)
     {
-        $queryBuilder = Product::query();
-        $result = $this->productData($request, $queryBuilder);
+        $result = Product_Controller::index($request);
         return view('admin.product.product-list', ['products' => $result['products'], 'request' => $result['request']]);
-    }
-
-    private function productData($request, $queryBuilder)
-    {
-        // Default
-        $queryBuilder->with('productImage', 'category', 'brand');
-        $queryBuilder->sortable();
-
-        $request = $request->all();
-        //dd($request);
-
-        // Filter
-        //category
-        if (isset($request['category'])) {
-            $queryBuilder->where('category_id', $request['category']);
-        }
-
-        //brand sorting
-        if (isset($request['brands'])) {
-            $queryBuilder->where('brand_id', $request['brands']);
-        }
-
-        //rating sorting
-        if (isset($request['rating'])) {
-            if ($request['rating'] == 'none') {
-                $queryBuilder->where('avg_rating', null);
-            } else {
-                $queryBuilder->where('avg_rating', '>=', $request['rating']);
-            }
-        }
-
-        //Searching
-        if (isset($request['search'])) {
-            $search = $request['search'];
-            if (ctype_digit($search)) {
-                $queryBuilder->where(function ($query) use ($search) {
-                    $query->where('purchase_price', $search)->orWhere('sale_price', $search);
-                });
-            } else {
-                $queryBuilder->where(function ($query) use ($search) {
-                    $query->where('name', 'LIKE', '%' . $search . '%')
-                        ->orWhereHas('category', function ($q) use ($search) {
-                            $q->where('name', 'LIKE', '%' . $search . '%');
-                        })
-                        ->orWhereHas('brand', function ($q) use ($search) {
-                            $q->where('name', 'LIKE', '%' . $search . '%');
-                        });
-                });
-            }
-        }
-
-        // Sorting
-        if (isset($request['sorting'])) {
-            if (in_array($request['sorting'], config('constants.orderBy'))) {
-                if (isset($request['rating'])) {
-                    $queryBuilder->orderBy('products.avg_rating', $request['sorting']);
-                } else {
-                    $queryBuilder->orderBy('products.id', $request['sorting']);
-                }
-            }
-
-        } else {
-            $queryBuilder->orderBy('products.id', 'desc');
-        }
-
-        // pagination
-        if (!isset($request['no_of_record']) || !in_array($request['no_of_record'], config('constants.num_of_raw'))) {
-            $request['no_of_record'] = 10;
-        }
-
-        $products = $queryBuilder->paginate($request['no_of_record']);
-        $result['products'] = $products;
-        $result['request'] = $request;
-
-        return $result;
     }
 
     public function add(Request $request)
@@ -207,7 +131,8 @@ class ProductController extends Controller
     {
         $queryBuilder = Product::query();
         $queryBuilder->onlyTrashed();
-        $result = $this->productData($request, $queryBuilder);
+
+        $result = Product_Controller::index($request,$queryBuilder);
         return view('admin.product.trashBin', ['products' => $result['products'], 'request' => $result['request']]);
     }
 

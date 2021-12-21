@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     use Response;
+
+    public function index(Request $request)
+    {
+        $result = Product_Controller::index($request);
+        return view('user.Product.index', ['products' => $result['products'], 'request' => $result['request']]);
+    }
     public function addToCart($id)
     {
         $result = Product_Controller::addToCarts($id);

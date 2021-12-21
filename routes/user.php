@@ -32,7 +32,7 @@ Route::middleware(['auth','userCheck'])->group(function () {
         })->name('index');
     });
     Route::prefix('product')->as('product.')->group(function () {
-        Route::get('/index', [\App\Http\Controllers\ProductController::class,'index'])->name('index');
+        Route::get('/index', [\App\Http\Controllers\User\ProductController::class,'index'])->name('index');
         Route::get('/productDetail/{id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('productDetail');
         Route::get('/addToCart/{id}', [\App\Http\Controllers\User\ProductController::class,'addToCart'])->name('addToCart');
     });
