@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    public function index(Request $request, $queryBuilder = null)
+    public function index(Request $request, $queryBuilder = null): array
     {
         if ($queryBuilder == null) {
             $queryBuilder = Product::query();
@@ -91,7 +91,7 @@ class ProductController extends Controller
 
     }
 
-    public function addToCarts($id)
+    public function addToCarts($id): bool
     {
         $product = Product::find($id);
         $cart = Cart::where('user_id', Auth::user()->id)->where('product_id', $product->id)->first();

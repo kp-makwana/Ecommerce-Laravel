@@ -23,12 +23,12 @@ class LoginController extends Controller
         }
     }
 
-    public function userDetails(Request $request)
+    public function userDetails(Request $request): UsersResource
     {
         return (new UsersResource(auth()->user()));
     }
 
-    public function logout()
+    public function logout(): \Illuminate\Http\JsonResponse
     {
         auth()->user()->tokens()->delete();
         return $this->success(null, "Logout successfully.");

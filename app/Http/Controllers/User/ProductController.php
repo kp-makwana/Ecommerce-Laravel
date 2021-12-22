@@ -17,7 +17,7 @@ class ProductController extends Controller
         return view('user.Product.index', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
-    public function addToCart($id)
+    public function addToCart($id): \Illuminate\Http\JsonResponse
     {
         $result = Product_Controller::addToCarts($id);
         if ($result) {
@@ -27,7 +27,7 @@ class ProductController extends Controller
         }
     }
 
-    public function buyNow($id)
+    public function buyNow($id): \Illuminate\Http\RedirectResponse
     {
         Product_Controller::addToCarts($id);
         return redirect()->route('user.viewCart');

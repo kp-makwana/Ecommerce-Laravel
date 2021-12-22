@@ -107,7 +107,7 @@ class ProductController extends Controller
         return view('admin.product.bulkProductUpload');
     }
 
-    public function productStockUpdate(Request $request)
+    public function productStockUpdate(Request $request): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'productUpdate' => 'required|mimes:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.binary.macroEnabled.12,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12,xlsx,text/csv,text/plain,application/csv,application/json']);
@@ -116,7 +116,7 @@ class ProductController extends Controller
 
     }
 
-    public function demoSheetDownload()
+    public function demoSheetDownload(): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return Excel::download(new ProductExport(), 'product_bulk_upload_demo.xlsx');
     }

@@ -62,7 +62,7 @@ class ProductController extends Controller
         return response()->json($category);
     }
 
-    public function offers($id)
+    public function offers($id): \Illuminate\Http\JsonResponse
     {
         $count = Offer::where('product_id', $id)->orWhere('status', 'active')->count();
         if ($count > 0) {
@@ -95,15 +95,16 @@ class ProductController extends Controller
 
     public function checkInCart($id): \Illuminate\Http\JsonResponse
     {
-        if (Cart::where('user_id', Auth::user()->id)->where('product_id', $id)->first()) {
-            return response()->json(['result' => true]);
+        $count = Cart::where('user_id', Auth::user()->id)->where('product_id', $id)->count();
+        if ($count > 0) {
+            return response()->json(['result' => true, 'count' => $count]);
         }
         return response()->json(['result' => false]);
     }
 
-    public function ProductReview(Request $request,$id)
+    public function ProductReview(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        $queryBuilder = ProductRating::where('product_id', $id)->paginate(10);
+        $queryBuilder = ProductRating::where('product_id', $id)->orderBy('created_at', 'DESC')->paginate(10);
         return $this->success(ProductRatingResource::collection($queryBuilder));
     }
 }
