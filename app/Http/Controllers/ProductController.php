@@ -106,4 +106,9 @@ class ProductController extends Controller
         }
         return false;
     }
+
+    public function cartList()
+    {
+        return Cart::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+    }
 }

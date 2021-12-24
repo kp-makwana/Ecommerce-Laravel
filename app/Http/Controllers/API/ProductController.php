@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController as Product_Controller;
+use App\Http\Resources\CartResource;
 use App\Http\Resources\ProductRatingResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Brand;
@@ -93,6 +94,36 @@ class ProductController extends Controller
         }
     }
 
+    public function cartQuantityAdd($id): \Illuminate\Http\JsonResponse
+    {
+        $cart = Cart::where('product_id', $id)->where('user_id', Auth::user()->id)->first();
+        if ($cart->quantity < 5) {
+            $cart->quantity++;
+            $cart->save();
+            return $this->success(['quantity' => $cart->quantity], 'Change Quantity in ' . $cart->quantity);
+        }
+        return $this->error('Were sorry! Only 5 unit(s) allowed in each order');
+    }
+
+    public function cartQuantityRemove($id): \Illuminate\Http\JsonResponse
+    {
+        $cart = Cart::where('product_id', $id)->where('user_id', Auth::user()->id)->first();
+        if ($cart->quantity > 1) {
+            $cart->quantity--;
+            $cart->save();
+            return $this->success(['quantity' => $cart->quantity], 'Change Quantity in ' . $cart->quantity);
+        }
+        return $this->error('Only 1 Quantity less.');
+    }
+
+    public function removeFromCart($id): \Illuminate\Http\JsonResponse
+    {
+        if (Cart::where('product_id', $id)->where('user_id', Auth::user()->id)->delete()) {
+            return response()->json(['result' => 'Successfully removed in cart list.']);
+        }
+        return $this->error('Product not found in cart');
+    }
+
     public function checkInCart($id): \Illuminate\Http\JsonResponse
     {
         $count = Cart::where('user_id', Auth::user()->id)->where('product_id', $id)->count();
@@ -102,9 +133,14 @@ class ProductController extends Controller
         return response()->json(['result' => false]);
     }
 
-    public function ProductReview(Request $request, $id): \Illuminate\Http\JsonResponse
+    public function ProductReview(Request $request, $id): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         $queryBuilder = ProductRating::where('product_id', $id)->orderBy('created_at', 'DESC')->paginate(10);
-        return $this->success(ProductRatingResource::collection($queryBuilder));
+        return ProductRatingResource::collection($queryBuilder);
+    }
+
+    public function cartList(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        return CartResource::collection(Product_Controller::cartList());
     }
 }

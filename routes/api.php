@@ -34,6 +34,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
     Route::get('offers/{id}', [ProductController::class, 'offers']);
+    Route::prefix('cart')->as('cart.')->group(function () {
+        Route::get('/cartList', [ProductController::class, 'cartList']);
+        Route::get('/cartQuantityAdd/{id}', [ProductController::class, 'cartQuantityAdd']);
+        Route::get('/cartQuantityRemove/{id}', [ProductController::class, 'cartQuantityRemove']);
+        Route::get('/removeFromCart/{id}', [ProductController::class, 'removeFromCart']);
+    });
+    Route::get('cartList', [ProductController::class, 'cartList']);
 
     Route::get('/brand', [ProductController::class, 'brand']);
     Route::get('/category', [ProductController::class, 'category']);

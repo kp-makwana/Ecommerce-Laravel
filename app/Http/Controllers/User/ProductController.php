@@ -35,6 +35,7 @@ class ProductController extends Controller
 
     public function viewCart()
     {
-        return view('user.myCart');
+        $products = Product_Controller::cartList();
+        return view('user.myCart',['products'=>$products]);
     }
 }
