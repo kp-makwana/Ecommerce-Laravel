@@ -41,7 +41,7 @@ class CartResource extends JsonResource
             'product_id' => $this->product_id,
             'product_name' => $this->product->name,
             'product_image' => ($this->product_image[0]) ? asset('storage/ProductImages/' . $this->product_image[0]->name) : asset('images/product.png'),
-            'product_price' => $this->product->sale_price,
+            'product_price' => round($this->product->sale_price),
             'product_count' => $this->quantity,
             'applied_offer' => $offer ? $offer : null,
             'discountable_price' => $price,

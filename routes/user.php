@@ -3,6 +3,7 @@
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,7 @@ Route::middleware(['auth','userCheck'])->group(function () {
         Route::get('/index', function () {
             return view('user.myWishlist');
         })->name('index');
+        Route::get('/addOrRemoveWishList/{id}', [WishListController::class, 'addOrRemoveWishList'])->name('addOrRemoveWishList');
     });
     Route::prefix('help')->as('help.')->group(function () {
         Route::get('/index', function () {

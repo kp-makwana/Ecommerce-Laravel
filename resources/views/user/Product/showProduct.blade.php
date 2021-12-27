@@ -13,7 +13,16 @@
             </ul> <!-- cd-item-wrapper -->
         </li>
         <li class="col-md-6 py-4 px-5 bg-light text-black-50">
-            <h5 class="mb-1"><strong>{{ $product->name }}</strong></h5>
+            <div class="col-md-12 row">
+                <div class="col-md-10">
+                    <h5 class="mb-1"><strong>{{ $product->name }}</strong></h5>
+                </div>
+                <div class="col-md-2">
+                    <div
+                        class="heart {{ \App\Models\WishList::where('product_id','=',$product->id)->first() ? 'is-active':'' }}"
+                        onclick="addToWishList()"></div>
+                </div>
+            </div>
             <div class="mb-2">
                 <span
                     class="fa px-2 py-2 text-white rounded my-2 fa-star bg-{{ $bladeService->ratingClass($product->avg_rating) }}">&nbsp;&nbsp;{{$product->avg_rating ?? "N/A"}}</span>
@@ -224,6 +233,18 @@
             });
         }
     </script>
+    <script>
+
+        function addToWishList() {
+            $.ajax({
+                'url': '{{ route('user.wishlist.addOrRemoveWishList',$product->id) }}',
+                'type': 'GET',
+                success: function (response) {
+                    $(".heart").toggleClass("is-active");
+                },
+            });
+        }
+    </script>
 @endpush
 @push('style')
     <style>
@@ -313,6 +334,30 @@
                 left: 14%;
                 top: 28%
             }
+        }
+    </style>
+    <style>
+        .heart {
+            width: 100px;
+            height: 100px;
+            background: url("{{ asset('images/wishList.png') }}") no-repeat;
+            background-position: 0 0;
+            cursor: pointer;
+            transition: background-position 1s steps(28);
+            transition-duration: 0s;
+        }
+
+        .heart.is-active {
+            transition-duration: 1s;
+            background-position: -2800px 0;
+        }
+
+        .stage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
         }
     </style>
 @endpush

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\WishListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +42,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/removeFromCart/{id}', [ProductController::class, 'removeFromCart']);
     });
     Route::get('cartList', [ProductController::class, 'cartList']);
+
+    Route::prefix('wishlist')->as('wishlist.')->group(function () {
+        Route::get('/checkInWishList/{id}', [WishListController::class, 'checkInWishList']);
+        Route::get('/addOrRemoveWishList/{id}', [WishListController::class, 'addOrRemoveWishList']);
+    });
 
     Route::get('/brand', [ProductController::class, 'brand']);
     Route::get('/category', [ProductController::class, 'category']);
