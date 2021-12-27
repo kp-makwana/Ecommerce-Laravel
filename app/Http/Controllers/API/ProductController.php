@@ -97,12 +97,15 @@ class ProductController extends Controller
     public function cartQuantityAdd($id): \Illuminate\Http\JsonResponse
     {
         $cart = Cart::where('product_id', $id)->where('user_id', Auth::user()->id)->first();
-        if ($cart->quantity < 5) {
-            $cart->quantity++;
-            $cart->save();
-            return $this->success(['quantity' => $cart->quantity], 'Change Quantity in ' . $cart->quantity);
+        if ($cart) {
+            if($cart->quantity < 5){
+                $cart->quantity++;
+                $cart->save();
+                return $this->success(['quantity' => $cart->quantity], 'Change Quantity in ' . $cart->quantity);
+            }
+            return $this->error('Were sorry! Only 5 unit(s) allowed in each order');
         }
-        return $this->error('Were sorry! Only 5 unit(s) allowed in each order');
+        return $this->error('Product Not Found in Cart.');
     }
 
     public function cartQuantityRemove($id): \Illuminate\Http\JsonResponse
