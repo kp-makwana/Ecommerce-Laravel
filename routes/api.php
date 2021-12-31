@@ -52,3 +52,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/category', [ProductController::class, 'category']);
 
 });
+
+Route::get('/test', [ProductController::class, 'index']);
+Route::get('/users',function (){
+    return response()->json(\App\Models\User::all());
+});
+Route::get('/users/{id}',function ($id){
+    return response()->json(\App\Models\User::find($id));
+});

@@ -13,6 +13,7 @@ use App\Models\Category;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Models\ProductRating;
+use App\Models\WishList;
 use App\Traits\Response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -44,7 +45,9 @@ class ProductController extends Controller
                 'description' => $product->description,
                 'images' => collect($product->productImage)->map(function ($q) {
                     return asset('storage/ProductImages/' . $q->name);
-                })
+                }),
+                'in_wishList'=> (bool)WishList::where('product_id',$product->id)->where('user_id',Auth::user()->id)->first(),
+                'in_cart'=>(bool)Cart::where('product_id',$product->id)->where('user_id',Auth::user()->id)->first()
             ]);
         } else {
             return $this->error('Product Not Found');

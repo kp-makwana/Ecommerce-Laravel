@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\User\DashboardController;
-use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth','userCheck'])->group(function () {
+Route::middleware(['auth', 'userCheck'])->group(function () {
     Route::prefix('dashboard')->as('dashboard.')->group(function () {
         Route::get('/index', [DashboardController::class, 'index'])->name('index');
     });
@@ -37,6 +37,7 @@ Route::middleware(['auth','userCheck'])->group(function () {
         Route::get('/index', [ProductController::class, 'index'])->name('index');
         Route::get('/productDetail/{id}', [\App\Http\Controllers\ProductController::class, 'show'])->name('productDetail');
         Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])->name('addToCart');
+        Route::get('/removeFromCart/{id}', [ProductController::class, 'removeFromCart'])->name('removeFromCart');
         Route::get('/buyNow/{id}', [ProductController::class, 'buyNow'])->name('buyNow');
     });
     Route::get('/viewCart', [ProductController::class, 'viewCart'])->name('viewCart');
