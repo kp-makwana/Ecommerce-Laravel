@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Http\Request;
@@ -20,11 +21,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [\App\Http\Controllers\API\Auth\LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/userDetails', [\App\Http\Controllers\API\Auth\LoginController::class, 'userDetails']);
-    Route::get('/logout', [\App\Http\Controllers\API\Auth\LoginController::class, 'logout']);
+    Route::get('/userDetails', [LoginController::class, 'userDetails']);
+    Route::get('/logout', [LoginController::class, 'logout']);
 
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index']);
@@ -48,10 +49,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/addOrRemoveWishList/{id}', [WishListController::class, 'addOrRemoveWishList']);
     });
     Route::prefix('user')->as('user.')->group(function () {
-        Route::get('/profile', [\App\Http\Controllers\API\Auth\LoginController::class, 'userDetails']);
-        Route::post('/profileUpdate', [\App\Http\Controllers\API\Auth\LoginController::class, 'userUpdate']);
+        Route::get('/profile', [LoginController::class, 'userDetails']);
+        Route::post('/profileUpdate', [LoginController::class, 'userUpdate']);
+        Route::post('/checkPassword', [LoginController::class, 'checkPassword']);
+        Route::post('/changePassword', [LoginController::class, 'changePassword']);
     });
-
 
     Route::get('/brand', [ProductController::class, 'brand']);
     Route::get('/category', [ProductController::class, 'category']);

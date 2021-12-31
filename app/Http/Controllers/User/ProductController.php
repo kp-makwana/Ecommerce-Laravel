@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ProductController as Product_Controller;
 use App\Models\Cart;
 use App\Traits\Response;
 use Illuminate\Http\Request;
@@ -15,13 +14,13 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $result = Product_Controller::index($request);
+        $result = (new \App\Http\Controllers\ProductController())->index($request);
         return view('user.Product.index', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
     public function addToCart($id): \Illuminate\Http\JsonResponse
     {
-        $result = Product_Controller::addToCarts($id);
+        $result = (new \App\Http\Controllers\ProductController())->addToCarts($id);
         if ($result) {
             return $this->success($result);
         } else {
@@ -37,25 +36,25 @@ class ProductController extends Controller
 
     public function buyNow($id): \Illuminate\Http\RedirectResponse
     {
-        Product_Controller::addToCarts($id);
+        (new \App\Http\Controllers\ProductController())->addToCarts($id);
         return redirect()->route('user.viewCart');
     }
 
     public function viewCart()
     {
         $carts = Cart::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
-        $data = $carts->map(function ($query){
+        $data = $carts->map(function ($query) {
             return [
-                'id'=>$query->id,
-                'product_name'=>$query->product->name,
-                'count'=>$query->quantity,
-                'offer'=>$query->offer->map(function ($q){
+                'id' => $query->id,
+                'product_name' => $query->product->name,
+                'count' => $query->quantity,
+                'offer' => $query->offer->map(function ($q) {
                     return [
-                        'offer_id'=>$q->id,
-                        'offer_name'=>$q->name,
+                        'offer_id' => $q->id,
+                        'offer_name' => $q->name,
                     ];
                 }),
-                'price'=>10000,
+                'price' => 10000,
             ];
         });
         $total_items = $carts->count();

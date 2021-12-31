@@ -4,10 +4,13 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\UserUpdateRequest;
+use App\Http\Requests\PasswordRequest;
 use App\Http\Resources\UsersResource;
+use App\Models\User;
 use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -56,5 +59,24 @@ class LoginController extends Controller
     {
         (new \App\Http\Controllers\UserController)->profileUpdate($request);
         return Response()->json(['message' => 'profile data update successfully']);
+    }
+
+    public function checkPassword(Request $request): \Illuminate\Http\JsonResponse
+    {
+        if (Hash::check($request->password, Auth::user()->getAuthPassword())) {
+            return Response()->json(['result' => true, 'message' => 'Current password match.']);
+        }
+        return Response()->json(['result' => false, 'message' => 'Current password Not match.']);
+    }
+
+    public function changePassword(PasswordRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $password = $request->password;
+        $user = User::find(Auth::user()->id);
+        $user->password = Hash::make($password);
+        if ($user->save()) {
+            return Response()->json(['result' => true, 'message' => 'Password change successfully.']);
+        }
+        return Response()->json(['result' => false, 'message' => 'Password change fail  .']);
     }
 }
