@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class WishListController extends Controller
 {
+
+    public function index()
+    {
+        return response()->json(WishList::all());
+    }
+
     public function addOrRemoveWishList($id): \Illuminate\Http\JsonResponse
     {
         $result = WishList::where('product_id', $id)->first();
@@ -27,9 +33,8 @@ class WishListController extends Controller
     {
         $result = WishList::where('product_id', $id)->first();
         if ($result) {
-            return response()->json(['result'=>true,'message'=>'item Found in wishList']);
+            return response()->json(['result' => true, 'message' => 'item Found in wishList']);
         }
-        return response()->json(['result'=>false,'message'=>'item Not Found in wishList.']);
+        return response()->json(['result' => false, 'message' => 'item Not Found in wishList.']);
     }
-
 }

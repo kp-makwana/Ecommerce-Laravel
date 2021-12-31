@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API;
 
 use App\Traits\Response;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
@@ -39,7 +42,6 @@ class UserUpdateRequest extends FormRequest
 
     public function messages()
     {
-
         return [
             'f_name.max' => 'Enter Maximum 25 character',
             'f_name.min' => 'Enter Minimum 3 character',
@@ -49,5 +51,10 @@ class UserUpdateRequest extends FormRequest
             'email.Rule' => 'Email Not in Proper Format',
             'zipcode' => 'Zipcode is Must Be 6 Number',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException($this->error($validator->errors()->first(), JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

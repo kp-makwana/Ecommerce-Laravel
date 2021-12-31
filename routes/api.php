@@ -44,9 +44,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('cartList', [ProductController::class, 'cartList']);
 
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
-        Route::get('/checkInWishList/{id}', [WishListController::class, 'checkInWishList']);
+        Route::get('/index', [WishListController::class, 'index']);
         Route::get('/addOrRemoveWishList/{id}', [WishListController::class, 'addOrRemoveWishList']);
     });
+    Route::prefix('user')->as('user.')->group(function () {
+        Route::get('/profile', [\App\Http\Controllers\API\Auth\LoginController::class, 'userDetails']);
+        Route::post('/profileUpdate', [\App\Http\Controllers\API\Auth\LoginController::class, 'userUpdate']);
+    });
+
 
     Route::get('/brand', [ProductController::class, 'brand']);
     Route::get('/category', [ProductController::class, 'category']);
@@ -54,9 +59,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/test', [ProductController::class, 'index']);
-Route::get('/users',function (){
+Route::get('/users', function () {
     return response()->json(\App\Models\User::all());
 });
-Route::get('/users/{id}',function ($id){
+Route::get('/users/{id}', function ($id) {
     return response()->json(\App\Models\User::find($id));
 });
