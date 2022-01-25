@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Traits\Response;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,22 +43,38 @@ class ProductController extends Controller
 
     public function viewCart()
     {
-        $carts = Cart::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
-        $data = $carts->map(function ($query) {
+        $now = now();
+
+//        $items = Cart::with('product','product_image','offer')
+//            ->where('user_id', Auth::user()->id)
+//            ->orderBy('created_at', 'DESC')
+//            ->get();
+
+        $items = Cart::with('offer',function ($offer) use($now){
+            $offer->where('status','active')
+                ->where('start_date', '<=', $now)
+                ->where('end_date', '>=', $now);
+        })
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        $carts = $items->map(function ($query) use ($now) {
             return [
                 'id' => $query->id,
                 'product_name' => $query->product->name,
                 'count' => $query->quantity,
-                'offer' => $query->offer->map(function ($q) {
-                    return [
-                        'offer_id' => $q->id,
-                        'offer_name' => $q->name,
-                    ];
-                }),
+                'offer' => $query->offer,
+                'product_image'=> asset('storage/ProductImages/' . $query->product_image[0]->name),
                 'price' => 10000,
             ];
         });
-        $total_items = $carts->count();
-        return view('user.myCart', ['carts' => $carts, 'total_items' => $total_items]);
+        $data = [
+            'price' => 7500,
+            'total_item' => $items->count(),
+            'discount' => 749,
+            'delivery_Charges' => 499,
+            'total_price' => 7549
+        ];
+        return view('user.myCart', ['carts' => $carts, 'data' => $data]);
     }
 }

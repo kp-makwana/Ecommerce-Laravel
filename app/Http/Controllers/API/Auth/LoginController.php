@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\UserSignupRequest;
 use App\Http\Requests\API\UserUpdateRequest;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Resources\UsersResource;
+use App\Models\Address;
 use App\Models\User;
 use App\Traits\Response;
 use Illuminate\Http\Request;
@@ -27,6 +29,37 @@ class LoginController extends Controller
         }
     }
 
+    public function signup(UserSignupRequest $request)
+    {
+        $f_name = $request->input('first_name');
+        $l_name = $request->input('last_name');
+        $dob = $request->input('dob');
+        $country_code = $request->input('country_code');
+        $phone = $request->input('phone');
+        $gender = $request->input('gender');
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $user = new User();
+        $user->f_name = $f_name;
+        $user->l_name = $l_name;
+        $user->dob = $dob;
+        $user->country_code = $country_code;
+        $user->contact_no = $phone;
+        $user->gender = $gender;
+        $user->email = $email;
+        $user->username = $email;
+        $user->password = Hash::make($password);
+        $user->save();
+
+        $address = new Address;
+        $address->user_id = $user->id;
+        $address->save();
+
+        $token = $user->createToken('auth_token', [request()->getClientIp()])->plainTextToken;
+        return (new UsersResource($user))->additional(['token' => $token]);
+    }
+
     public function logout(): \Illuminate\Http\JsonResponse
     {
         auth()->user()->tokens()->delete();
@@ -40,12 +73,14 @@ class LoginController extends Controller
         $data = [
             'first_name' => $user->f_name,
             'last_name' => $user->l_name,
-            'profile_image' => asset('storage/UserProfile/' . $user->ProfilePicture->name),
+            'profile_image' => asset(($user->ProfilePicture) ? 'storage/UserProfile/' . $user->ProfilePicture->name:'images/user.png'),
             'profile_complete' => '95%',
+            'details'=>$user->description,
             'dob' => $user->dob,
-            'phone' => '+' . $user->PhoneNumber,
+            'phone' => $user->contact_no,
             'gender' => $user->gender,
             'email' => $user->email,
+            'country_code'=>$user->country_code,
             'str_address' => $address->address,
             'zipcode' => $address->zipcode,
             'city' => $address->city->name ?? null,
@@ -78,5 +113,10 @@ class LoginController extends Controller
             return Response()->json(['result' => true, 'message' => 'Password change successfully.']);
         }
         return Response()->json(['result' => false, 'message' => 'Password change fail  .']);
+    }
+
+    public function checkAuth(): bool
+    {
+        return Auth::check();
     }
 }

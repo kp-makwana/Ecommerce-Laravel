@@ -8,43 +8,52 @@
                         <div class="col">
                             <h4><b>Shopping Cart</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">{{ $total_items }} items</div>
+                        <div class="col align-self-center text-right text-muted">{{ $data['total_item'] }} items</div>
                     </div>
                 </div>
-                @forelse($carts as $item)
+            @foreach($carts as $item)
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-2"><img class="img-fluid"
-                                                    src="{{ asset('/storage/ProductImages/'.$item->product_image[0]->name) }}">
+                                                    src="{{ $item['product_image'] }}">
                             </div>
                             <div class="col">
-                                <div class="row text-muted">{{ $item->product->name }}</div>
-                                <div class="row">Cotton T-shirt</div>
+                                <div class="row text-muted">{{ $item['product_name'] }}</div>
+                                @if(count($item['offer']) > 0)
+                                    <div class="text-success" data-toggle="tooltip" data-placement="bottom"
+                                             title="{{ $item['offer'] }}">
+                                        {{ count($item['offer'])}} Offers applied <span class="fa fa-info"></span>
+                                    </div>
+                                @endif
                             </div>
-                            <div class="col"><a href="#">-</a><a href="#" class="border">{{ $item->quantity }}</a><a
+                            <div class="col"><a href="#">-</a><a href="#" class="border">{{ $item['count'] }}</a><a
                                     href="#">+</a></div>
                             <div class="col">
-                                &#8377; {{ $item->product->sale_price }}
+                                &#8377; {{ $item['price'] }}
                                 <span class="close">
                                     <a href="#delete_product" class="passingID"
-                                       data-id="{{ route('user.product.removeFromCart',$item->id) }}"
+                                       data-id="{{ route('user.product.removeFromCart',$item['id']) }}"
                                        data-bs-toggle="modal">&#10005;</a>
                                 </span>
                             </div>
                         </div>
                     </div>
-                @empty
+                {{--@empty
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="row text-center">
                                 <img class="img-fluid" src="{{ asset('images/emptyCart.png') }}" alt="">
                                 <p>Your Card is empty</p>
-                                <a href="{{ route('user.product.index') }}"><button class="btn btn-info">Shop now</button></a>
+                                <a href="{{ route('user.product.index') }}">
+                                    <button class="btn btn-info">Shop now</button>
+                                </a>
                             </div>
                         </div>
                     </div>
-                @endforelse
-                <div class="back-to-shop"><a href="{{ route('user.product.index') }}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
+                @endforelse--}}
+                @endforeach
+                <div class="back-to-shop"><a href="{{ route('user.product.index') }}">&leftarrow;</a><span
+                        class="text-muted">Back to shop</span></div>
             </div>
             <div class="col-md-4 summary">
                 <div>
@@ -52,23 +61,23 @@
                 </div>
                 <hr>
                 <div class="row py-2">
-                    <div class="col" style="padding-left:0;">ITEMS ({{ $total_items }})</div>
-                    <div class="col text-right">&#8377;500</div>
+                    <div class="col" style="padding-left:0;">ITEMS ({{ $data['total_item'] }})</div>
+                    <div class="col text-right">&#8377;{{ $data['price'] }}</div>
                 </div>
                 <div class="row py-2">
-                    <div class="col" style="padding-left:0;">Discount </div>
-                    <div class="col text-right">&#8377;500</div>
+                    <div class="col" style="padding-left:0;">Discount</div>
+                    <div class="col text-right">&#8377;{{ $data['discount'] }}</div>
                 </div>
                 <div class="row py-2">
                     <div class="col" style="padding-left:0;">Delivery Charges &#8377;500</div>
-                    <div class="col text-right">&#8377;500</div>
+                    <div class="col text-right">&#8377;{{ $data['delivery_Charges'] }}</div>
                 </div>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right">&#8377;5000</div>
+                    <div class="col text-right">&#8377;{{ $data['total_price'] }}</div>
                 </div>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col text-success">You will save ₹849 on this order</div>
+                    <div class="col text-success">You will save ₹{{ $data['discount'] }} on this order</div>
                 </div>
                 <button class="btn" id="checkout">PLACE ORDER</button>
             </div>
@@ -78,7 +87,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are you sure you want to remove this item?</strong></h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are you sure you want to remove this
+                            item?</strong></h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                        style="font-size: 18px;">x</a>
                 </div>
@@ -284,4 +294,5 @@
             background-position-y: center
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('css/tooltip.css') }}">
 @endpush

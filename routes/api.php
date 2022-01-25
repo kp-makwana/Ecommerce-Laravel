@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\API\CommonController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\WishListController;
@@ -22,10 +24,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/signup', [LoginController::class, 'signup']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/userDetails', [LoginController::class, 'userDetails']);
     Route::get('/logout', [LoginController::class, 'logout']);
+    Route::get('/checkAuth', [LoginController::class, 'checkAuth']);
 
     Route::prefix('product')->as('product.')->group(function () {
         Route::get('/index', [ProductController::class, 'index']);
@@ -55,6 +59,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/changePassword', [LoginController::class, 'changePassword']);
     });
 
+    Route::get('fetchCountry', [CommonController::class, 'fetchCountry'])->name('fetchCountry');
+    Route::get('getStates', [CommonController::class, 'fetchStates'])->name('fetchStates');
+    Route::get('getCities', [CommonController::class, 'fetchCities'])->name('fetchCities');
     Route::get('/brand', [ProductController::class, 'brand']);
     Route::get('/category', [ProductController::class, 'category']);
 

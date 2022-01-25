@@ -10,7 +10,6 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -124,10 +123,9 @@
                             <a class="nav-link" href="#">More</a>
                         </li>
                         <li class="nav-item">
+                            @php $count = \App\Models\Cart::where('user_id',Auth::user()->id)->count()@endphp
                             <a class="nav-link" href="{{ route('user.viewCart') }}"><i class="fa fa-shopping-cart"></i>
-                                cart({{ \App\Models\Cart::where('user_id',Auth::user()->id)->count() }})</a>
-                        </li>
-                        <li class="nav-item">
+                                cart{{ ($count>0)?('('.$count.')'):'' }}</a>
                         </li>
                     </ul>
                 </div>
