@@ -12,7 +12,7 @@
 -   First of clone the project in git if you already install git then open Terminal(Linux) or CMD(Window) and change your directory if you need and use this command and clone the project
 
 
-    git clone https://github.com/kiranmakwana/Ecommerce-Laravel 
+    git clone https://github.com/kp-makwana/Ecommerce-Laravel 
 
 -   If you are not Install the git  the download the zip file and Extract file
 -   Create ``.env`` File and copy ``.env.example`` file data and setup data
