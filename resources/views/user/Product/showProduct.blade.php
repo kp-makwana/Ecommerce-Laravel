@@ -57,10 +57,9 @@
                 $result = (App\Models\Cart::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first());
             @endphp
             @if($result != null)
-                <a id="goToCart" href="{{ route('user.viewCart') }}">
+                <a id="goToCart" href="{{ route('user.cart.index') }}">
                     <button id="addToCart" class="btn btn-info cart-button px-5 clicked"><span
-                            class="dot">{{ $result->quantity }}</span>Go To Cart
-                    </button>
+                            class="dot">{{ $result->quantity }}</span>Go To Cart</button>
                 </a>
 
             @else
@@ -73,7 +72,7 @@
             @endif
         </div>
         <div class="px-5">
-            <a href="{{ route('user.product.buyNow',$product->id) }}">
+            <a href="#">
                 <button class="btn buttons btn-primary cart-button px-5">Buy Now</button>
             </a>
         </div>
@@ -334,30 +333,6 @@
                 left: 14%;
                 top: 28%
             }
-        }
-    </style>
-    <style>
-        .heart {
-            width: 100px;
-            height: 100px;
-            background: url("{{ asset('images/wishList.png') }}") no-repeat;
-            background-position: 0 0;
-            cursor: pointer;
-            transition: background-position 1s steps(28);
-            transition-duration: 0s;
-        }
-
-        .heart.is-active {
-            transition-duration: 1s;
-            background-position: -2800px 0;
-        }
-
-        .stage {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
         }
     </style>
 @endpush

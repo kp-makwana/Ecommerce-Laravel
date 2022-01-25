@@ -4,7 +4,7 @@
         <div class="card-header">
             <div class="text-dark">
                 <strong>
-                    Product Stock update Demo Sheet Dwonload
+                    Product Stock update Demo Sheet Download
                 </strong>
             </div>
         </div>
