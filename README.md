@@ -25,19 +25,19 @@
 -   Use Command To Setup Project 
 
 
-    composer install
+    `composer install`
 
-    php artisan key:generate
+    `php artisan key:generate`
 
-    php artisan migrate --seed
+    `php artisan migrate --seed`
 
-    php artisan storage:link
+    `php artisan storage:link`
 
 
 -   Start server
 
 
-    php artisan serve
+    `php artisan serve`
 
 
 -   Go To ``http://127.0.0.1:8000/`` and user Email/Username :``ecommerce@user.com`` & Password:``password``
