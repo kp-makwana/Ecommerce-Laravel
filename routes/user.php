@@ -41,6 +41,11 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
         Route::get('/buyNow/{id}', [ProductController::class, 'buyNow'])->name('buyNow');
     });
     Route::get('/viewCart', [ProductController::class, 'viewCart'])->name('viewCart');
+    Route::prefix('cart')->as('cart.')->group(function () {
+        Route::get('/cartQuantityAdd/{id}', [ProductController::class, 'cartQuantityAdd'])->name('cartQuantityAdd');
+        Route::get('/cartQuantityRemove/{id}', [ProductController::class, 'cartQuantityRemove'])->name('cartQuantityRemove');
+    });
+
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
         Route::get('/index', function () {
             return view('user.myWishlist');

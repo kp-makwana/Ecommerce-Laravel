@@ -21,14 +21,19 @@
                                 <div class="row text-muted">{{ $item['product_name'] }}</div>
                                 @if(count($item['offer']) > 0)
                                     <div class="text-success" data-toggle="tooltip" data-placement="bottom"
-                                         title="{{ $item['offer'] }}">
+                                         title="{{ $item['offer'] }}"
+                                    >
                                         {{ count($item['offer'])}} Offers applied <span class="fa fa-info"></span>
                                     </div>
                                 @endif
                             </div>
                             <div class="col">
-                                <a href="#">-</a><a href="#" class="border">{{ $item['count'] }}</a><a
-                                    href="#">+</a></div>
+                                <a href="#" id="cartQuantityRemove"
+                                   class={{ ($item['count'] == 1) ? ' custom-disable':'' }}>-</a>
+                                <a href="#" class="border">{{ $item['count'] }}</a>
+                                <a href="#" id="cartQuantityAdd"
+                                   data-id="{{ route('user.cart.cartQuantityAdd',$item['product_id']) }}"
+                                >+</a></div>
                             <div class="col">
                                 <div class="">
                                     <b class="mr-4">
@@ -134,7 +139,27 @@
             $('#delete_product').modal('show');
         });
     </script>
+    <script>
+        $("#cartQuantityAdd").click(function () {
+            const url = $(this).attr('data-id');
+            $.ajax({
+                'url': url,
+                'type': 'GET',
+                success: function (response) {
+                    $(".heart").toggleClass("is-active");
+                },
+            });
+        });
+    </script>
 @endpush
 @push('style')
     <link rel="stylesheet" href="{{ asset('css/viewcart.css') }}">
+    <style>
+        .custom-disable {
+            pointer-events: none;
+            cursor: default;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
 @endpush
