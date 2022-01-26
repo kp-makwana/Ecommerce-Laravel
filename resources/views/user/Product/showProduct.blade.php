@@ -57,9 +57,10 @@
                 $result = (App\Models\Cart::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first());
             @endphp
             @if($result != null)
-                <a id="goToCart" href="{{ route('user.cart.index') }}">
+                <a id="goToCart" href="{{ route('user.viewCart') }}">
                     <button id="addToCart" class="btn btn-info cart-button px-5 clicked"><span
-                            class="dot">{{ $result->quantity }}</span>Go To Cart</button>
+                            class="dot">{{ $result->quantity }}</span>Go To Cart
+                    </button>
                 </a>
 
             @else
