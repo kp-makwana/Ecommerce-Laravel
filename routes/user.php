@@ -44,6 +44,7 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
     Route::prefix('cart')->as('cart.')->group(function () {
         Route::get('/cartQuantityAdd/{id}', [ProductController::class, 'cartQuantityAdd'])->name('cartQuantityAdd');
         Route::get('/cartQuantityRemove/{id}', [ProductController::class, 'cartQuantityRemove'])->name('cartQuantityRemove');
+        Route::get('/address', [ProductController::class, 'address'])->name('address');
     });
 
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
