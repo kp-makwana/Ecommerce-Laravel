@@ -29,10 +29,16 @@
                             </div>
                             <div class="col">
                                 <a href="#" id="cartQuantityRemove"
-                                   class={{ ($item['count'] == 1) ? ' custom-disable':'' }}>-</a>
-                                <a href="#" class="border">{{ $item['count'] }}</a>
+                                   data-url="{{ route('user.cart.cartQuantityRemove',$item['product_id']) }}"
+                                   data-id="{{ $item['product_id'] }}"
+                                   class="{{ ($item['count'] <= 1) ? 'cartQuantityRemove custom-disable':'cartQuantityRemove' }}"
+                                >-</a>
+                                <a href="#" id="count_{{ $item['product_id'] }}" class="border"
+                                   data-id="{{ $item['product_id'] }}">{{ $item['count'] }}</a>
                                 <a href="#" id="cartQuantityAdd"
-                                   data-id="{{ route('user.cart.cartQuantityAdd',$item['product_id']) }}"
+                                   class="{{ ($item['count'] == 5) ? 'cartQuantityAdd custom-disable':'cartQuantityAdd' }}"
+                                   data-url="{{ route('user.cart.cartQuantityAdd',$item['product_id']) }}"
+                                   data-id="{{ $item['product_id'] }}"
                                 >+</a></div>
                             <div class="col">
                                 <div class="">
@@ -140,14 +146,28 @@
         });
     </script>
     <script>
-        $("#cartQuantityAdd").click(function () {
-            const url = $(this).attr('data-id');
+        $(".cartQuantityAdd").click(function () {
+            const url = $(this).attr('data-url');
+            const id = $(this).attr('data-id');
+            const q = '#count_' + id
             $.ajax({
-                'url': url,
-                'type': 'GET',
+                url: url,
+                type: 'GET',
                 success: function (response) {
-                    $(".heart").toggleClass("is-active");
-                },
+                    location.reload();
+                }
+            });
+        });
+        $(".cartQuantityRemove").click(function () {
+            const url = $(this).attr('data-url');
+            const id = $(this).attr('data-id');
+            const q = '#count_' + id
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    location.reload();
+                }
             });
         });
     </script>
