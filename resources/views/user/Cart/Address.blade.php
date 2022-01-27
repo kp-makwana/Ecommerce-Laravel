@@ -10,18 +10,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="back-to-shop mt-4">
+                    <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.viewCart') }}">Back </a>
+                </div>
             </div>
-            <div class="back-to-shop mt-4">
-                <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.viewCart') }}">Back </a>
-            </div>
-        </div>
-        <div class="col-md-4 summary">
-            <x-summary :data="$data"/>
-            <a class="btn btn-primary" style="
+            <div class="col-md-4 summary">
+                <x-summary :data="$data"/>
+                <a class="btn btn-primary" style="
                 width: 100%;"
-               href="{{ route('user.cart.address') }}">GOTO PAYMENT OPTIONS</a>
+                   href="{{ route('user.cart.address') }}">GOTO PAYMENT OPTIONS</a>
+            </div>
         </div>
-    </div>
     </div>
 @endsection
 
