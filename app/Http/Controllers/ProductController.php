@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductRating;
+use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    use Response;
+
     public function index(Request $request, $queryBuilder = null): array
     {
         if ($queryBuilder == null) {
@@ -111,18 +114,20 @@ class ProductController extends Controller
     {
         return Cart::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
     }
+
     public function cartQuantityAdd($id): \Illuminate\Http\JsonResponse
     {
         $cart = Cart::where('product_id', $id)->where('user_id', Auth::user()->id)->first();
         if ($cart) {
-            if($cart->quantity < 5){
+            if ($cart->quantity < 5) {
                 $cart->quantity++;
                 $cart->save();
-                return $this->success(['quantity' => $cart->quantity], 'Change Quantity in ' . $cart->quantity);
+                session()->flash('success', 'Change  Quantity in ' . $cart->quantity);
+                return response()->json(['quantity' => $cart->quantity, 'message' => 'Change Quantity in ' . $cart->quantity]);
             }
-            return $this->error('Were sorry! Only 5 unit(s) allowed in each order');
+            return response()->json('Were sorry! Only 5 unit(s) allowed in each order');
         }
-        return $this->error('Product Not Found in Cart.');
+        return response()->json('Product Not Found in Cart.');
     }
 
     public function cartQuantityRemove($id): \Illuminate\Http\JsonResponse
@@ -131,8 +136,9 @@ class ProductController extends Controller
         if ($cart->quantity > 1) {
             $cart->quantity--;
             $cart->save();
-            return $this->success(['quantity' => $cart->quantity], 'Change Quantity in ' . $cart->quantity);
+            session()->flash('success', 'Change  Quantity in ' . $cart->quantity);
+            return response()->json(['quantity' => $cart->quantity, 'Change Quantity in ' . $cart->quantity]);
         }
-        return $this->error('Only 1 Quantity less.');
+        return response()->json('Only 1 Quantity less.');
     }
 }

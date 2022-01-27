@@ -8,10 +8,11 @@
                         <div class="col">
                             <h4><b>Shopping Cart</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">{{ $data['total_item'] }} items</div>
+                        <div class="col align-self-center text-right text-muted">{{ $data['total_item'] ?? 0 }}items
+                        </div>
                     </div>
                 </div>
-                @foreach($carts as $item)
+                @foreach($data['carts'] as $item)
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-2"><img class="img-fluid"
@@ -29,10 +30,16 @@
                             </div>
                             <div class="col">
                                 <a href="#" id="cartQuantityRemove"
-                                   class={{ ($item['count'] == 1) ? ' custom-disable':'' }}>-</a>
-                                <a href="#" class="border">{{ $item['count'] }}</a>
+                                   data-url="{{ route('user.cart.cartQuantityRemove',$item['product_id']) }}"
+                                   data-id="{{ $item['product_id'] }}"
+                                   class="{{ ($item['count'] <= 1) ? 'cartQuantityRemove custom-disable':'cartQuantityRemove' }}"
+                                >-</a>
+                                <a href="#" id="count_{{ $item['product_id'] }}" class="border"
+                                   data-id="{{ $item['product_id'] }}">{{ $item['count'] }}</a>
                                 <a href="#" id="cartQuantityAdd"
-                                   data-id="{{ route('user.cart.cartQuantityAdd',$item['product_id']) }}"
+                                   class="{{ ($item['count'] == 5) ? 'cartQuantityAdd custom-disable':'cartQuantityAdd' }}"
+                                   data-url="{{ route('user.cart.cartQuantityAdd',$item['product_id']) }}"
+                                   data-id="{{ $item['product_id'] }}"
                                 >+</a></div>
                             <div class="col">
                                 <div class="">
@@ -54,54 +61,17 @@
                             </div>
                         </div>
                     </div>
-                    {{--@empty
-                        <div class="row border-top border-bottom">
-                            <div class="row main align-items-center">
-                                <div class="row text-center">
-                                    <img class="img-fluid" src="{{ asset('images/emptyCart.png') }}" alt="">
-                                    <p>Your Card is empty</p>
-                                    <a href="{{ route('user.product.index') }}">
-                                        <button class="btn btn-info">Shop now</button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforelse--}}
                 @endforeach
-                <div class="back-to-shop"><a href="{{ route('user.product.index') }}">&leftarrow;</a><span
-                        class="text-muted">Back to shop</span></div>
+                <div class="back-to-shop mt-4">
+                    <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.product.index') }}">Back to
+                        shop</a>
+                </div>
             </div>
             <div class="col-md-4 summary">
-                <div>
-                    <h5><b>Summary</b></h5>
-                </div>
-                <hr>
-                <div class="row py-2">
-                    <div class="col" style="padding-left:0;">ITEMS ({{ $data['total_item'] }})</div>
-                    <div class="col text-right">&#8377;{{ $data['price'] }}</div>
-                </div>
-                <div class="row py-2">
-                    <div class="col" style="padding-left:0;">Discount</div>
-                    <div class="col text-right">&#8377;{{ $data['discount'] }}</div>
-                </div>
-                <div class="row py-2">
-                    <div class="col" style="padding-left:0;">Delivery Charges
-                        <div class="text-muted small" data-toggle="tooltip" data-placement="bottom"
-                             title="{{ $item['offer'] }}">
-                            Free Delivery Order > 499
-                        </div>
-
-                    </div>
-                    <div class="col text-right">&#8377;{{ $data['delivery_Charges'] }}</div>
-                </div>
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right">&#8377;{{ $data['total_price'] }}</div>
-                </div>
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col text-success">You will save ₹{{ $data['discount'] }} on this order</div>
-                </div>
-                <button class="btn" id="checkout">PLACE ORDER</button>
+                <x-summary :data="$data"/>
+                <a class="btn btn-primary" style="width: 100%;" href="{{ route('user.cart.address') }}">PLACE
+                    ORDER
+                </a>
             </div>
         </div>
     </div>
@@ -140,20 +110,34 @@
         });
     </script>
     <script>
-        $("#cartQuantityAdd").click(function () {
-            const url = $(this).attr('data-id');
+        $(".cartQuantityAdd").click(function () {
+            const url = $(this).attr('data-url');
+            const id = $(this).attr('data-id');
+            const q = '#count_' + id
             $.ajax({
-                'url': url,
-                'type': 'GET',
+                url: url,
+                type: 'GET',
                 success: function (response) {
-                    $(".heart").toggleClass("is-active");
-                },
+                    location.reload();
+                }
+            });
+        });
+        $(".cartQuantityRemove").click(function () {
+            const url = $(this).attr('data-url');
+            const id = $(this).attr('data-id');
+            const q = '#count_' + id
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    location.reload();
+                }
             });
         });
     </script>
 @endpush
 @push('style')
-    <link rel="stylesheet" href="{{ asset('css/viewcart.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/viewCart.css') }}">
     <style>
         .custom-disable {
             pointer-events: none;
