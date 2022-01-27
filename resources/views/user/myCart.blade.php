@@ -173,7 +173,7 @@
     </script>
 @endpush
 @push('style')
-    <link rel="stylesheet" href="{{ asset('css/viewcart.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/viewCart.css') }}">
     <style>
         .custom-disable {
             pointer-events: none;
