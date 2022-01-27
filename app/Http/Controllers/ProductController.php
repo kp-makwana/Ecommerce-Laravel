@@ -122,6 +122,7 @@ class ProductController extends Controller
             if ($cart->quantity < 5) {
                 $cart->quantity++;
                 $cart->save();
+                session()->flash('success', 'Change  Quantity in ' . $cart->quantity);
                 return response()->json(['quantity' => $cart->quantity, 'message' => 'Change Quantity in ' . $cart->quantity]);
             }
             return response()->json('Were sorry! Only 5 unit(s) allowed in each order');
@@ -135,6 +136,7 @@ class ProductController extends Controller
         if ($cart->quantity > 1) {
             $cart->quantity--;
             $cart->save();
+            session()->flash('success', 'Change  Quantity in ' . $cart->quantity);
             return response()->json(['quantity' => $cart->quantity, 'Change Quantity in ' . $cart->quantity]);
         }
         return response()->json('Only 1 Quantity less.');
