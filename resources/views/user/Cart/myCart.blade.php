@@ -61,28 +61,17 @@
                             </div>
                         </div>
                     </div>
-                    {{--@empty
-                        <div class="row border-top border-bottom">
-                            <div class="row main align-items-center">
-                                <div class="row text-center">
-                                    <img class="img-fluid" src="{{ asset('images/emptyCart.png') }}" alt="">
-                                    <p>Your Card is empty</p>
-                                    <a href="{{ route('user.product.index') }}">
-                                        <button class="btn btn-info">Shop now</button>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforelse--}}
                 @endforeach
-                <div class="back-to-shop"><a href="{{ route('user.product.index') }}">&leftarrow;</a><span
-                        class="text-muted">Back to shop</span></div>
+                <div class="back-to-shop mt-4">
+                    <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.product.index') }}">Back to
+                        shop</a>
+                </div>
             </div>
             <div class="col-md-4 summary">
                 <x-summary :data="$data"/>
-                <button class="btn" id="checkout" onclick="window.location='{{ route('user.cart.address') }}'">PLACE
+                <a class="btn btn-primary" style="width: 100%;" href="{{ route('user.cart.address') }}">PLACE
                     ORDER
-                </button>
+                </a>
             </div>
         </div>
     </div>
