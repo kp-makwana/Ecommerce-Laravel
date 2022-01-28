@@ -1,4 +1,4 @@
-<select id="CityList" name="city" class="form-control">
+<select id="CityList" name="city" class="form-control {{ $class }}">
     <option value="" disabled selected>-- Select City --</option>
     @foreach($cities as $city)
         <option

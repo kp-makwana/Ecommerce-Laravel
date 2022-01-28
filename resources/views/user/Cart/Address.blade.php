@@ -45,31 +45,62 @@
                 @endforeach
                 <div class="row border-top border-bottom">
                     <div class="row main align-items-center">
-                        <div class="col-1">
+                        <div class="col-1 mt-0">
                             <input class="custom-radio" type="radio" name="address" value="1" id="address">
                         </div>
                         <div class="col">
+                            <b class="mr-3">
+                                EDIT ADDRESS
+                            </b>
                             <div class="col">
-                                <b class="mr-3">
-                                    EDIT ADDRESS
-                                </b>
-                                <div class="col">
-                                    <input type="text" name="address" value="address" class="" id=""
-                                           style="padding: 20px 16px 0 13px; ">
-                                    <lable for="address"
-                                           style="position: absolute;top: 0;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                        Liable
-                                    </lable>
-                                </div>
+                                <input type="text" name="name" class="form-control input-group-lg" id=""
+                                       style="padding: 10px 16px 0 13px; ">
+                                <lable for="name" class="small"
+                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
+                                    Name
+                                </lable>
                             </div>
-                            <div class="row text-dart">
-                                    <span class="">
-                                        FULL ADDRESS
-                                    </span>
-                                <span class="">
-                                        CITY & State
-                                    </span>
+                            <div class="col">
+                                <input type="text" name="mobile" class="form-control input-group-lg" id=""
+                                       style="padding: 10px 16px 0 13px; ">
+                                <lable for="mobile" class="small"
+                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
+                                    Mobile
+                                </lable>
                             </div>
+                            <div class="col">
+                                <input type="text" name="zipcode" class="form-control input-group-lg" id=""
+                                       style="padding: 10px 16px 0 13px; ">
+                                <lable for="zipcode" class="small"
+                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
+                                    Zipcode
+                                </lable>
+                            </div>
+                            <div class="col">
+                                <input type="text" name="locality" class="form-control input-group-lg" id=""
+                                       style="padding: 10px 16px 0 13px; ">
+                                <lable for="locality" class="small"
+                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
+                                    Locality
+                                </lable>
+                            </div>
+                            <div class="col">
+                                <x-city class="input-group-lg"/>
+                                <lable for="city" class="small"
+                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
+                                    City
+                                </lable>
+                            </div>
+                            <div class="col">
+                                <textarea name="address" class="form-control input-group-lg" id=""
+                                          style="padding: 10px 16px 0 13px;"
+                                ></textarea>
+                                <lable for="address" class="small"
+                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
+                                    Address
+                                </lable>
+                            </div>
+
                         </div>
                         <div class="col align-self-center text-right text-muted">
                             <a href="" class="text-primary text-primary">EDIT</a>
