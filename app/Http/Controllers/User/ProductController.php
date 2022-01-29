@@ -6,10 +6,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\DeliveryAddress;
-use App\Models\Offer;
 use App\Traits\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {

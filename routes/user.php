@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WishListController;
-use App\Http\Controllers\User\AddressController;
 use Illuminate\Support\Facades\Route;
 
 /*
