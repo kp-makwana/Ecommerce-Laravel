@@ -1,6 +1,7 @@
 @extends('user.layout.sidebar',['title'=>'My WishList'])
 @section('content')
-    <div id="card" class="card card-custom">
+    <h1>My WishList</h1>
+    {{--<div id="card" class="card card-custom">
         <div class="row">
             <div class="col-md-8 cart">
                 <div class="title">
@@ -68,11 +69,11 @@
                 </div>
             </div>
             <div class="col-md-4 summary">
-                {{--                <x-summary :data="$data"/>--}}
+                --}}{{--                <x-summary :data="$data"/>--}}{{--
                 <a class="btn btn-primary" style="width: 100%;" href="{{ route('user.cart.address') }}">PLACE
                     ORDER
                 </a>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection

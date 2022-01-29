@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\DeliveryAddress;
 use App\Models\Offer;
 use App\Traits\Response;
 use Illuminate\Http\Request;
@@ -53,7 +54,8 @@ class ProductController extends Controller
 
     public function Address()
     {
-        return view('user.Cart.Address', ['data' => CartController::summary()]);
+        $address = DeliveryAddress::all();
+        return view('user.Cart.Address', ['data' => CartController::summary(), 'address' => $address]);
     }
 
     public function cartQuantityAdd($id): \Illuminate\Http\JsonResponse

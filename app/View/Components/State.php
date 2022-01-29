@@ -9,14 +9,16 @@ use Illuminate\View\Component;
 class State extends Component
 {
     public $getStates;
+    public $class;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($class = '')
     {
+        $this->class = $class;
         $this->getStates = States::where('country_id', Auth::user()->address->country_id)->get();
     }
 

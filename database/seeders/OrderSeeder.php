@@ -27,8 +27,6 @@ class OrderSeeder extends Seeder
             'billing_address_id'=>1,
             'order_status_id'=>1,
         ],[
-
-
             'user_id' => 2,
             'product_id' => 1,
             'order_date' => Carbon::now(),

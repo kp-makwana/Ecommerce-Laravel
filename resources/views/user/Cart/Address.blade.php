@@ -10,7 +10,7 @@
                         </div>
                     </div>
                 </div>
-                @foreach($data['carts'] as $item)
+                @foreach($address as $i)
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-1">
@@ -19,21 +19,21 @@
                             <div class="col">
                                 <div class="col">
                                     <b class="mr-3">
-                                        FULL NAME
+                                        {{ $i->name }}
                                     </b>
                                     <span class="small ml-4" style="color: #878787;background-color: #f0f0f0">
-                                        HOME
+                                        {{ $i->type }}
                                     </span>
                                     <span class="ml-4">
-                                        MOBILE NUMBER
+                                        {{ $i->mobile_number }}
                                     </span>
                                 </div>
                                 <div class="row text-dart">
                                     <span class="">
-                                        FULL ADDRESS
+                                        {{ $i->address }}
                                     </span>
                                     <span class="">
-                                        CITY & State
+                                        {{ $i->city->name }}, {{ $i->state->name }}
                                     </span>
                                 </div>
                             </div>
@@ -85,10 +85,17 @@
                                 </lable>
                             </div>
                             <div class="col">
+                                <x-state class="input-group-lg"/>
+                                <lable for="state" class="small"
+                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
+                                    State
+                                </lable>
+                            </div>
+                            <div class="col">
                                 <x-city class="input-group-lg"/>
                                 <lable for="city" class="small"
                                        style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    City
+                                    State
                                 </lable>
                             </div>
                             <div class="col">
