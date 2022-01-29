@@ -69,6 +69,9 @@
                 <li class="{{ request()->is('user/profile/*') ? 'active' : '' }}">
                     <a href="{{ route('user.profile.index') }}">My Profile</a>
                 </li>
+                <li class="{{ request()->is('user/address/*') ? 'active' : '' }}">
+                    <a href="{{ route('user.address.index') }}">Addresses</a>
+                </li>
                 <li class="{{ request()->is('user/product/*') ? 'active' : '' }}">
                     <a href="{{ route('user.product.index') }}">Product</a>
                 </li>
@@ -79,7 +82,7 @@
                     <a href="{{ route('user.wishlist.index') }}">My Wishlist</a>
                 </li>
                 <li class="{{ request()->is('user/cart/*') ? 'active' : '' }}">
-                    <a href="{{ route('user.viewCart') }}">My Cart</a>
+                    <a href="{{ route('user.cart.index') }}">My Cart</a>
                 </li>
                 <li class="{{ request()->is('user/help/*') ? 'active' : '' }}">
                     <a href="{{ route('user.help.index') }}">Help & Support</a>
@@ -125,7 +128,8 @@
                         </li>
                         <li class="nav-item">
                             @php $count = \App\Models\Cart::where('user_id',Auth::user()->id)->count()@endphp
-                            <a class="nav-link" href="{{ route('user.viewCart') }}"><i class="fa fa-shopping-cart"></i>
+                            <a class="nav-link" href="{{ route('user.cart.index') }}"><i
+                                    class="fa fa-shopping-cart"></i>
                                 cart{{ ($count>0)?('('.$count.')'):'' }}</a>
                         </li>
                     </ul>

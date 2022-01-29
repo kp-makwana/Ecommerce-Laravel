@@ -4,6 +4,7 @@ use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WishListController;
+use App\Http\Controllers\User\AddressController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,10 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
         Route::post('/checkPassword', [UserController::class, 'checkPassword'])->name('checkPassword');
         Route::post('/changePassword', [UserController::class, 'changePassword'])->name('changePassword');
     });
+    Route::prefix('address')->as('address.')->group(function () {
+        Route::get('/index', [AddressController::class, 'index'])->name('index');
+    });
+
     Route::prefix('order')->as('order.')->group(function () {
         Route::get('/index', function () {
             return view('user.order');
@@ -40,11 +45,11 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
         Route::get('/removeFromCart/{id}', [ProductController::class, 'removeFromCart'])->name('removeFromCart');
         Route::get('/buyNow/{id}', [ProductController::class, 'buyNow'])->name('buyNow');
     });
-    Route::get('/viewCart', [ProductController::class, 'viewCart'])->name('viewCart');
     Route::prefix('cart')->as('cart.')->group(function () {
+        Route::get('/index', [ProductController::class, 'viewCart'])->name('index');
         Route::get('/cartQuantityAdd/{id}', [ProductController::class, 'cartQuantityAdd'])->name('cartQuantityAdd');
         Route::get('/cartQuantityRemove/{id}', [ProductController::class, 'cartQuantityRemove'])->name('cartQuantityRemove');
-        Route::get('/address', [ProductController::class, 'address'])->name('address');
+        Route::get('/address', [ProductController::class, 'address'])->name('address')->middleware('cart');
     });
 
     Route::prefix('wishlist')->as('wishlist.')->group(function () {

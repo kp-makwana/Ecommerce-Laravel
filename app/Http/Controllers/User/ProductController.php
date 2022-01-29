@@ -44,12 +44,12 @@ class ProductController extends Controller
     public function buyNow($id): \Illuminate\Http\RedirectResponse
     {
         (new \App\Http\Controllers\ProductController())->addToCarts($id);
-        return redirect()->route('user.viewCart');
+        return redirect()->route('user.cart.index');
     }
 
     public function viewCart()
     {
-        return view('user.Cart.myCart', ['data' => CartController::summary()]);
+        return view('user.Cart.index', ['data' => CartController::summary()]);
     }
 
     public function Address()

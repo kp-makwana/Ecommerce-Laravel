@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'cart' => \App\Http\Middleware\Cart::class,
         'adminCheck' => \App\Http\Middleware\AdminCheck::class,
         'userCheck' => \App\Http\Middleware\UserCheck::class,
         'login' => \App\Http\Middleware\Login::class,

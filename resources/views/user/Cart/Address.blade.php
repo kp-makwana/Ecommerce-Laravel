@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <div class="back-to-shop mt-4">
-                    <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.viewCart') }}">Back </a>
+                    <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.cart.index') }}">Back </a>
                 </div>
             </div>
             <div class="col-md-4 summary">

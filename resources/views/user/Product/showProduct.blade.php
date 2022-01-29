@@ -57,7 +57,7 @@
                 $result = (App\Models\Cart::where('user_id',Auth::user()->id)->where('product_id',$product->id)->first());
             @endphp
             @if($result != null)
-                <a id="goToCart" href="{{ route('user.viewCart') }}">
+                <a id="goToCart" href="{{ route('user.cart.index') }}">
                     <button id="addToCart" class="btn btn-info cart-button px-5 clicked"><span
                             class="dot">{{ $result->quantity }}</span>Go To Cart
                     </button>
@@ -224,7 +224,7 @@
                     $link.append($img);
                     $('#addToCart').removeClass('btn-success');
                     $('#addToCart').addClass('btn-info');
-                    $('#goToCart').attr('href', '{{ route('user.viewCart') }}');
+                    $('#goToCart').attr('href', '{{ route('user.cart.index') }}');
                     $('#addToCart').prop("onclick", null);
                     if (response.data) {
                         toastr.success('Product Added in cart.');
