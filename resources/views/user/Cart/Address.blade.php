@@ -112,7 +112,7 @@
                 </div>
             </div>
             <div class="col-md-4 summary">
-                <x-summary :data="$data"/>
+                <x-summary :summary="$data"/>
                 <a class="btn btn-primary" style="
                 width: 100%;"
                    href="{{ route('user.cart.address') }}">GOTO PAYMENT OPTIONS</a>
