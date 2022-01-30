@@ -70,10 +70,9 @@ class AddressController extends Controller
         return redirect()->route('user.address.index');
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
-        return response()->json(['result' => true]);
-        $result = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $id)->delete();
+        $result = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $request->id)->delete();
         if ($result) {
             return response()->json(['result' => true]);
         }

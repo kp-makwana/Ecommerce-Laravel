@@ -17,6 +17,7 @@ class DeliveryAddressSeeder extends Seeder
         DeliveryAddress::insert([[
             'user_id' => 2,
             'name' => 'Test user',
+            'default_address' => '1',
             'mobile_number' => '9879879878',
             'zipcode' => 382350,
             'country_id' => 1,
@@ -28,9 +29,10 @@ class DeliveryAddressSeeder extends Seeder
         ], [
             'user_id' => 2,
             'name' => 'Test user',
+            'default_address' => 1,
             'mobile_number' => '1231231230',
             'zipcode' => 382350,
-            'country_id' => 1,
+            'country_id' => 2,
             'locality' => 'talaja',
             'address' => '1,xyz talaja Bhavnagar-364135',
             'city_id' => 1,

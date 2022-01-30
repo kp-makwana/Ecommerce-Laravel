@@ -16,6 +16,7 @@ class CreateDeliveryAddressesTable extends Migration
         Schema::create('delivery_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->enum('default_address', [0 => 0, 1 => 1])->default(0);
             $table->string('name');
             $table->string('mobile_number');
             $table->string('zipcode');

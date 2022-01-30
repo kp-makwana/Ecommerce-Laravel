@@ -31,7 +31,7 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
     });
     Route::prefix('address')->as('address.')->group(function () {
         Route::get('/index', [AddressController::class, 'index'])->name('index');
-        Route::get('/delete/{id}', [AddressController::class, 'delete'])->name('delete');
+        Route::post('/delete', [AddressController::class, 'delete'])->name('delete');
     });
 
     Route::prefix('order')->as('order.')->group(function () {

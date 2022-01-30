@@ -49,6 +49,8 @@
                                    data-obj="id_{{ $i->id }}"
                                    data-bs-toggle="modal"
                                 >DELETE</a>
+                                <input type="hidden" name="route_{{ $i->id }}"
+                                       value="{{ route('user.address.delete',$i->id) }}">
                             </div>
                         </div>
                     </div>
@@ -140,7 +142,6 @@
                        aria-label="Close"
                        style="font-size: 18px;">x</a>
                 </div>
-                x
                 <div class="modal-body">
                     <p>Are you sure you want to remove this address?
                     </p>
@@ -167,20 +168,24 @@
         $(".passingID").click(function () {
             var id = $(this).attr('data-id');
             var obj = $(this).attr('data-obj');
-            console.log(obj)
             $("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')');
+            console.log($("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')'));
             $('#delete_address').modal('toggle');
         });
     </script>
     <script>
         function removeAddress(id, obj) {
-            console.log(id, obj)
             $.ajax({
-                'url': '{{ route('user.address.delete',2) }}',
-                'type': 'GET',
+                url: '{{ route('user.address.delete') }}',
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id,
+                },
                 success: function (response) {
-                    // $('#delete_address').modal('close');
-                    obj.remove();
+                    if (response.result === true) {
+                        obj.remove();
+                    }
                     $(".model-close2").click();
                 },
             });
