@@ -92,13 +92,13 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Are you sure you want to remove this
-                            item?</strong></h5>
+                    <h5 class="modal-title" id="exampleModalToggleLabel"><strong>Remove Item</strong></h5>
                     <a type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                        style="font-size: 18px;">x</a>
                 </div>
                 <div class="modal-body">
-                    <p>You can Also Restore from trash bin</p>
+                    <p>Are you sure you want to remove this item?
+                    </p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" style="background: #c6c8ca" class="btn" data-bs-dismiss="modal"
