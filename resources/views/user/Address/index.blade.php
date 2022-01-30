@@ -10,7 +10,7 @@
                         </div>
                         <div
                             class="col align-self-center text-right text-muted">
-                            <a class="btn btn-info" href="">Add New Address</a>
+                            <a class="btn btn-info" href="{{ route('user.address.add') }}">Add New Address</a>
                         </div>
                     </div>
                 </div>
@@ -18,7 +18,8 @@
                     <div id="id_{{ $i->id }}" class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-1">
-                                <input class="custom-radio" type="radio" name="address" value="1"
+                                <input class="form-check" type="radio" value="{{ $i->id }}" name="address"
+                                       {{ ($i->default_address == 1) ? 'checked':'' }}
                                        id="address">
                             </div>
                             <div class="col">
@@ -126,9 +127,6 @@
                         </div>
                     </div>
                 </div>--}}
-                <div class="back-to-shop mt-4">
-                    <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.cart.index') }}">Back </a>
-                </div>
             </div>
         </div>
     </div>
@@ -190,5 +188,20 @@
                 },
             });
         }
+    </script>
+    <script>
+        $('input:radio[name=address]').change(function () {
+            $.ajax({
+                url: '{{ route('user.address.defaultSet') }}',
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: this.value,
+                },
+                success: function (response) {
+
+                },
+            });
+        });
     </script>
 @endpush

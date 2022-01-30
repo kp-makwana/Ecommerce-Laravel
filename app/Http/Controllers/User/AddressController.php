@@ -12,11 +12,16 @@ class AddressController extends Controller
 {
     public function index()
     {
-        $address = DeliveryAddress::where('user_id', Auth::user()->id)->get();
+        $address = DeliveryAddress::where('user_id', Auth::user()->id)->orderBy('default_address', 'DESC')->get();
         return view('user.address.index', ['data' => CartController::summary(), 'address' => $address]);
     }
 
-    public function add(Request $request)
+    public function add()
+    {
+        return view('user.Address.add');
+    }
+
+    public function saveAdd(Request $request)
     {
         $name = $request->input('name');
         $mobile_number = $request->input('mobile_number');
@@ -77,5 +82,15 @@ class AddressController extends Controller
             return response()->json(['result' => true]);
         }
         return response()->json(['result' => false]);
+    }
+
+    public function defaultSet(Request $request)
+    {
+        DeliveryAddress::where('user_id', Auth::user()->id)->update(['default_address' => '0']);
+        $obj = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $request->id)->first();
+        $obj->default_address = '1';
+        $result = $obj->save();
+
+        return response()->json(['result' => $result]);
     }
 }
