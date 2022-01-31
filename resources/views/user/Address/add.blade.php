@@ -117,4 +117,21 @@
 @endpush
 @push('script')
     <script src="{{ asset('js/common.js') }}"></script>
+    <script>
+        $('#stateList').change(function () {
+            var stateId = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('fetchCities') }}',
+                data: {
+                    stateId: stateId,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#getCityList").html(data);
+                }
+            });
+        });
+    </script>
 @endpush
