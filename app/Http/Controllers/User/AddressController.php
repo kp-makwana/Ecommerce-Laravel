@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\DeliveryAddress;
+use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +30,8 @@ class AddressController extends Controller
         $zipcode = $request->input('zipcode');
         $locality = $request->input('locality');
         $address = $request->input('address');
-        $city_id = $request->input('city_id');
+        $city_id = $request->input('city');
+        $state = $request->input('state');
         $landmark = $request->input('landmark ');
         $alt_phone = $request->input('alt_phone');
         $type = $request->input('type');
@@ -41,6 +44,8 @@ class AddressController extends Controller
         $obj->locality = $locality;
         $obj->address = $address;
         $obj->city_id = $city_id;
+        $obj->state_id = $state;
+        $obj->country_id = State::find($state)->country_id;
         $obj->landmark = $landmark;
         $obj->alt_phone = $alt_phone;
         $obj->type = in_array($type, config('constants.addressType')) ? $type : 'home';

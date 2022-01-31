@@ -10,15 +10,17 @@ class CountryCode extends Component
      * @var \App\Models\Country[]|\Illuminate\Database\Eloquent\Collection
      */
     public $country;
+    public $class;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($class = '')
     {
         $this->country = \App\Models\Country::all();
+        $this->class = $class;
     }
 
     /**

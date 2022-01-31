@@ -1,4 +1,4 @@
-<select class="form-control" name="country" id="countryList">
+<select class="form-control {{ $class }}" name="country" id="countryList">
     <option value="" disabled selected>-- Select Country --</option>
 
     @foreach($countries as $count)

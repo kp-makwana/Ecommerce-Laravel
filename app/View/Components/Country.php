@@ -14,9 +14,12 @@ class Country extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $class;
+
+    public function __construct($class = '')
     {
         $this->countries = \App\Models\Country::all();
+        $this->class = $class;
     }
 
     /**

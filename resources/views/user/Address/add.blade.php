@@ -18,7 +18,7 @@
                             <div class="tab row col-md-12">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="product_name">Name</label>
+                                        <label for="name">Name</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <input class="form-control" id="name" name="name"
@@ -27,16 +27,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="purchase_price">Purchase Price</label>
+                                        <label for="mobile_number">Mobile Number</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <input class="form-control" id="mobile" name="mobile"
+                                        <input class="form-control" id="mobile_number" name="mobile_number"
                                                onkeypress="return isNumberKey(event)" type="text"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="sale_price">Sale Price</label>
+                                        <label for="zipcode">Zipcode</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <input class="form-control" id="zipcode" name="zipcode"
@@ -45,16 +45,24 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="sale_price">Sale Price</label>
+                                        <label for="locality">Locality</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <input class="form-control" id="locality" name="locality"
-                                               onkeypress="return isNumberKey(event)" type="text"/>
+                                               type="text"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="brand_id">Brand Name</label>
+                                        <label for="address">Address</label>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <textarea class="form-control" name="address" id="address"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="state">State</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <x-state class="input-group-lg"/>
@@ -62,7 +70,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="category_id">Category Name</label>
+                                        <label for="city">City</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <x-city class="input-group-lg"/>
@@ -70,40 +78,25 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="product_type">Product Type</label>
+                                        <label for="alt_phone">Alternate Phone</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <textarea name="address" class="form-control input-group-lg" id=""
-                                                  style="padding: 10px 16px 0 13px;"
-                                        ></textarea>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="quantity">Quantity</label>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <input class="form-control" id="quantity" name="quantity" type="text"
-                                               onkeypress="return isNumberKey(event)"/>
+                                        <input class="form-control" id="alt_phone" name="alt_phone"
+                                               onkeypress="return isNumberKey(event)" type="text"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="description">Description</label>
+                                        <label for="type">Address Type</label>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <textarea class="form-control" id="description" name="description"
-                                                  rows="3"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="image">Upload Product Images</label>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <a id="OpenImgUpload" href="#">Select Images</a>
-                                        <input type="file" style="display: none" id="imageUpload" accept="image/*"
-                                               name="upload_file[]" onchange="preview_image();" multiple/>
+                                        <select id="type" name="type" class="form-control">
+                                            <option value="" disabled selected>-- Select Address Type --</option>
+                                            @foreach(config('constants.addressType') as $type)
+                                                <option
+                                                    value="{{ $type }}" {{ ($type == 'home')?'selected':'' }}> {{ ucfirst($type) }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -123,5 +116,5 @@
     <link rel="stylesheet" href="{{ asset('css/viewCart.css') }}">
 @endpush
 @push('script')
-
+    <script src="{{ asset('js/common.js') }}"></script>
 @endpush

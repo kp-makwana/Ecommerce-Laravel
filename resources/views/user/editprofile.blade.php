@@ -93,7 +93,7 @@
                                     <label>Country Code</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <x-CountryCode/>
+                                    <x-CountryCode class="bg-dark text-white"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -168,7 +168,7 @@
                                     <label>Country</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <x-country/>
+                                    <x-country class="bg-dark text-white"/>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -177,7 +177,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div id="getStatesList">
-                                        <x-state/>
+                                        <x-state class="bg-dark text-white"/>
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                                     <label>City</label>
                                 </div>
                                 <div class="col-md-6" id="getCityList">
-                                    <x-city/>
+                                    <x-city class="bg-dark text-white"/>
                                 </div>
                             </div>
                         </div>
