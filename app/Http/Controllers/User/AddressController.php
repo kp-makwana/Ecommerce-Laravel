@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
-use App\Models\Country;
+use App\Http\Requests\DeliveryAddressRequest;
 use App\Models\DeliveryAddress;
 use App\Models\State;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class AddressController extends Controller
     public function index()
     {
         $address = DeliveryAddress::where('user_id', Auth::user()->id)->orderBy('default_address', 'DESC')->get();
-        return view('user.address.index', ['data' => CartController::summary(), 'address' => $address]);
+        return view('user.Address.index', ['data' => CartController::summary(), 'address' => $address]);
     }
 
     public function add()
@@ -23,7 +23,7 @@ class AddressController extends Controller
         return view('user.Address.add');
     }
 
-    public function saveAdd(Request $request)
+    public function saveAdd(DeliveryAddressRequest $request)
     {
         $name = $request->input('name');
         $mobile_number = $request->input('mobile_number');
@@ -39,6 +39,7 @@ class AddressController extends Controller
         $obj = new DeliveryAddress;
         $obj->user_id = Auth::user()->id;
         $obj->name = $name;
+        $obj->default_address = '1';
         $obj->mobile_number = $mobile_number;
         $obj->zipcode = $zipcode;
         $obj->locality = $locality;
@@ -49,6 +50,7 @@ class AddressController extends Controller
         $obj->landmark = $landmark;
         $obj->alt_phone = $alt_phone;
         $obj->type = in_array($type, config('constants.addressType')) ? $type : 'home';
+        $this->defaultAddressRemove();
         $obj->save();
         return redirect()->route('user.address.index');
     }
@@ -84,6 +86,11 @@ class AddressController extends Controller
     {
         $result = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $request->id)->delete();
         if ($result) {
+            $obj = DeliveryAddress::where('user_id', Auth::user()->id)->first();
+            if ($obj) {
+                $obj->default_address = '1';
+                $obj->save();
+            }
             return response()->json(['result' => true]);
         }
         return response()->json(['result' => false]);
@@ -91,11 +98,16 @@ class AddressController extends Controller
 
     public function defaultSet(Request $request)
     {
-        DeliveryAddress::where('user_id', Auth::user()->id)->update(['default_address' => '0']);
+        $this->defaultAddressRemove();
         $obj = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $request->id)->first();
         $obj->default_address = '1';
         $result = $obj->save();
 
         return response()->json(['result' => $result]);
+    }
+
+    private function defaultAddressRemove()
+    {
+        DeliveryAddress::where('user_id', Auth::user()->id)->update(['default_address' => '0']);
     }
 }

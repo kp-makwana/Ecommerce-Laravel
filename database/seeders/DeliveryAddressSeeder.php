@@ -32,7 +32,7 @@ class DeliveryAddressSeeder extends Seeder
             'default_address' => 1,
             'mobile_number' => '1231231230',
             'zipcode' => 382350,
-            'country_id' => 2,
+            'country_id' => 1,
             'locality' => 'talaja',
             'address' => '1,xyz talaja Bhavnagar-364135',
             'city_id' => 1,
