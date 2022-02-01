@@ -10,7 +10,8 @@ class WishListController extends Controller
 
     public function index()
     {
-        return response()->json(WishList::all());
+        $products = WishList::where('user_id', Auth::id())->paginate(10);
+        return view('user.myWishlist', ['products' => $products, 'data' => CartController::summary()]);
     }
 
     public function addOrRemoveWishList($id): \Illuminate\Http\JsonResponse

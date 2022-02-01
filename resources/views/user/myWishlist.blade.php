@@ -1,23 +1,24 @@
 @extends('user.layout.sidebar',['title'=>'My WishList'])
 @section('content')
-    <h1>My WishList</h1>
-    {{--<div id="card" class="card card-custom">
+    <div id="card" class="card card-custom">
         <div class="row">
-            <div class="col-md-8 cart">
+            <div class="col-md-12 cart">
                 <div class="title">
                     <div class="row">
                         <div class="col">
-                            <h4><b>Shopping Cart</b></h4>
+                            <h4><b>My WishList</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">{{ $data['total_item'] ?? 0 }}items
+                        <div
+                            class="col align-self-center text-right text-muted">@if($data['total_item'] >0){{ $data['total_item'] ?? 0 }}
+                            items @endif
                         </div>
                     </div>
                 </div>
-                @foreach($data['carts'] as $item)
+                @forelse($data['carts'] as $item)
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
-                            <div class="col-2"><img class="img-fluid"
-                                                    src="{{ $item['product_image'] }}">
+                            <div class="col-2">
+                                <img class="img-fluid" src="{{ $item['product_image'] }}">
                             </div>
                             <div class="col">
                                 <div class="row text-muted">{{ $item['product_name'] }}</div>
@@ -62,18 +63,22 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="back-to-shop mt-4">
+                        <p>Your Card is empty</p>
+                    </div>
+                @endforelse
                 <div class="back-to-shop mt-4">
                     <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.product.index') }}">Back to
                         shop</a>
                 </div>
             </div>
-            <div class="col-md-4 summary">
-                --}}{{--                <x-summary :data="$data"/>--}}{{--
-                <a class="btn btn-primary" style="width: 100%;" href="{{ route('user.cart.address') }}">PLACE
-                    ORDER
-                </a>
-            </div>
         </div>
-    </div>--}}
+    </div>
 @endsection
+@push('script')
+    <script></script>
+@endpush
+@push('style')
+    <link rel="stylesheet" href="{{ asset('css/viewCart.css') }}">
+@endpush

@@ -18,12 +18,16 @@
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-2">
-                                <img class="img-fluid" src="{{ $item['product_image'] }}">
+                                <a href="{{ route('user.product.productDetail',$item['id']) }}">
+                                    <img class="img-fluid" src="{{ $item['product_image'] }}">
+                                </a>
                             </div>
                             <div class="col">
-                                <div class="row text-muted">{{ $item['product_name'] }}</div>
+                                <a href="{{ route('user.product.productDetail',$item['id']) }}" class="mt-0">
+                                    <div class="row text-muted">{{ $item['product_name'] }}</div>
+                                </a>
                                 @if(count($item['offer']) > 0)
-                                    <div class="text-success" data-toggle="tooltip" data-placement="bottom"
+                                    <div class="text-success mt-0" data-toggle="tooltip" data-placement="bottom"
                                          title="{{ $item['offer'] }}"
                                     >
                                         {{ count($item['offer'])}} Offers applied <span class="fa fa-info"></span>
