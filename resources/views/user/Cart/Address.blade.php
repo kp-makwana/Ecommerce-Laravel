@@ -78,7 +78,7 @@
                         }
                     else{
                         $message = 'GOTO PAYMENT OPTIONS';
-                        $route = route('user.dashboard.index');
+                        $route = route('user.cart.placeOrder');
                     }
                 @endphp
                 <button id="next" class="btn btn-success" style="width: 100%;"

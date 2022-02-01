@@ -56,6 +56,11 @@ class ProductController extends Controller
         return view('user.Cart.Address', ['data' => CartController::summary(), 'address' => $address]);
     }
 
+    public function placeOrder(Request $request)
+    {
+        return view('user.Cart.payment');
+    }
+
     public function cartQuantityAdd($id): \Illuminate\Http\JsonResponse
     {
         return \App\Http\Controllers\ProductController::cartQuantityAdd($id);
