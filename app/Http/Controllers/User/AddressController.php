@@ -83,7 +83,7 @@ class AddressController extends Controller
                 $obj->default_address = '1';
                 $obj->save();
             }
-            return response()->json(['result' => true]);
+            return response()->json(['result' => true, 'available_address' => DeliveryAddress::where('user_id', Auth::id())->count()]);
         }
         return response()->json(['result' => false]);
     }

@@ -73,7 +73,7 @@
                     $count = \App\Models\DeliveryAddress::where('user_id',Auth::id())->count();
                     if($count == 0)
                         {
-                            $message = 'Add New Address';
+                            $message = 'ADD NEW ADDRESS';
                             $route = route('user.address.add');
                         }
                     else{
@@ -81,8 +81,7 @@
                         $route = route('user.dashboard.index');
                     }
                 @endphp
-                <button class="btn btn-primary" style="
-                width: 100%;"
+                <button id="next" class="btn btn-success" style="width: 100%;"
                         onclick="window.location='{{ $route }}'"
                 >{{ $message }}
                 </button>
@@ -101,7 +100,6 @@
             var id = $(this).attr('data-id');
             var obj = $(this).attr('data-obj');
             $("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')');
-            console.log($("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')'));
             $('#delete_address').modal('toggle');
         });
     </script>
@@ -117,6 +115,13 @@
                 success: function (response) {
                     if (response.result === true) {
                         obj.remove();
+                    }
+                    if (response.available_address === 0) {
+                        const btn = $('#next');
+                        btn.attr('onclick', "window.location='{{ route('user.address.add') }}'")
+                        btn.html('ADD NEW ADDRESS');
+                        btn.removeClass('btn-success');
+                        btn.addClass('btn-info');
                     }
                     $(".model-close2").click();
                 },

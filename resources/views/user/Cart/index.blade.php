@@ -76,7 +76,7 @@
             @if($data['total_item'] >0)
                 <div class="col-md-4 summary">
                     <x-summary :summary="$data"/>
-                    <a class="btn btn-primary" style="width: 100%;" href="{{ route('user.cart.address') }}">PLACE
+                    <a class="btn btn-success" style="width: 100%;" href="{{ route('user.cart.address') }}">PLACE
                         ORDER
                     </a>
                 </div>

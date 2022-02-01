@@ -186,7 +186,7 @@
     </div>
 @endsection
 @push('style')
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    {{--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap');
 
@@ -539,8 +539,8 @@
             .order {
                 padding: 10px
             }
-        }</style>
+        }</style>--}}
 @endpush
 @push('script')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    {{--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>--}}
 @endpush

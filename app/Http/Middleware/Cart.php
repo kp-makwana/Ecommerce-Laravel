@@ -19,7 +19,7 @@ class Cart
     {
         $count = \App\Models\Cart::where('user_id', Auth::user()->id)->count();
         if ($count == 0) {
-            return redirect()->route('user.dashboard.index');
+            return redirect()->route('user.product.index');
         }
         return $next($request);
     }
