@@ -4,8 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DeliveryAddressController;
 use App\Models\Cart;
-use App\Models\DeliveryAddress;
 use App\Traits\Response;
 use Illuminate\Http\Request;
 
@@ -52,7 +52,7 @@ class ProductController extends Controller
 
     public function Address()
     {
-        $address = DeliveryAddress::all();
+        $address = DeliveryAddressController::index();
         return view('user.Cart.Address', ['data' => CartController::summary(), 'address' => $address]);
     }
 

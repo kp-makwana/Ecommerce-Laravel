@@ -8,13 +8,18 @@
                         <div class="col">
                             <h4><b>DELIVERY ADDRESS</b></h4>
                         </div>
+                        <div class="col align-self-center text-right text-muted">
+                            <a class="text-primary" href="{{ route('user.address.add') }}">ADD NEW ADDRESS</a>
+                        </div>
                     </div>
                 </div>
-                @foreach($address as $i)
-                    <div class="row border-top border-bottom">
+                @forelse($address as $i)
+                    <div id="id_{{ $i->id }}" class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-1">
-                                <input class="custom-radio" type="radio" name="address" value="1" id="address">
+                                <input class="form-check" type="radio" value="{{ $i->id }}" name="address"
+                                       {{ ($i->default_address == 1) ? 'checked':'' }}
+                                       id="address">
                             </div>
                             <div class="col">
                                 <div class="col">
@@ -37,94 +42,53 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col align-self-center text-right text-muted">
-                                <a href="" class="text-primary text-primary">EDIT</a>
+                            <div class="col align-self-center text-right ">
+                                <a href="{{ route('user.address.edit',$i->id) }}"
+                                   class="text-primary text-primary">EDIT</a>
+                                <a href="#delete_address" class="passingID text-danger"
+                                   data-id="{{ $i->id }}"
+                                   data-obj="id_{{ $i->id }}"
+                                   data-bs-toggle="modal"
+                                >DELETE</a>
+                                <input type="hidden" name="route_{{ $i->id }}"
+                                       value="{{ route('user.address.delete',$i->id) }}">
                             </div>
                         </div>
                     </div>
-                @endforeach
-                <div class="row border-top border-bottom">
-                    <div class="row main align-items-center">
-                        <div class="col-1 mt-0">
-                            <input class="custom-radio" type="radio" name="address" value="1" id="address">
-                        </div>
-                        <div class="col">
-                            <b class="mr-3">
-                                EDIT ADDRESS
-                            </b>
-                            <div class="col">
-                                <input type="text" name="name" class="form-control input-group-lg" id=""
-                                       style="padding: 10px 16px 0 13px; ">
-                                <lable for="name" class="small"
-                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    Name
-                                </lable>
-                            </div>
-                            <div class="col">
-                                <input type="text" name="mobile" class="form-control input-group-lg" id=""
-                                       style="padding: 10px 16px 0 13px; ">
-                                <lable for="mobile" class="small"
-                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    Mobile
-                                </lable>
-                            </div>
-                            <div class="col">
-                                <input type="text" name="zipcode" class="form-control input-group-lg" id=""
-                                       style="padding: 10px 16px 0 13px; ">
-                                <lable for="zipcode" class="small"
-                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    Zipcode
-                                </lable>
-                            </div>
-                            <div class="col">
-                                <input type="text" name="locality" class="form-control input-group-lg" id=""
-                                       style="padding: 10px 16px 0 13px; ">
-                                <lable for="locality" class="small"
-                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    Locality
-                                </lable>
-                            </div>
-                            <div class="col">
-                                <x-state class="input-group-lg"/>
-                                <lable for="state" class="small"
-                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    State
-                                </lable>
-                            </div>
-                            <div class="col">
-                                <x-city class="input-group-lg"/>
-                                <lable for="city" class="small"
-                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    State
-                                </lable>
-                            </div>
-                            <div class="col">
-                                <textarea name="address" class="form-control input-group-lg" id=""
-                                          style="padding: 10px 16px 0 13px;"
-                                ></textarea>
-                                <lable for="address" class="small"
-                                       style="position: absolute;top: -3px;left: 0;padding: 0px 20px 20px 20px;color: #878787">
-                                    Address
-                                </lable>
-                            </div>
-
-                        </div>
-                        <div class="col align-self-center text-right text-muted">
-                            <a href="" class="text-primary text-primary">EDIT</a>
+                @empty
+                    <div class="border-top">
+                        <div class="text-lg-center mt-4"><h4 class="text-danger">No Address Found</h4></div>
+                        <div class="text-lg-center mt-4"><a href="{{ route('user.address.add') }}" class="text-primary">Add
+                                New Address</a>
                         </div>
                     </div>
-                </div>
+                @endforelse
                 <div class="back-to-shop mt-4">
                     <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.cart.index') }}">Back </a>
                 </div>
             </div>
             <div class="col-md-4 summary">
                 <x-summary :summary="$data"/>
-                <a class="btn btn-primary" style="
+                @php
+                    $count = \App\Models\DeliveryAddress::where('user_id',Auth::id())->count();
+                    if($count == 0)
+                        {
+                            $message = 'Add New Address';
+                            $route = route('user.address.add');
+                        }
+                    else{
+                        $message = 'GOTO PAYMENT OPTIONS';
+                        $route = route('user.dashboard.index');
+                    }
+                @endphp
+                <button class="btn btn-primary" style="
                 width: 100%;"
-                   href="{{ route('user.cart.address') }}">GOTO PAYMENT OPTIONS</a>
+                        onclick="window.location='{{ $route }}'"
+                >{{ $message }}
+                </button>
             </div>
         </div>
+        <x-modal.address-delete/>
     </div>
 @endsection
 
@@ -133,6 +97,45 @@
 @endpush
 @push('script')
     <script>
+        $(".passingID").click(function () {
+            var id = $(this).attr('data-id');
+            var obj = $(this).attr('data-obj');
+            $("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')');
+            console.log($("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')'));
+            $('#delete_address').modal('toggle');
+        });
+    </script>
+    <script>
+        function removeAddress(id, obj) {
+            $.ajax({
+                url: '{{ route('user.address.delete') }}',
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id,
+                },
+                success: function (response) {
+                    if (response.result === true) {
+                        obj.remove();
+                    }
+                    $(".model-close2").click();
+                },
+            });
+        }
+    </script>
+    <script>
+        $('input:radio[name=address]').change(function () {
+            $.ajax({
+                url: '{{ route('user.address.defaultSet') }}',
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: this.value,
+                },
+                success: function (response) {
 
+                },
+            });
+        });
     </script>
 @endpush

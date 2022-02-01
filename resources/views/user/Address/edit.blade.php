@@ -17,6 +17,7 @@
                         <div class="col-md-10">
                             <div class="tab row col-md-12">
                                 <input type="hidden" name="id" value="{{ $address->id }}">
+                                <input type="hidden" name="previousUrl" value="{{ $previousUrl }}">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="name">Name<span class="text-danger">*</span></label>

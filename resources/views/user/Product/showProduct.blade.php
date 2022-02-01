@@ -73,7 +73,7 @@
             @endif
         </div>
         <div class="px-5">
-            <a href="#">
+            <a href="{{ route('user.product.buyNow',$product->id) }}">
                 <button class="btn buttons btn-primary cart-button px-5">Buy Now</button>
             </a>
         </div>

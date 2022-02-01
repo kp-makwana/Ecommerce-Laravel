@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DeliveryAddressController;
 use App\Http\Requests\DeliveryAddressRequest;
 use App\Models\DeliveryAddress;
 use App\Models\State;
@@ -14,19 +15,21 @@ class AddressController extends Controller
 {
     public function index()
     {
-        $address = DeliveryAddress::where('user_id', Auth::user()->id)->orderBy('default_address', 'DESC')->paginate(5);
+        $address = DeliveryAddressController::index();
         return view('user.Address.index', ['data' => CartController::summary(), 'address' => $address]);
     }
 
-    public function add()
+    public function add(Request $request)
     {
-        return view('user.Address.add');
+        $previousUrl = url()->previous();
+        return view('user.Address.add', compact('previousUrl'));
     }
 
     public function edit($id)
     {
+        $previousUrl = url()->previous();
         $address = DeliveryAddress::find($id);
-        return view('user.Address.edit', compact('address'));
+        return view('user.Address.edit', compact(['address', 'previousUrl']));
     }
 
     public function addOrEdit(DeliveryAddressRequest $request)
@@ -41,6 +44,8 @@ class AddressController extends Controller
         $landmark = $request->input('landmark');
         $alt_phone = $request->input('alt_phone');
         $type = $request->input('type');
+
+        $previousUrl = $request->input('previousUrl');
 
         if ($request->input('id')) {
             $obj = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $request->input('id'))->first();
@@ -62,6 +67,10 @@ class AddressController extends Controller
         $obj->alt_phone = $alt_phone;
         $obj->type = in_array($type, config('constants.addressType')) ? $type : 'home';
         $obj->save();
+
+        if ($previousUrl == route('user.cart.address')) {
+            return redirect()->route('user.cart.address');
+        }
         return redirect()->route('user.address.index');
     }
 

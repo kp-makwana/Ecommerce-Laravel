@@ -10,7 +10,7 @@
                         </div>
                         <div
                             class="col align-self-center text-right text-muted">
-                            <a class="btn btn-info" href="{{ route('user.address.add') }}">Add New Address</a>
+                            <a class="text-primary" href="{{ route('user.address.add') }}">Add New Address</a>
                         </div>
                     </div>
                 </div>
@@ -68,79 +68,53 @@
                     </div>
             </div>
         </div>
-        <div class="modal fade" id="delete_address" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-             data-bs-dismiss="modal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalToggleLabel"><strong>DELETE ADDRESS</strong></h5>
-                        <a type="button" id="model-close" class="btn-close model-close" data-bs-dismiss="modal"
-                           aria-label="Close"
-                           style="font-size: 18px;">x</a>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to remove this address?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" style="background: #c6c8ca" class="btn model-close2"
-                                data-bs-dismiss="modal"
-                                aria-label="Close">CANCEL
-                        </button>
-                        <a id="route">
-                            <button class="btn btn-danger">
-                                DELETE
-                            </button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endsection
-        @push('style')
-            <link rel="stylesheet" href="{{ asset('css/viewCart.css') }}">
-        @endpush
-        @push('script')
-            <script>
-                $(".passingID").click(function () {
-                    var id = $(this).attr('data-id');
-                    var obj = $(this).attr('data-obj');
-                    $("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')');
-                    console.log($("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')'));
-                    $('#delete_address').modal('toggle');
-                });
-            </script>
-            <script>
-                function removeAddress(id, obj) {
-                    $.ajax({
-                        url: '{{ route('user.address.delete') }}',
-                        type: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            id: id,
-                        },
-                        success: function (response) {
-                            if (response.result === true) {
-                                obj.remove();
-                            }
-                            $(".model-close2").click();
-                        },
-                    });
-                }
-            </script>
-            <script>
-                $('input:radio[name=address]').change(function () {
-                    $.ajax({
-                        url: '{{ route('user.address.defaultSet') }}',
-                        type: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            id: this.value,
-                        },
-                        success: function (response) {
+        <x-modal.address-delete/>
+    </div>
+@endsection
+@push('style')
+    <link rel="stylesheet" href="{{ asset('css/viewCart.css') }}">
+@endpush
+@push('script')
+    <script>
+        $(".passingID").click(function () {
+            var id = $(this).attr('data-id');
+            var obj = $(this).attr('data-obj');
+            $("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')');
+            console.log($("#route").attr("onclick", 'removeAddress(' + id + ',' + obj + ')'));
+            $('#delete_address').modal('toggle');
+        });
+    </script>
+    <script>
+        function removeAddress(id, obj) {
+            $.ajax({
+                url: '{{ route('user.address.delete') }}',
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id,
+                },
+                success: function (response) {
+                    if (response.result === true) {
+                        obj.remove();
+                    }
+                    $(".model-close2").click();
+                },
+            });
+        }
+    </script>
+    <script>
+        $('input:radio[name=address]').change(function () {
+            $.ajax({
+                url: '{{ route('user.address.defaultSet') }}',
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: this.value,
+                },
+                success: function (response) {
 
-                        },
-                    });
-                });
-            </script>
-    @endpush
+                },
+            });
+        });
+    </script>
+@endpush

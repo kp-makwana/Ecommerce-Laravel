@@ -15,6 +15,7 @@
                           name="address_add">
                         @csrf
                         <div class="col-md-10">
+                            <input type="hidden" name="previousUrl" value="{{ $previousUrl }}">
                             <div class="tab row col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
