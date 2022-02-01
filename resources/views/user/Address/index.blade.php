@@ -44,7 +44,8 @@
                                 </div>
                             </div>
                             <div class="col align-self-center text-right ">
-                                <a href="" class="text-primary text-primary">EDIT</a>
+                                <a href="{{ route('user.address.edit',$i->id) }}"
+                                   class="text-primary text-primary">EDIT</a>
                                 <a href="#delete_address" class="passingID text-danger"
                                    data-id="{{ $i->id }}"
                                    data-obj="id_{{ $i->id }}"
@@ -61,6 +62,9 @@
                         <div class="text-lg-center mt-4"><a href="{{ route('user.address.add') }}" class="text-primary">Add
                                 New Address</a></div>
                         @endforelse
+                        <div class="row mt-3">
+                            {{ $address->links() }}
+                        </div>
                     </div>
             </div>
         </div>

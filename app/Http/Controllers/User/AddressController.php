@@ -14,7 +14,7 @@ class AddressController extends Controller
 {
     public function index()
     {
-        $address = DeliveryAddress::where('user_id', Auth::user()->id)->orderBy('default_address', 'DESC')->get();
+        $address = DeliveryAddress::where('user_id', Auth::user()->id)->orderBy('default_address', 'DESC')->paginate(5);
         return view('user.Address.index', ['data' => CartController::summary(), 'address' => $address]);
     }
 
@@ -23,7 +23,13 @@ class AddressController extends Controller
         return view('user.Address.add');
     }
 
-    public function saveAdd(DeliveryAddressRequest $request)
+    public function edit($id)
+    {
+        $address = DeliveryAddress::find($id);
+        return view('user.Address.edit', compact('address'));
+    }
+
+    public function addOrEdit(DeliveryAddressRequest $request)
     {
         $name = $request->input('name');
         $mobile_number = $request->input('mobile_number');
@@ -32,52 +38,29 @@ class AddressController extends Controller
         $address = $request->input('address');
         $city_id = $request->input('city');
         $state = $request->input('state');
-        $landmark = $request->input('landmark ');
+        $landmark = $request->input('landmark');
         $alt_phone = $request->input('alt_phone');
         $type = $request->input('type');
 
-        $obj = new DeliveryAddress;
-        $obj->user_id = Auth::user()->id;
+        if ($request->input('id')) {
+            $obj = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $request->input('id'))->first();
+        } else {
+            $this->defaultAddressRemove();
+            $obj = new DeliveryAddress;
+            $obj->user_id = Auth::user()->id;
+            $obj->default_address = '1';
+        }
         $obj->name = $name;
-        $obj->default_address = '1';
         $obj->mobile_number = $mobile_number;
         $obj->zipcode = $zipcode;
         $obj->locality = $locality;
         $obj->address = $address;
-        $obj->city_id = $city_id;
-        $obj->state_id = $state;
+        $obj->city_id = (int)$city_id;
+        $obj->state_id = (int)$state;
         $obj->country_id = State::find($state)->country_id;
         $obj->landmark = $landmark;
         $obj->alt_phone = $alt_phone;
         $obj->type = in_array($type, config('constants.addressType')) ? $type : 'home';
-        $this->defaultAddressRemove();
-        $obj->save();
-        return redirect()->route('user.address.index');
-    }
-
-    public function edit(Request $request)
-    {
-        $id = $request->input('id');
-        $name = $request->input('name');
-        $mobile_number = $request->input('mobile_number');
-        $zipcode = $request->input('zipcode');
-        $locality = $request->input('locality');
-        $address = $request->input('address');
-        $city_id = $request->input('city_id');
-        $landmark = $request->input('landmark ');
-        $alt_phone = $request->input('alt_phone');
-        $type = $request->input('type');
-
-        $obj = DeliveryAddress::where('user_id', Auth::user()->id)->where('id', $id)->first();
-        $obj->name = $name;
-        $obj->mobile_number = $mobile_number;
-        $obj->zipcode = $zipcode;
-        $obj->locality = $locality;
-        $obj->address = $address;
-        $obj->city_id = $city_id;
-        $obj->landmark = $landmark;
-        $obj->alt_phone = $alt_phone;
-        $obj->type = $type;
         $obj->save();
         return redirect()->route('user.address.index');
     }

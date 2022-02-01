@@ -32,7 +32,8 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
     Route::prefix('address')->as('address.')->group(function () {
         Route::get('/index', [AddressController::class, 'index'])->name('index');
         Route::get('/add', [AddressController::class, 'add'])->name('add');
-        Route::post('/saveAdd', [AddressController::class, 'saveAdd'])->name('saveAdd');
+        Route::get('/edit/{id}', [AddressController::class, 'edit'])->name('edit');
+        Route::post('/addOrEdit', [AddressController::class, 'addOrEdit'])->name('addOrEdit');
         Route::post('/delete', [AddressController::class, 'delete'])->name('delete');
         Route::post('/defaultAddressChange', [AddressController::class, 'defaultSet'])->name('defaultSet');
     });

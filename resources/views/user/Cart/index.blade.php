@@ -17,8 +17,8 @@
                 @forelse($data['carts'] as $item)
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
-                            <div class="col-2"><img class="img-fluid"
-                                                    src="{{ $item['product_image'] }}">
+                            <div class="col-2">
+                                <img class="img-fluid" src="{{ $item['product_image'] }}">
                             </div>
                             <div class="col">
                                 <div class="row text-muted">{{ $item['product_name'] }}</div>
@@ -64,19 +64,14 @@
                         </div>
                     </div>
                 @empty
-                    <div class="row border-top border-bottom">
-                        <div class="row main align-items-center">
-                            <div class="row text-center">
-                                <img class="img-fluid" src="{{ asset('images/emptyCart.png') }}" alt="">
-                            </div>
-                        </div>
-                    </div>
                     <div class="back-to-shop mt-4">
                         <p>Your Card is empty</p>
-                        <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.product.index') }}">Back to
-                            shop</a>
                     </div>
                 @endforelse
+                <div class="back-to-shop mt-4">
+                    <a class="btn btn-info mt-4" style="width: 25%" href="{{ route('user.product.index') }}">Back to
+                        shop</a>
+                </div>
             </div>
             @if($data['total_item'] >0)
                 <div class="col-md-4 summary">

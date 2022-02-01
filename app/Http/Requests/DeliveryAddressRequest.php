@@ -31,8 +31,6 @@ class DeliveryAddressRequest extends FormRequest
             'address' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'landmark' => 'min:3|max:25',
-            'alt_phone' => 'min:10',
             'type' => 'required',
         ];
     }

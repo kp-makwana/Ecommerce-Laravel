@@ -2,6 +2,6 @@
     <option value="" disabled selected>-- Select City --</option>
     @foreach($cities as $city)
         <option
-            value="{{ $city->id }}" {{ $city->id == Auth::user()->address->city_id ? "selected":"" }}> {{ ucfirst($city->name) }}</option>
+            value="{{ $city->id }}" {{ $city->id == ($selectId ?? Auth::user()->address->city_id) ? "selected":"" }}> {{ ucfirst($city->name) }}</option>
     @endforeach
 </select>
