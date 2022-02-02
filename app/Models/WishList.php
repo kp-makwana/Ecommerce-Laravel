@@ -18,4 +18,9 @@ class WishList extends Model
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+
+    public function productImage(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
+    }
 }

@@ -18,12 +18,12 @@
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-2">
-                                <a href="{{ route('user.product.productDetail',$item['id']) }}">
+                                <a href="{{ route('user.product.productDetail',$item['product_id']) }}">
                                     <img class="img-fluid" src="{{ $item['product_image'] }}">
                                 </a>
                             </div>
                             <div class="col">
-                                <a href="{{ route('user.product.productDetail',$item['id']) }}" class="mt-0">
+                                <a href="{{ route('user.product.productDetail',$item['product_id']) }}" class="mt-0">
                                     <div class="row text-muted">{{ $item['product_name'] }}</div>
                                 </a>
                                 @if(count($item['offer']) > 0)

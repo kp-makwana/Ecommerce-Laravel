@@ -72,7 +72,7 @@ class CartController extends Controller
             'discount' => static::$total_discount,
             'delivery_Charges' => $delivery_Charges,
             'total_price' => static::$total_price,
-            'carts' => $carts
+            'carts' => (object)$carts
         ];
     }
 }

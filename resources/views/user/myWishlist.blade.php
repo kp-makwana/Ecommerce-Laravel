@@ -17,25 +17,20 @@
                 @forelse($data['carts'] as $item)
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
-                            <div class="col-2">
-                                <img class="img-fluid" src="{{ $item['product_image'] }}">
+                            <div class="col-1">
+                                <a href="{{ route('user.product.productDetail',$item['product_id']) }}">
+                                    <img class="img-fluid" src="{{ $item['product_image'] }}">
+                                </a>
                             </div>
                             <div class="col">
-                                <div class="row text-muted">{{ $item['product_name'] }}</div>
-                                @if(count($item['offer']) > 0)
-                                    <div class="text-success" data-toggle="tooltip" data-placement="bottom"
-                                         title="{{ $item['offer'] }}"
-                                    >
-                                        {{ count($item['offer'])}} Offers applied <span class="fa fa-info"></span>
-                                    </div>
-                                @endif
+                                <div class="row text-muted">
+                                    <a href="{{ route('user.product.productDetail',$item['product_id']) }}">{{ $item['product_name'] }}</a>
+                                </div>
                             </div>
                             <div class="col">
-                                <a href="#" id="cartQuantityRemove"
-                                   data-url="{{ route('user.cart.cartQuantityRemove',$item['product_id']) }}"
-                                   data-id="{{ $item['product_id'] }}"
-                                   class="{{ ($item['count'] <= 1) ? 'cartQuantityRemove custom-disable':'cartQuantityRemove' }}"
-                                >-</a>
+                                <span
+                                    class="fa px-2 py-2 text-white rounded my-2 fa-star bg-{{ $bladeService->ratingClass(4.4) }}">&nbsp;&nbsp;{{ 4.4 ?? "N/A"}}</span>
+                                <span class="mx-3 text-muted">(450)<span class="mx-2"> Ratings</span></span>
                                 <a href="#" id="count_{{ $item['product_id'] }}" class="border"
                                    data-id="{{ $item['product_id'] }}">{{ $item['count'] }}</a>
                                 <a href="#" id="cartQuantityAdd"

@@ -10,7 +10,16 @@ class WishListController extends Controller
 
     public function index()
     {
-        $products = WishList::where('user_id', Auth::id())->paginate(10);
+        $queryBuilder = WishList::where('user_id', Auth::id())->paginate(10);
+        $products = $queryBuilder->map(function ($q) {
+            $obj = [
+                'id' => $q->id,
+                'img' => $q->productImage[0]->name,
+                'product_id' => $q->product_id,
+                '' => $q->product_id
+            ];
+            return (object)$obj;
+        });
         return view('user.myWishlist', ['products' => $products, 'data' => CartController::summary()]);
     }
 
