@@ -75,7 +75,11 @@
                                         <label for="city">City<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-md-6">
-                                        <x-city class="input-group-lg mb-1"/>
+                                        {{--                                        <x-city class="input-group-lg mb-1"/>--}}
+                                        <select id="CityList" name="city" class="form-control input-group-lg mb-1">
+                                            <option value="0" disabled selected>-- Select State First --</option>
+                                        </select>
+
                                         @error('city')<p class="text-danger">*{{ $message }}</p>@enderror
                                     </div>
                                 </div>
@@ -151,16 +155,32 @@
     <script>
         $('#stateList').change(function () {
             var stateId = $(this).val();
+            const city = $("#CityList");
             $.ajax({
                 type: 'POST',
-                url: '{{ route('fetchCities') }}',
+                url: '{{ route('cityList') }}',
                 data: {
                     stateId: stateId,
                     "_token": "{{ csrf_token() }}"
                 },
                 success: function (data) {
-                    console.log(data);
-                    $("#getCityList").html(data);
+                    if ((data.cities.length) > 0) {
+                        $("#CityList option").remove();
+
+                        city.append(new Option('--select city--', '0'));
+                        const cityDefault = $("#CityList option[value='0']");
+                        cityDefault.attr('selected', 'selected');
+                        cityDefault.attr('disabled', 'disabled');
+                        $.each(data.cities, function () {
+                            $("#CityList").append(new Option(this.name, this.id));
+                        });
+                    } else {
+                        $("#CityList option").remove();
+                        $("#CityList").append(new Option('--SELECT STATE FIRST--', '0'));
+                        const cityDefault = $("#CityList option[value='0']");
+                        cityDefault.attr('selected', 'selected');
+                        cityDefault.attr('disabled', 'disabled');
+                    }
                 }
             });
         });

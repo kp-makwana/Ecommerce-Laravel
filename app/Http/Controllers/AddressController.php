@@ -29,4 +29,16 @@ class AddressController extends Controller
         return view('components.city', compact('cities'))->render();
     }
 
+    public function stateList($id = 1): \Illuminate\Http\JsonResponse
+    {
+        $states = State::where('country_id', $id)->orderBy('name', 'ASC')->get();
+        return response()->json(['states' => $states]);
+    }
+
+    public function cityList(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $cities = City::where('state_id', $request->stateId)->orderBy('name', 'ASC')->get();
+        return response()->json(['cities' => $cities]);
+    }
+
 }

@@ -28,6 +28,10 @@ Route::middleware('login')->group(function () {
 
 Route::post('getStates', [AddressController::class, 'fetchStates'])->name('fetchStates');
 Route::post('getCities', [AddressController::class, 'fetchCities'])->name('fetchCities');
+
+Route::post('/stateList/{id?}', [AddressController::class, 'stateList'])->name('cityList');
+Route::post('/cityList', [AddressController::class, 'cityList'])->name('cityList');
+
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [GeustController::class, 'logout'])->name('logout');
 });

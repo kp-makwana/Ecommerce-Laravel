@@ -76,7 +76,14 @@
                                         <label for="city">City<span class="text-danger">*</span></label>
                                     </div>
                                     <div class="col-md-6">
-                                        <x-city class="input-group-lg mb-1" :id="$address->city_id"/>
+                                        {{--                                        <x-city class="input-group-lg mb-1" :id="$address->city_id"/>--}}
+                                        <select id="CityList" name="city" class="form-control input-group-lg mb-1">
+                                            <option value="0" disabled selected>-- Select State First --</option>
+                                            @foreach(App\Models\City::where('state_id',$address->stateId)->orderBy('name','ASC')->get() as $i)
+                                                <option value="0" selected>{{ $i->name }}</option>
+                                            @endforeach
+
+                                        </select>
                                         @error('city')<p class="text-danger">*{{ $message }}</p>@enderror
                                     </div>
                                 </div>
@@ -150,7 +157,7 @@
 @endpush
 @push('script')
     <script src="{{ asset('js/common.js') }}"></script>
-    <script>
+    {{--<script>
         $('#stateList').change(function () {
             var stateId = $(this).val();
             $.ajax({
@@ -163,6 +170,39 @@
                 success: function (data) {
                     console.log(data);
                     $("#getCityList").html(data);
+                }
+            });
+        });
+    </script>--}}
+    <script>
+        $('#stateList').change(function () {
+            var stateId = $(this).val();
+            const city = $("#CityList");
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('cityList') }}',
+                data: {
+                    stateId: stateId,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    if ((data.cities.length) > 0) {
+                        $("#CityList option").remove();
+
+                        city.append(new Option('--select city--', '0'));
+                        const cityDefault = $("#CityList option[value='0']");
+                        cityDefault.attr('selected', 'selected');
+                        cityDefault.attr('disabled', 'disabled');
+                        $.each(data.cities, function () {
+                            $("#CityList").append(new Option(this.name, this.id));
+                        });
+                    } else {
+                        $("#CityList option").remove();
+                        $("#CityList").append(new Option('--SELECT STATE FIRST--', '0'));
+                        const cityDefault = $("#CityList option[value='0']");
+                        cityDefault.attr('selected', 'selected');
+                        cityDefault.attr('disabled', 'disabled');
+                    }
                 }
             });
         });
