@@ -1,4 +1,4 @@
-@extends('layout.guest-sidebar')
+@extends('layout.guest-sidebar',['title'=>'Login'])
 
 @section('content')
     <!-- Registeration Form -->
