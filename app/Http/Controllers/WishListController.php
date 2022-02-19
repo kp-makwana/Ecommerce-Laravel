@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\CommonController;
 use App\Models\WishList;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,14 +12,18 @@ class WishListController extends Controller
     public function index()
     {
         $queryBuilder = WishList::where('user_id', Auth::id())->paginate(10);
-        $products = $queryBuilder->map(function ($q) {
-            $obj = [
-                'id' => $q->id,
-                'img' => $q->productImage[0]->name,
-                'product_id' => $q->product_id,
-                '' => $q->product_id
+        $products = $queryBuilder->map(function ($query) {
+            $discount = CommonController::productDiscount($query->product_id);
+            $salePrice = $query->product->sale_price;
+            return [
+                'id' => $query->id,
+                'product_id' => $query->product_id,
+                'product_name' => $query->product->name,
+                'count' => $query->quantity,
+                'product_image' => asset('storage/ProductImages/' . $query->productImage[0]->name),
+                'original_price' => $salePrice,
+                'price' => $salePrice - $discount,
             ];
-            return (object)$obj;
         });
         return view('user.myWishlist', ['products' => $products, 'data' => CartController::summary()]);
     }

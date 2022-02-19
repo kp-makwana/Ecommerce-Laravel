@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                @forelse($data['carts'] as $item)
+                @forelse($products as $item)
                     <div class="row border-top border-bottom">
                         <div class="row main align-items-center">
                             <div class="col-1">
@@ -31,13 +31,7 @@
                                 <span
                                     class="fa px-2 py-2 text-white rounded my-2 fa-star bg-{{ $bladeService->ratingClass(4.4) }}">&nbsp;&nbsp;{{ 4.4 ?? "N/A"}}</span>
                                 <span class="mx-3 text-muted">(450)<span class="mx-2"> Ratings</span></span>
-                                <a href="#" id="count_{{ $item['product_id'] }}" class="border"
-                                   data-id="{{ $item['product_id'] }}">{{ $item['count'] }}</a>
-                                <a href="#" id="cartQuantityAdd"
-                                   class="{{ ($item['count'] == 5) ? 'cartQuantityAdd custom-disable':'cartQuantityAdd' }}"
-                                   data-url="{{ route('user.cart.cartQuantityAdd',$item['product_id']) }}"
-                                   data-id="{{ $item['product_id'] }}"
-                                >+</a></div>
+                            </div>
                             <div class="col">
                                 <div class="">
                                     <b class="mr-4">
