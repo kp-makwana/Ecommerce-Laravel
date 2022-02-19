@@ -1,4 +1,4 @@
-@extends('layout.guest-sidebar')
+@extends('layout.guest-sidebar',['title'=>'Sign up'])
 
 @section('content')
 
