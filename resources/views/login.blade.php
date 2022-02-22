@@ -14,7 +14,6 @@
                             </span>
                     </div>
                     <input id="email" type="email" name="username" placeholder="Enter Email or UserName Address"
-                           value="ecommerce@user.com"
                            class="form-control bg-white border-left-0 border-md">
                 </div>
                 @error('username')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
