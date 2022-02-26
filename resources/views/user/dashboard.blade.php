@@ -1,5 +1,6 @@
 @extends('user.layout.sidebar',['title'=>'Dashboard'])
 @section('content')
+    {{ $user }}
     {{--<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynav"
