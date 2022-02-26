@@ -1,6 +1,6 @@
 @extends('user.layout.sidebar',['title'=>'Dashboard'])
 @section('content')
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    {{--<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynav"
                     aria-controls="mynav" aria-expanded="false" aria-label="Toggle navigation"><span
@@ -183,7 +183,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 @endsection
 @push('style')
     {{--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
