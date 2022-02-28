@@ -20,10 +20,9 @@
         <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
             <img src="{{ asset('images/logo.png') }}" alt="" class="img-fluid mb-3 d-none d-md-block">
             <h1>Create an Account</h1>
-            <p class="font-italic text-muted mb-0">Create a minimal registeration page using Bootstrap 4 HTML form
-                elements.</p>
-            <p class="font-italic text-muted">Snippet By <a href="#" class="text-muted">
-                    <u>Bootstrapious</u></a>
+            <p class="font-italic text-muted mb-0">Welcome to the laravel-8 Ecommrece project</p>
+            <p class="font-italic text-muted">Snippet By <a href="http://kpmakwana.tech/" target="_blank" class="text-muted">
+                    <u>kp-makwana</u></a>
             </p>
         </div>
         @yield('content')
