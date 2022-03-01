@@ -20,9 +20,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('login')->group(function () {
     Route::get('/', [GeustController::class, 'showLogin'])->name('login');
     Route::get('/signup', [GeustController::class, 'showSignup'])->name('signup');
+    Route::get('/forgetPassword', [GeustController::class, 'forgetPasswordPage'])->name('forgetPasswordPage');
+    Route::get('/resetPassword', [GeustController::class, 'resetPassword'])->name('password.reset');
 
     Route::post('login', [GeustController::class, 'register'])->name('user.register');
     Route::post('/', [GeustController::class, 'login'])->name('submitLogin');
+    Route::post('/forgetPassword', [GeustController::class, 'forgetPassword'])->name('forgetPassword');
+    Route::post('/reset-password', [GeustController::class, 'passwordUpdate'])->name('password.update');
 
 });
 

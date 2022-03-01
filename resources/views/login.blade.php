@@ -31,6 +31,9 @@
                 @error('password')<p class="text-danger ml-3">*{{ $message }}</p>@enderror
                 @if(Session::has('type'))
                     <p class="text-danger ml-3">*{{ Session::get('message')}}</p>
+                @endif
+                @if(Session::has('status'))
+                    <p class="text-success ml-3">{{ Session::get('message') }}</p>
             @endif
 
 
@@ -41,6 +44,14 @@
                         <span class="font-weight-bold">Login</span>
                     </button>
                 </div>
+
+                <div class="text-center w-100 mt-2">
+                    <p class="text-muted font-weight-bold"><a href="{{ route('forgetPasswordPage') }}"
+                                                              class="text-primary ml-2">
+                            forget password?</a>
+                    </p>
+                </div>
+
 
                 <!-- Divider Text -->
                 <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
