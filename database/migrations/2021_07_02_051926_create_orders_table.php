@@ -16,7 +16,6 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
             $table->date('order_date');
             $table->integer('order_amount');
             $table->integer('discount')->default(0);
@@ -31,9 +30,8 @@ class CreateOrdersTable extends Migration
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('shipping_address_id')->references('id')->on('addresses');
-            $table->foreign('billing_address_id')->references('id')->on('addresses');
+//            $table->foreign('shipping_address_id')->references('id')->on('delivery_addresses');
+//            $table->foreign('billing_address_id')->references('id')->on('delivery_addresses');
             $table->foreign('order_status_id')->references('id')->on('order_statuses');
         });
     }

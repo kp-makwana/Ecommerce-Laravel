@@ -18,7 +18,6 @@ class OrderSeeder extends Seeder
     {
         Order::insert([[
             'user_id' => 2,
-            'product_id' => 2,
             'order_date' => Carbon::now(),
             'order_amount' => 6000,
             'net_amount'=>6000,
@@ -28,7 +27,6 @@ class OrderSeeder extends Seeder
             'order_status_id'=>1,
         ],[
             'user_id' => 2,
-            'product_id' => 1,
             'order_date' => Carbon::now(),
             'order_amount' => 5000,
             'net_amount'=>5000,
