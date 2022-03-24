@@ -153,8 +153,14 @@
 @push('script')
     <script src="{{ asset('js/common.js') }}"></script>
     <script>
+        $( document ).ready(function() {
+            city()
+        });
         $('#stateList').change(function () {
-            var stateId = $(this).val();
+            city()
+        });
+        function city(){
+            var stateId = $('#stateList').val();
             const city = $("#CityList");
             $.ajax({
                 type: 'POST',
@@ -183,6 +189,6 @@
                     }
                 }
             });
-        });
+        }
     </script>
 @endpush
