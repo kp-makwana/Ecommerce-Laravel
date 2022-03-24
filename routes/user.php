@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProductController;
@@ -56,6 +57,10 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
         Route::get('/cartQuantityRemove/{id}', [ProductController::class, 'cartQuantityRemove'])->name('cartQuantityRemove');
         Route::get('/address', [ProductController::class, 'address'])->name('address')->middleware('cart');
         Route::get('/placeOrder', [ProductController::class, 'placeOrder'])->name('placeOrder')->middleware('cart');
+    });
+    Route::prefix('order')->as('order.')->group(function () {
+        Route::get('/payment', [OrderController::class, 'payment'])->name('payment')->middleware('cart');
+        Route::get('/placeOrder', [OrderController::class, 'placeOrder'])->name('placeOrder')->middleware('cart');
     });
 
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
