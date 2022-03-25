@@ -66,6 +66,7 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
         Route::get('/index', [WishListController::class, 'index'])->name('index');
         Route::get('/addOrRemoveWishList/{id}', [WishListController::class, 'addOrRemoveWishList'])->name('addOrRemoveWishList');
+        Route::get('/removeToWishList/{id}', [WishListController::class, 'removeToWishList'])->name('removeToWishList');
     });
     Route::prefix('help')->as('help.')->group(function () {
         Route::get('/index', function () {
