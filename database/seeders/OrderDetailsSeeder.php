@@ -16,11 +16,11 @@ class OrderDetailsSeeder extends Seeder
      */
     public function run()
     {
-        OrderDetails::insert([
+        /*OrderDetails::insert([
             'order_id'=>1,
             'product_id'=>1,
             'quantity'=>2,
             'discount'=>1000,
-        ]);
+        ]);*/
     }
 }

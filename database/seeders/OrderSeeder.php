@@ -16,7 +16,7 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        Order::insert([[
+        /*Order::insert([[
             'user_id' => 2,
             'order_date' => Carbon::now(),
             'order_amount' => 6000,
@@ -34,6 +34,6 @@ class OrderSeeder extends Seeder
             'shipping_address_id'=>1,
             'billing_address_id'=>1,
             'order_status_id'=>1,
-        ]]);
+        ]]);*/
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\DeliveryAddress;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -15,7 +16,7 @@ class OrderController extends Controller
         return view('user.Cart.payment');
     }
 
-    public function placeOrder()
+    public function placeOrder(): \Illuminate\Http\RedirectResponse
     {
         $data = CartController::summary();
 
@@ -45,9 +46,11 @@ class OrderController extends Controller
                 $order_item->quantity = $item['count'];
                 $order_item->price = $item['price'];
                 $order_item->discount = $item['product_discount'];
-                $order_item->save();
+                if ($order_item->save()) {
+                    Cart::find($item['id'])->delete();
+                }
             }
         }
-        return view('user.order');
+        return redirect()->route('user.order.index');
     }
 }
