@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\DashboardController;
@@ -73,4 +74,5 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
             return view('user.help-support');
         })->name('index');
     });
+    Route::post('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
 });
