@@ -74,3 +74,5 @@ Route::get('/users', function () {
 Route::get('/users/{id}', function ($id) {
     return response()->json(\App\Models\User::find($id));
 });
+
+Route::post('checkPaymentStatus',[\App\Http\Controllers\PaymentController::class,'checkPaymentStatus'])->name('checkPaymentStatus');

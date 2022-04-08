@@ -56,37 +56,6 @@
             }
         });
         $('#paynow').on('click',function(e){
-            var options = {
-                "key": "rzp_test_7y7xZB7qOMMm5l",
-                "amount": 2000,
-                "name": "Tutsmake",
-                "description": "Payment",
-                "image": "https://lh3.googleusercontent.com/a-/AOh14Gh833ThinFrkzBq4_fS-S0KHP552epZx4guGbm_yw=s83-c-mo",
-                "handler": function (response){
-                    alert(response.razorpay_payment_id);
-                    alert(response.razorpay_order_id);
-                    alert(response.razorpay_signature)
-                },
-                "allow_rotation":false,
-                "prefill": {
-                    "contact": '9988665544',
-                    "email":   'tutsmake@gmail.com',
-                },
-                "modal":{
-                    // "confirm_close":true,
-                    "animation":true,
-
-                },
-                "theme": {
-                    "color": "#F0F0F0"
-                }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.open();
-            e.preventDefault();
-        });
-
-        function checkoutDetails() {
             $.ajax({
                 'url': '{{ route('user.checkout') }}',
                 'type': 'POST',
@@ -95,8 +64,11 @@
                     'auth_id':{{ \Illuminate\Support\Facades\Auth::id() }}
                 },
                 success: function (response) {
+                    var rzp1 = new Razorpay(response.data);
+                    rzp1.open();
+                    e.preventDefault();
                 }
             });
-        }
-        </script>
+        });
+    </script>
 @endpush

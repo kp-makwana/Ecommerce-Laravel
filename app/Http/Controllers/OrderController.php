@@ -7,13 +7,15 @@ use App\Models\DeliveryAddress;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\OrderStatus;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function payment()
+    public function payment(Request $request)
     {
-        return view('user.Cart.payment');
+        $response = [];
+        return view('user.Cart.payment',compact('response'));
     }
 
     public function placeOrder(): \Illuminate\Http\RedirectResponse

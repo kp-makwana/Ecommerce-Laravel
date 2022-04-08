@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -32,5 +33,16 @@ class PaymentController extends Controller
                 "color"=> "#F0F0F0"
             ]
         ]);
+    }
+
+    public function checkPaymentStatus(Request $request)
+    {
+        Log::info('Data Coming',$request->all());
+        dd($request->all());
+    }
+
+    public function test()
+    {
+
     }
 }
