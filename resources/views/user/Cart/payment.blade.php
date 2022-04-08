@@ -49,6 +49,25 @@
 @push('script')
     <script src="{{ asset('js/Payment/checkout.js') }}"></script>
     <script>
+
+        var options = {
+            "handler": function (response){
+                $.ajax({
+                    'url': '{{ route('checkPaymentStatus') }}',
+                    'type': 'POST',
+                    'data':{
+                        '_token':$('meta[name="csrf-token"]').attr('content'),
+                        'auth_id':{{ \Illuminate\Support\Facades\Auth::id() }},
+                        'razorpay_payment_id':response.razorpay_payment_id,
+                        'razorpay_order_id':response.razorpay_order_id ?? '',
+                        'razorpay_signature':response.razorpay_signature ?? ''
+                    },
+                    success: function (response) {
+
+                    }
+                });
+            },
+        };
         var SITEURL = '{{URL::to('')}}';
         $.ajaxSetup({
             headers: {
@@ -64,7 +83,9 @@
                     'auth_id':{{ \Illuminate\Support\Facades\Auth::id() }}
                 },
                 success: function (response) {
-                    var rzp1 = new Razorpay(response.data);
+                    let PaymentData = response.data
+                    $.extend(PaymentData, options);
+                    var rzp1 = new Razorpay(PaymentData);
                     rzp1.open();
                     e.preventDefault();
                 }

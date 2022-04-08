@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\API\CommonController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -75,4 +76,4 @@ Route::get('/users/{id}', function ($id) {
     return response()->json(\App\Models\User::find($id));
 });
 
-Route::post('checkPaymentStatus',[\App\Http\Controllers\PaymentController::class,'checkPaymentStatus'])->name('checkPaymentStatus');
+Route::post('/checkPaymentStatus',[PaymentController::class,'checkPaymentStatus'])->name('checkPaymentStatus');

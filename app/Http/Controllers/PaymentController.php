@@ -17,17 +17,14 @@ class PaymentController extends Controller
             "amount"=> 2000,
             "name"=> "Tutsmake",
             "description"=> "Payment",
-            "image"=> "https=>//lh3.googleusercontent.com/a-/AOh14Gh833ThinFrkzBq4_fS-S0KHP552epZx4guGbm_yw=s83-c-mo",
-            "handler"=> "",
+            "image"=> "https://lh3.googleusercontent.com/a-/AOh14Gh833ThinFrkzBq4_fS-S0KHP552epZx4guGbm_yw=s83-c-mo",
             "allow_rotation"=>false,
             "prefill"=> [
                 "contact"=> '9988665544',
                 "email"=>   'tutsmake@gmail.com',
             ],
             "modal"=>[
-                // "confirm_close"=>true,
                 "animation"=>true,
-
             ],
             "theme"=> [
                 "color"=> "#F0F0F0"
