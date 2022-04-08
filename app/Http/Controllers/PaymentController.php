@@ -10,31 +10,35 @@ use Illuminate\Support\Facades\Log;
 class PaymentController extends Controller
 {
     use Response;
+
     public function checkout(Request $request)
     {
+        $data = CartController::summary();
+        $user = Auth::user();
+
         return $this->success([
-            "key"=> "rzp_test_7y7xZB7qOMMm5l",
-            "amount"=> 2000,
-            "name"=> "Tutsmake",
-            "description"=> "Payment",
-            "image"=> "https://lh3.googleusercontent.com/a-/AOh14Gh833ThinFrkzBq4_fS-S0KHP552epZx4guGbm_yw=s83-c-mo",
-            "allow_rotation"=>false,
-            "prefill"=> [
-                "contact"=> '9988665544',
-                "email"=>   'tutsmake@gmail.com',
+            "key" => "rzp_test_7y7xZB7qOMMm5l",
+            "amount" => $data['total_price'] * 100,
+            "name" => $user->getFullNameAttribute(),
+            "description" => "Payment",
+            "image" => "https://lh3.googleusercontent.com/a-/AOh14Gh833ThinFrkzBq4_fS-S0KHP552epZx4guGbm_yw=s83-c-mo",
+            "allow_rotation" => false,
+            "prefill" => [
+                "contact" => $user->contact_no,
+                "email" => $user->email,
             ],
-            "modal"=>[
-                "animation"=>true,
+            "modal" => [
+                "animation" => true,
             ],
-            "theme"=> [
-                "color"=> "#F0F0F0"
+            "theme" => [
+                "color" => "#F0F0F0"
             ]
         ]);
     }
 
     public function checkPaymentStatus(Request $request)
     {
-        Log::info('Data Coming',$request->all());
+        Log::info('Data Coming', $request->all());
         dd($request->all());
     }
 
