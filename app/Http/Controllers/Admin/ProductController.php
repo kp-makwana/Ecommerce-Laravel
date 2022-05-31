@@ -19,13 +19,13 @@ class ProductController extends Controller
 {
     public function gridView(Request $request)
     {
-        $result = Product_Controller::index($request);
+        $result = (new Product_Controller)->index($request);
         return view('admin.product.product-grid', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
     public function listview(Request $request)
     {
-        $result = Product_Controller::index($request);
+        $result = (new Product_Controller)->index($request);
         return view('admin.product.product-list', ['products' => $result['products'], 'request' => $result['request']]);
     }
 
@@ -132,7 +132,7 @@ class ProductController extends Controller
         $queryBuilder = Product::query();
         $queryBuilder->onlyTrashed();
 
-        $result = Product_Controller::index($request, $queryBuilder);
+        $result = (new Product_Controller())->index($request, $queryBuilder);
         return view('admin.product.trashBin', ['products' => $result['products'], 'request' => $result['request']]);
     }
 

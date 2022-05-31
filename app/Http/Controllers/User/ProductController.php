@@ -47,13 +47,13 @@ class ProductController extends Controller
 
     public function viewCart()
     {
-        return view('user.Cart.index', ['data' => CartController::summary()]);
+        return view('user.Cart.index', ['data' => (new CartController())->summary()]);
     }
 
     public function Address()
     {
-        $address = DeliveryAddressController::index();
-        return view('user.Cart.Address', ['data' => CartController::summary(), 'address' => $address]);
+        $address = (new DeliveryAddressController())->index();
+        return view('user.Cart.Address', ['data' => (new CartController())->summary(), 'address' => $address]);
     }
 
     public function placeOrder(Request $request)

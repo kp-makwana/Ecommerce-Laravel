@@ -35,7 +35,7 @@
                             <div class="col">
                                 <div class="">
                                     @php
-                                        $discount = App\Http\Controllers\API\CommonController::productDiscount($item->product_id)
+                                        $discount = (new App\Http\Controllers\API\CommonController)->productDiscount($item->product_id)
                                     @endphp
                                     <b class="mr-4">
                                         &#8377; {{ $item->product->sale_price-$discount }}

@@ -20,7 +20,7 @@ class OrderController extends Controller
 
     public function placeOrder(): \Illuminate\Http\RedirectResponse
     {
-        $data = CartController::summary();
+        $data = (new CartController)->summary();;
 
         $address = DeliveryAddress::where('user_id', Auth::id())->where('default_address', 1)->first(['id']);
         $order_status = OrderStatus::first();

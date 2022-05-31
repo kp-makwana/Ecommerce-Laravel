@@ -13,7 +13,7 @@ class PaymentController extends Controller
 
     public function checkout(Request $request)
     {
-        $data = CartController::summary();
+        $data = (new CartController)->summary();
         $user = Auth::user();
 
         return $this->success([

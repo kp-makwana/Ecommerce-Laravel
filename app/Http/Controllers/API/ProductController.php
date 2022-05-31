@@ -25,7 +25,9 @@ class ProductController extends Controller
 
     public function index(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $result = Product_Controller::index($request);
+        $product_Controller = new Product_Controller();
+        $result = $product_Controller->index($request);
+
         return ProductResource::collection($result['products']);
     }
 
@@ -89,7 +91,9 @@ class ProductController extends Controller
 
     public function addToCart($id): \Illuminate\Http\JsonResponse
     {
-        $result = Product_Controller::addToCarts($id);
+        $product_Controller = new Product_Controller();
+        $result = $product_Controller->addToCarts($id);
+
         if ($result) {
             return $this->success(['result' => 'Item added in your cart.']);
         } else {
@@ -147,6 +151,6 @@ class ProductController extends Controller
 
     public function cartList(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return CartResource::collection(Product_Controller::cartList());
+        return CartResource::collection((new Product_Controller())->cartList());
     }
 }

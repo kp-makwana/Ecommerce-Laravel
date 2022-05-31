@@ -25,7 +25,7 @@ class WishListController extends Controller
 //                'price' => $salePrice - $discount,
 //            ];
 //        });
-        return view('user.myWishlist', ['products' => $queryBuilder, 'data' => CartController::summary()]);
+        return view('user.myWishlist', ['products' => $queryBuilder, 'data' => (new CartController)->summary()]);
     }
 
     public function addOrRemoveWishList($id): \Illuminate\Http\JsonResponse

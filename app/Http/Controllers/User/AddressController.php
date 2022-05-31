@@ -15,8 +15,8 @@ class AddressController extends Controller
 {
     public function index()
     {
-        $address = DeliveryAddressController::index();
-        return view('user.Address.index', ['data' => CartController::summary(), 'address' => $address]);
+        $address = (new DeliveryAddressController())->index();
+        return view('user.Address.index', ['data' => (new CartController())->summary(), 'address' => $address]);
     }
 
     public function add(Request $request)
