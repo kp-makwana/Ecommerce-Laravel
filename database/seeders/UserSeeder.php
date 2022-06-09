@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'contact_no' => '9876543210',
             'gender' => 'male',
             'email' => 'ecommerce@admin.com',
-            'username' => 'ecommerce@admin.com',
+            'username' => 'admin',
             'password' => Hash::make('Admin@123'),
             'description' => 'this is admin'
         ], [
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'contact_no' => '9876543211',
             'gender' => 'female',
             'email' => 'ecommerce@user.com',
-            'username' => 'ecommerce@user.com',
+            'username' => 'user',
             'password' => Hash::make('password'),
             'description' => 'this is user'
         ], [

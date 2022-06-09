@@ -13,7 +13,7 @@
                                 <i class="fa fa-envelope text-muted"></i>
                             </span>
                     </div>
-                    <input id="email" type="email" name="username" placeholder="Enter Email or UserName Address"
+                    <input id="email" type="text" name="username" placeholder="Enter Email or UserName Address"
                            class="form-control bg-white border-left-0 border-md">
                 </div>
                 @error('username')<p class="text-danger ml-3">*{{ $message }}</p>@enderror

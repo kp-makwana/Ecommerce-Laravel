@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -76,15 +77,12 @@ class UserController extends Controller
         return ['success' => 'form submit successfully'];
     }
 
-    public function login(LoginRequest $request): \Illuminate\Http\RedirectResponse
+    public function login(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $result = User::where('email', $request->input('username'))->exists();
+        $result = User::where('email', $request->input('username'))->orWhere('username', $request->input('username'))->exists();
         if ($result) {
             if (Auth::attempt($request->only('username', 'password'), $request->filled('remember'))) {
-                if (Auth()->user()->role === "admin") {
-                    return redirect()->route('admin.index');
-                }
-                return redirect()->route('user.dashboard.index');
+                return redirect()->intended();
             }
             return redirect()->route('login')->with(['type' => 'error', 'message' => 'Invalid password']);
         }
@@ -139,6 +137,7 @@ class UserController extends Controller
 
     public function logout(): \Illuminate\Http\RedirectResponse
     {
+        Session::put('url.intended',url()->previous()?:'/');
         Auth::logout();
         return redirect()->route('login');
     }
