@@ -7,18 +7,20 @@ use App\Models\DeliveryAddress;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\OrderStatus;
+use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    use Response;
     public function payment(Request $request)
     {
         $response = [];
         return view('user.Cart.payment',compact('response'));
     }
 
-    public function placeOrder(): \Illuminate\Http\RedirectResponse
+    public function placeOrder($payment_id)
     {
         $data = (new CartController)->summary();;
 
@@ -36,6 +38,7 @@ class OrderController extends Controller
         $order->shipping_amount = $data['delivery_Charges'];
         $order->shipping_date = $data['total_price'] ?? 0;
         $order->shipping_date = $date;
+        $order->payment_id = $payment_id;
         $order->shipping_address_id = $address->id;
         $order->billing_address_id = $address->id;
         $order->order_status_id = $order_status->id;
@@ -53,6 +56,6 @@ class OrderController extends Controller
                 }
             }
         }
-        return redirect()->route('user.order.index');
+        return $order->toArray();
     }
 }

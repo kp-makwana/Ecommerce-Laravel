@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Razorpay\Api\Api;
 
 class PaymentController extends Controller
 {
@@ -13,15 +14,35 @@ class PaymentController extends Controller
 
     public function checkout(Request $request)
     {
-        $data = (new CartController)->summary();
+        $summary = (new CartController)->summary();
         $user = Auth::user();
 
+        $notes = '';
+        foreach($summary['carts'] as $key => $item){
+            if ($key == 0){
+                $notes = $item['product_name'];
+            }else{
+                $notes .= " | ".$item['product_name'];
+            }
+        }
+
+        $api = new Api('rzp_test_5N0PbdN26WjVNH', 'pwVtwJGPJbs5j6oFkJEdVL9h');
+        $razorpayOrder = $api->order->create(array('receipt' => time(), 'amount' => $summary['total_price'] * 100, 'currency' => 'INR', 'notes' => array('product_name' => $notes)));
+
+        if(!empty($razorpayOrder['id'])){
+            $payment = new Payment;
+            $payment->user_id = Auth::id();
+            $payment->razorpay_order_id = $razorpayOrder['id'];
+            $payment->save();
+        }
+
         return $this->success([
-            "key" => "rzp_test_7y7xZB7qOMMm5l",
-            "amount" => $data['total_price'] * 100,
-            "name" => $user->getFullNameAttribute(),
+            "key" => "rzp_test_5N0PbdN26WjVNH",
+            "amount" => $summary['total_price'] * 100,
+            "name" => env('APP_NAME'),
+            "order_id" => $razorpayOrder['id'],
             "description" => "Payment",
-            "image" => "https://lh3.googleusercontent.com/a-/AOh14Gh833ThinFrkzBq4_fS-S0KHP552epZx4guGbm_yw=s83-c-mo",
+            "image" => asset('images/logo.png'),
             "allow_rotation" => false,
             "prefill" => [
                 "contact" => $user->contact_no,
@@ -36,14 +57,41 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function checkPaymentStatus(Request $request)
+    public function verify(Request $request)
     {
-        Log::info('Data Coming', $request->all());
-        dd($request->all());
-    }
+        $razorpay_payment_id = $request->razorpay_payment_id;
+        $razorpay_order_id = $request->razorpay_order_id;
+        $razorpay_signature = $request->razorpay_signature;
 
-    public function test()
-    {
+        $api = new Api('rzp_test_5N0PbdN26WjVNH', 'pwVtwJGPJbs5j6oFkJEdVL9h');
+        if (empty($razorpay_payment_id) == false) {
+            try {
+                // Please note that the razorpay order ID must
+                // come from a trusted source (session here, but
+                // could be database or something else)
+                $attributes = array(
+                    'razorpay_order_id' => $razorpay_order_id,
+                    'razorpay_payment_id' => $razorpay_payment_id,
+                    'razorpay_signature' => $razorpay_signature
+                );
 
+                $payment = Payment::where('razorpay_order_id',$razorpay_order_id)->first();
+                $order = (new OrderController())->placeOrder($payment->id);
+
+                $api->utility->verifyPaymentSignature($attributes);
+
+                // Payment status update
+                $payment->order_id = $order['id'];
+                $payment->razorpay_payment_id = $razorpay_payment_id;
+                $payment->razorpay_signature = $razorpay_signature;
+                $payment->status = 'completed';
+                $payment->save();
+
+                $data = $this->success($order,'Payment success');
+            } catch (\Exception $e) {
+                $data = $this->error($e->getMessage());
+            }
+        }
+        return $data;
     }
 }

@@ -64,6 +64,9 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
         Route::get('/placeOrder', [OrderController::class, 'placeOrder'])->name('placeOrder')->middleware('cart');
     });
 
+    Route::prefix('payment')->as('payment.')->group(function () {
+        Route::any('/verify', [PaymentController::class, 'verify'])->name('verify');
+    });
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
         Route::get('/index', [WishListController::class, 'index'])->name('index');
         Route::get('/addOrRemoveWishList/{id}', [WishListController::class, 'addOrRemoveWishList'])->name('addOrRemoveWishList');
