@@ -59,12 +59,12 @@ Route::middleware(['auth', 'userCheck'])->group(function () {
         Route::get('/address', [ProductController::class, 'address'])->name('address')->middleware('cart');
         Route::get('/placeOrder', [ProductController::class, 'placeOrder'])->name('placeOrder')->middleware('cart');
     });
-    Route::prefix('order')->as('order.')->group(function () {
-        Route::get('/payment', [OrderController::class, 'payment'])->name('payment')->middleware('cart');
-        Route::get('/placeOrder', [OrderController::class, 'placeOrder'])->name('placeOrder')->middleware('cart');
+    Route::middleware('cart')->prefix('order')->as('order.')->group(function () {
+        Route::get('/payment', [OrderController::class, 'payment'])->name('payment');
+        Route::get('/placeOrder', [OrderController::class, 'placeOrder'])->name('placeOrder');
     });
 
-    Route::prefix('payment')->as('payment.')->group(function () {
+    Route::middleware('cart')->prefix('payment')->as('payment.')->group(function () {
         Route::any('/verify', [PaymentController::class, 'verify'])->name('verify');
     });
     Route::prefix('wishlist')->as('wishlist.')->group(function () {
